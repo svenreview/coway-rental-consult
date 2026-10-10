@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>상담 바구니 | 코웨이 렌탈 맞춤 상담</title>
+<meta name="description" content="담아 둔 제품을 확인하고 한 번에 무료 상담을 신청하세요.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="index.html"><span class="drop" aria-hidden="true"></span>코웨이 렌탈 맞춤 상담</a>
+    <nav class="nav-items" aria-label="주 메뉴">
+      <a href="products.html">제품·렌탈료</a>
+      <a href="recommend.html">맞춤 추천</a>
+      <a href="index.html#benefit">혜택</a>
+      <a href="index.html#how">상담 안내</a>
+    </nav>
+    <div class="nav-right">
+      <a class="nav-tel num" href="tel:010-3490-8733">010-3490-8733</a>
+      <a class="btn btn-main btn-small" href="consult.html" aria-current="page">상담 바구니<span class="count-dot" data-basket-count hidden></span></a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="consult-done" id="consult-done" tabindex="-1" hidden>
+    <h1 class="title">상담 신청이 접수됐어요</h1>
+    <p class="lead">확인 후 남겨 주신 연락처로 연락드릴게요. 급하시면 전화나 카카오톡으로 바로 물어보셔도 돼요.</p>
+    <div class="hero-cta">
+      <a class="btn btn-line num" href="tel:010-3490-8733">전화 010-3490-8733</a>
+      <a class="btn btn-line" href="index.html">처음으로</a>
+    </div>
+  </div>
+
+  <div id="consult-body">
+    <div class="page-head" style="padding-left:0;padding-right:0">
+      <h1 class="title">상담 바구니</h1>
+      <p class="lead">담은 제품을 확인하고 연락처를 남겨 주세요. 제품을 정하지 않았어도 신청할 수 있어요.</p>
+    </div>
+
+    <div class="consult-cols">
+      <section aria-labelledby="basket-title">
+        <h2 class="step-title" id="basket-title"><span>1</span>담은 제품</h2>
+        <ul class="b-list" id="basket-list" hidden></ul>
+        <p class="b-sum" id="basket-sum" hidden></p>
+        <div class="picked-empty" id="basket-empty">
+          아직 담은 제품이 없어요. 제품을 보고 궁금한 것을 담아 오거나, 아래에 연락처만 남겨도 돼요.
+        </div>
+        <div class="b-more">
+          <a class="btn btn-line btn-small" href="products.html">제품 더 담기</a>
+          <a class="btn btn-line btn-small" href="recommend.html">맞춤 추천 받기</a>
+        </div>
+      </section>
+
+      <section aria-labelledby="form-title">
+        <h2 class="step-title" id="form-title"><span>2</span>연락받을 곳</h2>
+        <form class="form" id="consult-form" novalidate>
+          <div class="field">
+            <label for="f-name">이름</label>
+            <input type="text" id="f-name" name="name" maxlength="50" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="f-contact">연락처</label>
+            <input type="tel" id="f-contact" name="contact" maxlength="100" autocomplete="tel" inputmode="tel" placeholder="010-0000-0000" required>
+          </div>
+          <fieldset class="field">
+            <legend>어디에서 쓰세요?</legend>
+            <div class="seg">
+              <label><input type="radio" name="kind" value="가정" checked><span>가정</span></label>
+              <label><input type="radio" name="kind" value="사업장"><span>사업장</span></label>
+              <label><input type="radio" name="kind" value="법인"><span>법인</span></label>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label for="f-message">문의 내용 <span class="opt">(선택)</span></label>
+            <textarea id="f-message" name="message" maxlength="1000" placeholder="쓰던 제품, 원하는 설치 시기처럼 미리 알려 주고 싶은 것"></textarea>
+          </div>
+          <div class="hp" aria-hidden="true"><label>비워 두세요 <input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <label class="consent">
+            <input type="checkbox" name="consent" required>
+            <span>상담 연락을 위해 이름·연락처·문의 내용을 수집·이용하는 데 동의해요. (필수) <a href="privacy.html">개인정보 처리방침</a></span>
+          </label>
+          <button type="submit" class="btn btn-main">상담 신청하기</button>
+          <p class="form-msg err" id="form-msg" role="alert" hidden></p>
+          <p class="note" style="margin-top:14px">계약·결제 정보와 상세 주소는 여기서 받지 않아요. 렌탈 접수는 상담에서 진행해요.</p>
+        </form>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer class="foot" style="margin-top:72px">
+  <div class="wrap">
+    <p>코웨이 본사 세일즈 팀장이 운영하는 렌탈 상담 사이트예요. 코웨이 본사 공식 홈페이지가 아니에요.</p>
+  </div>
+</footer>
+
+<nav class="tabbar" aria-label="빠른 메뉴">
+  <a href="products.html">제품</a>
+  <a href="recommend.html">추천</a>
+  <a href="tel:010-3490-8733">전화</a>
+  <a class="on" href="consult.html">바구니<span class="count-dot" data-basket-count hidden></span></a>
+</nav>
+
+<script src="assets/common.js"></script>
+<script src="assets/consult.js"></script>
+</body>
+</html>
