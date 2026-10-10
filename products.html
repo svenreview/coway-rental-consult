@@ -3,65 +3,54 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>제품·렌탈료 | 코웨이 렌탈 맞춤 상담</title>
-<meta name="description" content="코웨이 정수기·공기청정기·비데·매트리스의 약정별 월 렌탈료 금액표. 원하는 제품을 담아 한 번에 상담을 신청하세요.">
+<title>제품 | 코웨이 렌탈 맞춤 상담</title>
+<meta name="description" content="코웨이 정수기·공기청정기·비데·매트리스의 약정별 월 렌탈료. 원하는 제품을 담아 한 번에 상담을 신청하세요.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
 <header class="nav">
   <div class="wrap nav-inner">
-    <a class="logo" href="index.html"><span class="drop" aria-hidden="true"></span>코웨이 렌탈 맞춤 상담</a>
+    <a class="logo" href="index.html"><b>코웨이</b> 렌탈 맞춤 상담</a>
     <nav class="nav-items" aria-label="주 메뉴">
-      <a href="products.html" aria-current="page">제품·렌탈료</a>
+      <a href="products.html" aria-current="page">제품</a>
       <a href="recommend.html">맞춤 추천</a>
       <a href="index.html#benefit">혜택</a>
-      <a href="index.html#how">상담 안내</a>
     </nav>
     <div class="nav-right">
-      <a class="nav-tel num" href="tel:010-3490-8733">010-3490-8733</a>
-      <a class="btn btn-main btn-small" href="consult.html">무료 상담 신청<span class="count-dot" data-basket-count hidden></span></a>
+      <a class="btn btn-main btn-small" href="consult.html">상담 바구니<span class="count-dot" data-basket-count hidden></span></a>
     </div>
   </div>
 </header>
 
-<main>
-  <div class="wrap page-head">
-    <h1 class="title">제품·렌탈료</h1>
-    <p class="lead">궁금한 제품을 상담 바구니에 담아 두세요. 담은 제품을 한 번에 상담해 드려요.</p>
-    <p class="note" style="margin-top:10px">월 렌탈료는 2026년 9-10월 코웨이 종합카탈로그 기준이에요. 줄이 그어진 금액은 정상가, 굵은 금액은 프로모션 적용가예요. 정수기·공기청정기·비데는 렌탈등록비 10만원이 따로 있어요.</p>
+<main class="wrap">
+  <div class="page-head">
+    <h1>제품</h1>
   </div>
-
   <div class="toolbar">
-    <div class="wrap toolbar-inner">
-      <div class="pills" id="pills" aria-label="제품군"></div>
-      <input class="search" id="search" type="search" placeholder="제품 이름이나 모델명으로 찾기" aria-label="제품 찾기">
-    </div>
+    <div class="chips" id="chips" aria-label="제품군"></div>
+    <input class="search" id="search" type="search" placeholder="제품 이름·모델명" aria-label="제품 찾기">
   </div>
-
-  <div class="wrap plist" id="plist"><p class="empty">제품을 불러오는 중이에요</p></div>
+  <div class="grid plist" id="plist"><p class="empty">불러오는 중</p></div>
 </main>
 
 <div class="basket-bar" data-basket-bar hidden>
-  <span>담은 제품 <span data-basket-count></span></span>
-  <a class="btn btn-main btn-small" href="consult.html">이 제품으로 상담 신청</a>
+  <span>담은 제품 <span data-basket-count></span>개</span>
+  <a class="btn btn-main btn-small" href="consult.html">상담 신청</a>
 </div>
 
-<footer class="foot">
-  <div class="wrap">
-    <p>코웨이 본사 세일즈 팀장이 운영하는 렌탈 상담 사이트예요. 코웨이 본사 공식 홈페이지가 아니에요.</p>
-    <p class="foot-legal">실제 금액과 혜택은 상담 시점의 조건에 따라 달라질 수 있어요. <a href="privacy.html" style="display:inline">개인정보 처리방침</a></p>
-  </div>
+<footer class="wrap foot">
+  <p>월 렌탈료는 2026년 9-10월 카탈로그 기준, 가장 낮은 조건의 금액이에요. 제품을 누르면 약정별 금액표가 열려요. 정수기·공기청정기·비데는 렌탈등록비 10만원이 따로 있어요.</p>
 </footer>
 
 <nav class="tabbar" aria-label="빠른 메뉴">
   <a class="on" href="products.html">제품</a>
   <a href="recommend.html">추천</a>
   <a href="tel:010-3490-8733">전화</a>
-  <a href="consult.html">상담 신청</a>
+  <a href="consult.html">바구니 <span class="count-dot" data-basket-count hidden></span></a>
 </nav>
 
 <script src="assets/common.js"></script>

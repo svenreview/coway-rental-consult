@@ -1,7 +1,7 @@
 // 맞춤 추천: 미리 정해 둔 표(조건 → 제품)로만 추천한다. 금액은 카탈로그 자료에서 가져온다.
 // 추천 표는 초안이다. 운영자가 확인한 뒤 아래 TREE 를 고친다. 제품 이름은 data/catalog-prices.json 의 name 과 똑같이 적는다.
 (async () => {
-  const { won, esc, lowest, condition } = Site;
+  const { esc } = Site;
   const pick = (why, ...names) => ({ why, names });
 
   const TREE = {
@@ -83,21 +83,16 @@
     if (n.result) {
       const found = n.result.names.map(name => products.find(p => p.category === category() && p.name === name)).filter(Boolean);
       const note = `[맞춤 추천] ${answers().join(' / ')} → ${found.map(p => p.name).join(', ')}`;
-      box.innerHTML = `<p class="quiz-progress">${esc(answers().join(' · '))}</p>
-        <h1>이 제품을 먼저 보세요</h1>
-        ${found.map(p => { const low = lowest(p); return `<article class="result">
-          <h2>${esc(p.name)}</h2>
-          <p class="why">${esc(n.result.why)}</p>
-          <div class="price"><div><span>${esc(condition(low))}</span>${low.normal ? `<s class="num">${won(low.normal)}원</s>` : ''}<b class="num">월 ${won(low.price)}원</b>부터</div>${Site.addButton(p)}</div>
-        </article>`; }).join('')}
+      box.innerHTML = `<p class="quiz-progress">${esc(answers().join(' › '))}</p>
+        <h1>${esc(n.result.why)}</h1>
+        <div class="grid">${found.map(p => Site.card(p)).join('')}</div>
         <div class="result-actions">
-          <a class="btn btn-main" href="consult.html?note=${encodeURIComponent(note)}">담은 제품으로 상담 신청</a>
+          <a class="btn btn-main" href="consult.html?note=${encodeURIComponent(note)}">상담 바구니</a>
           <a class="btn btn-line" href="products.html#${encodeURIComponent(category())}">${esc(category())} 전체 보기</a>
         </div>
-        <p class="note" style="margin-top:16px">추천은 고르신 조건으로 미리 정해 둔 표에서 찾은 결과예요. 설치 환경에 따라 달라질 수 있어 상담에서 다시 확인해 드려요.</p>
         ${back}`;
     } else {
-      box.innerHTML = `<p class="quiz-progress">${trail.length ? esc(answers().join(' · ')) : '질문 서너 개면 끝나요'}</p>
+      box.innerHTML = `<p class="quiz-progress">${trail.length ? esc(answers().join(' › ')) : ''}</p>
         <h1>${esc(n.q)}</h1>
         <div class="choices">${n.options.map((o, i) => `<button type="button" data-i="${i}"><b>${esc(o.label)}</b>${o.hint ? `<span>${esc(o.hint)}</span>` : ''}</button>`).join('')}</div>
         ${back}`;
@@ -110,6 +105,6 @@
     if (choice) { trail.push(+choice.dataset.i); render(); window.scrollTo({ top: 0 }); return; }
     if (e.target.closest('[data-back]')) { trail.pop(); render(); }
   });
-  Site.wireAddButtons(box, products);
+  Site.wire(products);
   render();
 })();

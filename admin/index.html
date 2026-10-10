@@ -26,6 +26,10 @@ button,input{font:inherit}
 .top h1{font-size:20px}
 .count{background:var(--butter);border-radius:18px;padding:20px 22px;margin-bottom:14px}
 .count b{display:block;font-size:44px;line-height:1.1}
+.sources{background:var(--white);border:1px solid var(--line);border-radius:18px;margin-bottom:14px}
+.sources summary{cursor:pointer;padding:14px 18px;font-weight:700}
+.sources li{display:flex;justify-content:space-between;gap:12px;padding:10px 18px;border-top:1px solid var(--line);font-size:15px}
+.sources li span{overflow-wrap:anywhere}
 .filters{display:flex;gap:6px;overflow-x:auto;margin-bottom:14px}
 .filters button{white-space:nowrap;min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:var(--white);color:var(--soft);font-weight:700;cursor:pointer}
 .filters button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--white)}
@@ -61,6 +65,10 @@ button,input{font:inherit}
       <button class="btn" type="button" id="logout">나가기</button>
     </div>
     <div class="count">새 문의<b id="new-count">0</b></div>
+    <details class="sources" id="sources" hidden>
+      <summary>유입 경로별 문의 수</summary>
+      <ul id="source-list"></ul>
+    </details>
     <div class="filters" id="filters">
       <button type="button" data-f="전체" aria-pressed="true">전체</button>
       <button type="button" data-f="새 문의" aria-pressed="false">새 문의</button>
@@ -95,8 +103,19 @@ button,input{font:inherit}
   }
   const when = iso => new Date(iso).toLocaleString('ko-KR', { month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 
+  // 유입 경로: UTM 값이 있으면 그대로, 없으면 들어온 사이트, 그것도 없으면 "직접 방문"
+  const sourceOf = r => r.utm_source || r.referrer || '직접 방문';
+  const sourceText = r => r.utm_source
+    ? [r.utm_source, r.utm_medium, r.utm_campaign, r.utm_content, r.utm_term].filter(Boolean).join(' / ')
+    : (r.referrer ? r.referrer + ' 에서 들어옴' : '직접 방문 (UTM 없음)');
+
   function render() {
     $('#new-count').textContent = rows.filter(r => r.status === '새 문의').length;
+    const bySource = {};
+    rows.forEach(r => { const s = sourceOf(r); bySource[s] = (bySource[s] || 0) + 1; });
+    const ranked = Object.entries(bySource).sort((a, b) => b[1] - a[1]);
+    $('#sources').hidden = !rows.length;
+    $('#source-list').innerHTML = ranked.map(([s, n]) => `<li><span>${esc(s)}</span><b>${n}건</b></li>`).join('');
     document.querySelectorAll('#filters button').forEach(b => b.setAttribute('aria-pressed', b.dataset.f === filter));
     const shown = rows.filter(r => filter === '전체' || r.status === filter);
     $('#list').innerHTML = shown.length ? shown.map(r => `<li class="card ${r.status === '새 문의' ? 'new' : ''}">
@@ -105,6 +124,7 @@ button,input{font:inherit}
       <button type="button" class="contact" data-copy="${esc(r.contact)}">${esc(r.contact)}</button>
       ${r.products ? `<div class="block"><span>상담받을 제품</span><p>${esc(r.products)}</p></div>` : ''}
       ${r.message ? `<div class="block"><span>문의 내용</span><p>${esc(r.message)}</p></div>` : ''}
+      <div class="block"><span>유입 경로</span><p>${esc(sourceText(r))}</p></div>
       <div class="states">${STATES.map(s => `<button type="button" data-id="${r.id}" data-status="${s}" aria-pressed="${r.status === s}">${s}</button>`).join('')}</div>
     </li>`).join('') : `<li class="empty">${filter === '전체' ? '아직 들어온 문의가 없어요.' : '이 상태의 문의가 없어요.'}</li>`;
   }

@@ -8,6 +8,12 @@ create table if not exists public.inquiries (
   kind text,
   products text,
   message text,
+  utm_source text,
+  utm_medium text,
+  utm_campaign text,
+  utm_content text,
+  utm_term text,
+  referrer text,
   consent boolean not null default false,
   status text not null default '새 문의' check (status in ('새 문의', '연락함', '완료')),
   updated_at timestamptz

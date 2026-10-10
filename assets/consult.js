@@ -1,6 +1,6 @@
 // 상담 바구니: 담은 제품 보기·빼기, 상담 신청서 보내기
 (async () => {
-  const { won, esc, lowest, condition } = Site;
+  const { won, esc, lowest } = Site;
   const listEl = document.querySelector('#basket-list');
   const emptyEl = document.querySelector('#basket-empty');
   const sumEl = document.querySelector('#basket-sum');
@@ -20,12 +20,13 @@
       const low = p && lowest(p);
       if (low) sum += low.price;
       return `<li class="b-item">
-        <div><small>${esc(i.category)}</small><b>${esc(i.name)}</b>${low ? `<span class="note">${esc(condition(low))}</span>` : ''}</div>
-        <div class="b-side">${low ? `<span class="num">월 <b>${won(low.price)}원</b>부터</span>` : ''}<button type="button" data-remove="${esc(i.key)}" aria-label="${esc(i.name)} 빼기">빼기</button></div>
+        ${p ? Site.thumb(p) : '<div class="thumb"></div>'}
+        <div><small>${esc(i.category)}</small><b>${esc(i.name)}</b>${low ? `<span class="p num">월 ${won(low.price)}원~</span>` : ''}</div>
+        <button type="button" data-remove="${esc(i.key)}" aria-label="${esc(i.name)} 빼기">빼기</button>
       </li>`;
     }).join('');
     sumEl.hidden = items.length < 2 || !sum;
-    sumEl.innerHTML = `담은 제품 ${items.length}개 합계 <b class="num">월 ${won(sum)}원부터</b><span class="note">제품마다 가장 낮은 조건으로 더한 금액이에요. 실제 금액은 상담에서 조건에 맞춰 안내해 드려요.</span>`;
+    sumEl.innerHTML = `<span>${items.length}개 합계</span><b class="num">월 ${won(sum)}원~</b>`;
   }
   listEl.addEventListener('click', e => { const b = e.target.closest('[data-remove]'); if (b) Site.remove(b.dataset.remove); });
   document.addEventListener('basket-change', render);
@@ -46,6 +47,7 @@
       message: form.message.value.trim(),
       consent: form.consent.checked,
       website: form.website.value,
+      utm: Site.utm(),
     };
     const fail = text => { msg.textContent = text; msg.hidden = false; };
     if (!data.name || !data.contact) return fail('이름과 연락처를 적어 주세요.');

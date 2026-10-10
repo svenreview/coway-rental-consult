@@ -25,6 +25,9 @@ module.exports = async (req, res) => {
     message: clip(b.message, 1000),
     consent: b.consent === true,
   };
+  // 유입 경로(UTM): 값이 있을 때만 저장한다
+  const utm = b.utm && typeof b.utm === 'object' ? b.utm : {};
+  for (const k of ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'referrer']) row[k] = clip(utm[k], 120) || null;
   if (!row.name || !row.contact) return res.status(400).json({ error: '이름과 연락처를 적어 주세요' });
   if (!row.consent) return res.status(400).json({ error: '개인정보 수집·이용에 동의해 주세요' });
   const r = await fetch(`${SB_URL}/rest/v1/inquiries`, { method: 'POST', headers: { ...sbHeaders(), Prefer: 'return=minimal' }, body: JSON.stringify(row) });

@@ -7,143 +7,56 @@
 <meta name="description" content="코웨이 정수기·공기청정기·비데·매트리스의 월 렌탈료를 비교하고, 원하는 제품을 담아 한 번에 무료 상담을 신청하세요.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
-<div class="announce">
-  10월 프로모션: 아이콘 정수기 2·3은 약정에 따라 3~12개월 동안 월 렌탈료 1만원
-  <a href="#benefit">혜택 보기</a>
-</div>
-
 <header class="nav">
   <div class="wrap nav-inner">
-    <a class="logo" href="index.html"><span class="drop" aria-hidden="true"></span>코웨이 렌탈 맞춤 상담</a>
+    <a class="logo" href="index.html"><b>코웨이</b> 렌탈 맞춤 상담</a>
     <nav class="nav-items" aria-label="주 메뉴">
-      <a href="products.html">제품·렌탈료</a>
+      <a href="products.html">제품</a>
       <a href="recommend.html">맞춤 추천</a>
       <a href="#benefit">혜택</a>
-      <a href="#how">상담 안내</a>
     </nav>
     <div class="nav-right">
-      <a class="nav-tel num" href="tel:010-3490-8733">010-3490-8733</a>
-      <a class="btn btn-main btn-small" href="consult.html">무료 상담 신청<span class="count-dot" data-basket-count hidden></span></a>
+      <a class="btn btn-main btn-small" href="consult.html">상담 바구니<span class="count-dot" data-basket-count hidden></span></a>
     </div>
   </div>
 </header>
 
 <main>
 
-<section class="hero">
-  <div class="wrap hero-grid">
-    <div>
-      <h1 class="display">마음에 드는 제품을 담아 두면, 한 번에 상담해 드려요</h1>
-      <p class="lead">정수기부터 매트리스까지 월 렌탈료를 직접 비교해 보세요. 고르기 어려우면 질문 몇 개로 맞는 제품을 찾아 드려요.</p>
-      <div class="hero-cta">
-        <a class="btn btn-main" href="consult.html">무료 상담 신청</a>
-        <a class="btn btn-line" href="recommend.html">30초 맞춤 추천</a>
-      </div>
-      <p class="hero-facts">금액은 2026년 9-10월 코웨이 종합카탈로그 기준이에요.</p>
-    </div>
-
-    <div class="finder" aria-label="주력 제품과 신제품">
-      <div class="finder-tabs" id="finder-tabs" role="tablist" aria-label="제품군"></div>
-      <ul class="finder-list" id="finder-list"><li class="empty">제품을 불러오는 중이에요</li></ul>
-      <div class="finder-foot">
-        <span>가장 낮은 월 렌탈료 기준</span>
-        <a id="finder-more" href="products.html">전체 보기</a>
-      </div>
-    </div>
+<section class="wrap hero">
+  <h1>제품을 담아 두면<br>한 번에 상담해 드려요</h1>
+  <div class="hero-cta">
+    <a class="btn btn-main" href="products.html">제품 보기</a>
+    <a class="btn btn-line" href="recommend.html">30초 맞춤 추천</a>
   </div>
 </section>
 
-<section class="band band-mist" aria-label="누구에게 맞나요">
-  <div class="wrap">
-    <div class="who">
-      <a href="recommend.html"><b>집에서 쓸 거예요</b><span>1~4인 가구가 쓰는 정수기·공기청정기·비데·매트리스</span></a>
-      <a href="products.html#정수기"><b>가게·매장에 둘 거예요</b><span>카페·식당·학원에서 여러 사람이 쓰는 스탠드형</span></a>
-      <a href="consult.html"><b>회사·기관 담당자예요</b><span>여러 대 견적이 필요하면 상담에서 바로 받아 보세요</span></a>
-    </div>
-  </div>
+<section class="wrap sec" aria-labelledby="featured-title">
+  <h2 class="sec-title" id="featured-title">추천 제품</h2>
+  <div class="chips" id="chips" aria-label="제품군"></div>
+  <div class="grid" id="featured" style="margin-top:20px"><p class="empty">불러오는 중</p></div>
+  <div class="more"><a class="btn btn-line" id="more" href="products.html">전체 보기</a></div>
 </section>
 
-<section class="band" aria-labelledby="cats-title">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2 class="title" id="cats-title">네 가지 제품군, 금액표까지 한곳에서</h2>
-      <p class="lead">제품마다 약정 기간과 관리 방식에 따른 월 렌탈료를 볼 수 있어요.</p>
-    </div>
-    <div class="cats">
-      <a class="cat" href="products.html#정수기" data-cat-card="정수기"><h3>정수기</h3><span class="count"></span><p class="from"></p></a>
-      <a class="cat" href="products.html#공기청정기" data-cat-card="공기청정기"><h3>공기청정기</h3><span class="count"></span><p class="from"></p></a>
-      <a class="cat" href="products.html#비데" data-cat-card="비데"><h3>비데</h3><span class="count"></span><p class="from"></p></a>
-      <a class="cat" href="products.html#매트리스" data-cat-card="매트리스"><h3>매트리스</h3><span class="count"></span><p class="from"></p></a>
-    </div>
-  </div>
-</section>
-
-<section class="band band-mist" id="how" aria-labelledby="how-title">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2 class="title" id="how-title">상담 전에 많이 물어보시는 것</h2>
-    </div>
-    <div class="answers">
-      <div class="answer">
-        <h3>월 렌탈료는 얼마인가요?</h3>
-        <p>약정 기간이 길수록, 방문관리보다 자가관리일수록 낮아져요. 제품별 금액표에서 조건마다 금액을 확인할 수 있어요.</p>
-      </div>
-      <div class="answer">
-        <h3>설치와 관리는 어떻게 되나요?</h3>
-        <p>제품에 따라 전문가가 정기적으로 방문하는 방문관리와, 소모품을 받아 직접 하는 자가관리 중에서 골라요. 설치 가능 여부와 날짜는 상담에서 안내해 드려요.</p>
-      </div>
-      <div class="answer">
-        <h3>지금 받을 수 있는 혜택은요?</h3>
-        <p>이달의 프로모션과 제휴카드 할인이 있어요. 쓰던 제품과 약정 기간에 따라 달라져서, 상담에서 받을 수 있는 혜택을 골라 드려요.</p>
-      </div>
-    </div>
-    <ol class="steps" aria-label="상담 순서">
-      <li><b>제품 담기</b><span>궁금한 제품을 상담 바구니에 담아요</span></li>
-      <li><b>상담 신청</b><span>이름과 연락처만 남겨요</span></li>
-      <li><b>전화·카카오톡 상담</b><span>조건에 맞는 금액과 혜택을 안내받아요</span></li>
-      <li><b>렌탈 접수</b><span>계약과 설치 일정은 상담에서 진행해요</span></li>
-    </ol>
-  </div>
-</section>
-
-<section class="band deep" id="benefit" aria-labelledby="benefit-title">
-  <div class="wrap">
-    <div class="sec-head">
-      <h2 class="title" id="benefit-title">2026년 10월에 받을 수 있는 혜택</h2>
-      <p class="lead">같은 제품이라도 약정 기간, 지금 쓰는 제품, 신규·재렌탈 여부에 따라 달라져요.</p>
-    </div>
+<section class="deep" id="benefit" aria-labelledby="benefit-title">
+  <div class="wrap sec">
+    <h2 class="sec-title" id="benefit-title">10월 혜택</h2>
     <div class="perks">
-      <div class="perk">
-        <h3>월 렌탈료 1만원</h3>
-        <p class="who-for">아이콘 정수기 2·3, 공기청정기·살균비데 대상 제품</p>
-        <p>약정에 따라 3~12개월 동안 렌탈료가 1만원으로 청구돼요. 1만원을 깎아 주는 것이 아니에요.</p>
-      </div>
-      <div class="perk">
-        <h3>렌탈료 반값</h3>
-        <p class="who-for">아이콘 프로, 얼음정수기, 스탠드 정수기</p>
-        <p>약정 기간에 따라 3~12개월 동안 렌탈료의 절반만 내요.</p>
-      </div>
-      <div class="perk">
-        <h3>타사보상</h3>
-        <p class="who-for">다른 회사 정수기·공기청정기·비데를 쓰는 분</p>
-        <p>신규 렌탈 시 약정 할인가에서 10%를 더 할인해요. 쓰던 제품은 상담 전에 떼지 마세요.</p>
-      </div>
-      <div class="perk">
-        <h3>제휴카드 할인</h3>
-        <p class="who-for">카드 전월 실적에 따라</p>
-        <p>렌탈료를 제휴카드로 자동이체하면 매달 청구할인을 받아요. 10월 프로모션 적용 시 최대 월 4만원.</p>
-      </div>
+      <div class="perk"><h3>월 1만원</h3><p>아이콘 정수기 2·3 등, 약정별 3~12개월</p></div>
+      <div class="perk"><h3>렌탈료 반값</h3><p>얼음·스탠드 정수기, 약정별 3~12개월</p></div>
+      <div class="perk"><h3>타사보상 10%</h3><p>다른 회사 제품을 쓰는 분</p></div>
+      <div class="perk"><h3>제휴카드</h3><p>프로모션 적용 시 최대 월 4만원</p></div>
     </div>
     <details class="cards-box">
-      <summary>제휴카드별 할인 금액 보기</summary>
+      <summary>제휴카드별 할인 금액</summary>
       <div class="scroll-x">
         <table class="cards-table num">
-          <thead><tr><th>카드</th><th>전월 실적</th><th>기본 월 할인</th><th>10월 프로모션 적용 시</th></tr></thead>
+          <thead><tr><th>카드</th><th>전월 실적</th><th>기본 월 할인</th><th>10월 프로모션</th></tr></thead>
           <tbody>
             <tr><td>코웨이 신한카드</td><td>30만 / 70만 / 150만</td><td>13,000 / 17,000 / 30,000</td><td>20,000 / 21,000 / 30,000</td></tr>
             <tr><td>코웨이 ICON 우리카드</td><td>30만 / 80만 / 150만</td><td>13,000 / 17,000 / 23,000</td><td>21,000 / 24,000 / 30,000</td></tr>
@@ -155,71 +68,38 @@
           </tbody>
         </table>
       </div>
-      <p class="note">프로모션 금액은 최근 6개월 동안 해당 카드사 이용 이력이 없는 신규 발급 고객이 대상이에요. 실적 제외 항목, 연회비, 발급 조건은 카드사 기준에 따라 달라요.</p>
     </details>
-    <p class="note" style="margin-top:18px">2026년 10월 31일까지의 프로모션 기준이에요. 제품·약정·재고에 따라 조건이 달라지거나 일찍 끝날 수 있어요.</p>
+    <p class="note">2026년 10월 31일까지. 제품·약정·카드 이용 이력에 따라 달라져요.</p>
   </div>
 </section>
 
-<section class="band" aria-labelledby="person-title">
-  <div class="wrap person">
-    <div>
-      <h2 class="title" id="person-title">코웨이 본사 세일즈 팀장이 직접 상담해요</h2>
-      <p class="lead" style="margin-top:12px">제품을 직접 써 보고 쓴 글과 실사 사진은 블로그에서 볼 수 있어요.</p>
-    </div>
-    <div class="person-links">
-      <a href="https://coway.blogpro.so/" target="_blank" rel="noopener">제품 리뷰·정보 블로그 <span>coway.blogpro.so</span></a>
-      <a href="https://blog.naver.com/dreamket" target="_blank" rel="noopener">네이버 블로그 <span>blog.naver.com/dreamket</span></a>
-    </div>
-  </div>
-  <!-- 후기 자리: 실제 후기가 생기면 여기에 넣는다. 지어내지 않는다. -->
-</section>
-
-<section class="band consult" aria-labelledby="consult-title">
-  <div class="wrap consult-cta">
-    <div>
-      <h2 class="title" id="consult-title">담은 제품, 한 번에 상담받으세요</h2>
-      <p class="lead" style="margin-top:12px">이름과 연락처만 남기면 확인 후 연락드려요. 제품을 정하지 않았어도 괜찮아요.</p>
-    </div>
-    <div class="consult-direct">
-      <a class="btn btn-main" href="consult.html">상담 바구니로 가기<span class="count-dot" data-basket-count hidden></span></a>
-      <a class="btn btn-line num" href="tel:010-3490-8733">전화 010-3490-8733</a>
-      <a class="btn btn-line" href="https://open.kakao.com/o/st6dXvDg" target="_blank" rel="noopener">카카오톡으로 물어보기</a>
+<section class="wrap sec">
+  <div class="cta">
+    <h2>궁금한 제품, 한 번에 상담받으세요</h2>
+    <div class="cta-btns">
+      <a class="btn btn-main" href="consult.html">상담 바구니<span class="count-dot" data-basket-count hidden></span></a>
+      <a class="btn btn-line num" href="tel:010-3490-8733">010-3490-8733</a>
+      <a class="btn btn-line" href="https://open.kakao.com/o/st6dXvDg" target="_blank" rel="noopener">카카오톡</a>
     </div>
   </div>
 </section>
 
 </main>
 
-<footer class="foot">
-  <div class="wrap">
-    <div class="foot-grid">
-      <div>
-        <a class="logo" href="index.html"><span class="drop" aria-hidden="true"></span>코웨이 렌탈 맞춤 상담</a>
-        <p style="margin-top:10px;max-width:30em">코웨이 본사 세일즈 팀장이 운영하는 렌탈 상담 사이트예요. 코웨이 본사 공식 홈페이지가 아니에요.</p>
-      </div>
-      <div>
-        <h4>둘러보기</h4>
-        <a href="products.html">제품·렌탈료</a>
-        <a href="recommend.html">맞춤 추천</a>
-        <a href="privacy.html">개인정보 처리방침</a>
-      </div>
-      <div>
-        <h4>연락</h4>
-        <a class="num" href="tel:010-3490-8733">010-3490-8733</a>
-        <a href="https://open.kakao.com/o/st6dXvDg" target="_blank" rel="noopener">카카오톡 오픈채팅</a>
-        <a href="mailto:dreamket@naver.com">dreamket@naver.com</a>
-      </div>
-    </div>
-    <p class="foot-legal">렌탈료는 2026년 9-10월 코웨이 종합카탈로그 기준이며, 실제 금액과 혜택은 상담 시점의 조건에 따라 달라질 수 있어요.</p>
+<footer class="wrap foot">
+  <div class="foot-links">
+    <a href="https://coway.blogpro.so/" target="_blank" rel="noopener">블로그</a>
+    <a href="mailto:dreamket@naver.com">dreamket@naver.com</a>
+    <a href="privacy.html">개인정보 처리방침</a>
   </div>
+  <p>코웨이 본사 세일즈 팀장이 운영하는 상담 사이트예요. 코웨이 공식 홈페이지가 아니에요. 금액은 2026년 9-10월 카탈로그 기준이며 상담 시점에 달라질 수 있어요.</p>
 </footer>
 
 <nav class="tabbar" aria-label="빠른 메뉴">
   <a href="products.html">제품</a>
   <a href="recommend.html">추천</a>
   <a href="tel:010-3490-8733">전화</a>
-  <a class="on" href="consult.html">상담 신청<span class="count-dot" data-basket-count hidden></span></a>
+  <a href="consult.html">바구니 <span class="count-dot" data-basket-count hidden></span></a>
 </nav>
 
 <script src="assets/common.js"></script>

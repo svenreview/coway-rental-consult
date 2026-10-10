@@ -1,27 +1,43 @@
-// 모든 페이지가 함께 쓰는 것: 금액 자료 읽기, 상담 바구니, 메인에 보여 줄 제품 목록
+// 모든 페이지가 함께 쓰는 것: 금액 자료 읽기, 제품 카드, 금액표 창, 상담 바구니
 const Site = (() => {
   // 메인에 보여 줄 주력·신제품. 이름은 data/catalog-prices.json 의 name 과 똑같이 적는다.
   // 두 번째 칸에 '신제품'을 적으면 꼬리표가 붙는다.
   const FEATURED = {
     '정수기': [['아이콘 정수기 3'], ['아이콘 얼음정수기 미니', '신제품'], ['카페 얼음정수기', '신제품'], ['스위치 빌트인']],
-    '공기청정기': [['노블 공기청정기2'], ['스퀘어핏 공기청정기'], ['히티브 온풍 공기청정기']],
-    '비데': [['프라임 비데'], ['스타일 비데 플러스'], ['더매너 비데 플러스']],
-    '매트리스': [['비렉스 스마트 매트리스 S8+', '신제품'], ['시그니처 파이어쉴드 컴포트', '신제품'], ['하이브리드 4']],
+    '공기청정기': [['노블 공기청정기2'], ['스퀘어핏 공기청정기'], ['히티브 온풍 공기청정기'], ['아이콘 공기청정기']],
+    '비데': [['프라임 비데'], ['스타일 비데 플러스'], ['더매너 비데 플러스'], ['슬리믹 비데']],
+    '매트리스': [['비렉스 스마트 매트리스 S8+', '신제품'], ['시그니처 파이어쉴드 컴포트', '신제품'], ['하이브리드 4'], ['컴팩트 메모리폼']],
   };
   const CATEGORIES = ['정수기', '공기청정기', '비데', '매트리스'];
   const BASKET_KEY = 'consult-basket-v1';
+  const UTM_KEY = 'utm-v1';
+  const UTM_FIELDS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
+
+  // 유입 경로(UTM): 주소에 utm_ 값이 붙어 들어오면 기억해 뒀다가 상담 신청 때 함께 보낸다.
+  // 예) https://내사이트/?utm_source=naver&utm_medium=blog&utm_campaign=10월
+  try {
+    const q = new URLSearchParams(location.search);
+    if (UTM_FIELDS.some(k => q.get(k))) {
+      const u = {};
+      UTM_FIELDS.forEach(k => { const v = q.get(k); if (v) u[k] = v.slice(0, 120); });
+      localStorage.setItem(UTM_KEY, JSON.stringify(u));
+    } else if (!localStorage.getItem(UTM_KEY) && document.referrer && new URL(document.referrer).host !== location.host) {
+      localStorage.setItem(UTM_KEY, JSON.stringify({ referrer: new URL(document.referrer).host }));
+    }
+  } catch {}
+  const utm = () => { try { return JSON.parse(localStorage.getItem(UTM_KEY)) || {}; } catch { return {}; } };
 
   let cache;
-  const load = () => cache || (cache = fetch('data/catalog-prices.json').then(r => {
-    if (!r.ok) throw new Error('금액 자료를 불러오지 못했어요');
-    return r.json();
-  }).then(group));
+  const load = () => cache || (cache = Promise.all([
+    fetch('data/catalog-prices.json').then(r => { if (!r.ok) throw new Error('제품을 불러오지 못했어요'); return r.json(); }),
+    fetch('data/images.json').then(r => r.ok ? r.json() : {}).catch(() => ({})), // 사진이 없어도 사이트는 동작한다
+  ]).then(([rows, images]) => group(rows, images)));
 
-  function group(rows) {
+  function group(rows, images) {
     const map = new Map();
     for (const r of rows) {
       const key = r.category + '|' + r.name;
-      if (!map.has(key)) map.set(key, { key, category: r.category, name: r.name, variants: [] });
+      if (!map.has(key)) map.set(key, { key, category: r.category, name: r.name, img: images[key] || '', variants: [] });
       map.get(key).variants.push(r);
     }
     return [...map.values()];
@@ -43,8 +59,10 @@ const Site = (() => {
     return best;
   }
   const condition = b => [b.years + '년 약정', b.variant, b.care].filter(Boolean).join(', ');
+  const modelLabel = p => { const m = [...new Set(p.variants.map(v => v.model).filter(Boolean))]; return m.length > 1 ? m[0] + ' 외' : (m[0] || ''); };
+  const thumb = (p, tag) => `<div class="thumb">${p.img ? `<img src="${esc(p.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'${esc(p.category)}'}))">` : `<span class="ph">${esc(p.category)}</span>`}${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</div>`;
 
-  // 상담 바구니 (이 브라우저에만 저장된다)
+  // ── 상담 바구니 (이 브라우저에만 저장된다) ──
   function basket() {
     try { return JSON.parse(localStorage.getItem(BASKET_KEY)) || []; } catch { return []; }
   }
@@ -62,36 +80,69 @@ const Site = (() => {
   const remove = key => saveBasket(basket().filter(i => i.key !== key));
   const clear = () => saveBasket([]);
 
-  // 담기 버튼: 누르면 담고, 다시 누르면 뺀다
-  function addButton(product, extraClass = '') {
+  const addLabel = on => on ? '담았어요' : '바구니 담기';
+  function addButton(product, cls = 'btn-small') {
     const on = inBasket(product.key);
-    return `<button type="button" class="btn btn-small ${on ? 'btn-main' : 'btn-line'} ${extraClass}" data-add="${esc(product.key)}" aria-pressed="${on}">${on ? '담았어요' : '바구니에 담기'}</button>`;
+    return `<button type="button" class="btn btn-line btn-add ${cls}" data-add="${esc(product.key)}" aria-pressed="${on}">${addLabel(on)}</button>`;
   }
-  function wireAddButtons(root, products) {
-    root.addEventListener('click', e => {
-      const btn = e.target.closest('[data-add]');
-      if (!btn) return;
-      const product = products.find(p => p.key === btn.dataset.add);
-      if (product) toggle(product);
-    });
-  }
-  function refreshAddButtons() {
-    document.querySelectorAll('[data-add]').forEach(btn => {
-      const on = inBasket(btn.dataset.add);
-      btn.setAttribute('aria-pressed', on);
-      btn.classList.toggle('btn-main', on);
-      btn.classList.toggle('btn-line', !on);
-      btn.textContent = on ? '담았어요' : '바구니에 담기';
-    });
-  }
-  function refreshCounts() {
-    const n = basket().length;
-    document.querySelectorAll('[data-basket-count]').forEach(el => { el.textContent = n ? n + '개' : ''; el.hidden = !n; });
-    document.querySelectorAll('[data-basket-bar]').forEach(el => { el.hidden = !n; });
-  }
-  document.addEventListener('basket-change', () => { refreshCounts(); refreshAddButtons(); });
-  window.addEventListener('storage', () => { refreshCounts(); refreshAddButtons(); });
-  document.addEventListener('DOMContentLoaded', refreshCounts);
 
-  return { FEATURED, CATEGORIES, load, won, esc, lowest, condition, basket, inBasket, toggle, remove, clear, addButton, wireAddButtons, refreshCounts };
+  // ── 제품 카드 ──
+  function card(p, tag) {
+    const low = lowest(p);
+    return `<article class="card">
+      <button type="button" class="card-open" data-open="${esc(p.key)}" aria-label="${esc(p.name)} 금액표 보기">
+        ${thumb(p, tag)}
+        <span class="model">${esc(modelLabel(p))}</span>
+        <h3>${esc(p.name)}</h3>
+        <p class="price num">${low.normal ? `<s>${won(low.normal)}</s>` : ''}월 <b>${won(low.price)}</b>원~</p>
+      </button>
+      ${addButton(p)}
+    </article>`;
+  }
+
+  // ── 금액표 창 ──
+  let sheet;
+  function openSheet(p) {
+    if (!sheet) {
+      sheet = document.createElement('dialog');
+      sheet.className = 'sheet';
+      document.body.appendChild(sheet);
+      sheet.addEventListener('click', e => { if (e.target === sheet || e.target.closest('[data-close]')) sheet.close(); });
+    }
+    const years = [...new Set(p.variants.flatMap(v => v.prices.map(x => x.years)))].sort();
+    const cell = x => !x ? '—' : x.promo != null ? `<s>${won(x.rental)}</s><b>${won(x.promo)}</b>` : `<b>${won(x.rental)}</b>`;
+    sheet.innerHTML = `<div class="sheet-in">
+      <div class="sheet-head"><h2>${esc(p.name)}</h2><button type="button" class="sheet-close" data-close aria-label="닫기">×</button></div>
+      ${p.img ? `<div class="sheet-img"><img src="${esc(p.img)}" alt=""></div>` : ''}
+      <div class="scroll-x"><table class="ptable num">
+        <thead><tr><th>모델</th><th>관리</th>${years.map(y => `<th>${y}년</th>`).join('')}</tr></thead>
+        <tbody>${p.variants.map(v => `<tr><td>${esc(v.model || '—')}<span class="sub">${esc(v.variant || '')}</span></td><td>${esc([v.care, v.cycle].filter(Boolean).join(' ') || '—')}</td>${years.map(y => `<td>${cell(v.prices.find(x => x.years === y))}</td>`).join('')}</tr>`).join('')}</tbody>
+      </table></div>
+      <p class="note" style="margin-top:12px">월 렌탈료(원), 약정 기간별. 2026년 9-10월 카탈로그 기준.</p>
+    </div>
+    <div class="sheet-foot">${addButton(p, '')}<a class="btn btn-main" href="consult.html">상담 바구니</a></div>`;
+    sheet.showModal();
+  }
+
+  // 카드가 들어 있는 곳에 한 번 걸어 두면 담기와 금액표 열기가 동작한다
+  function wire(products) {
+    if (wire.done) return; wire.done = true;
+    document.addEventListener('click', e => {
+      const add = e.target.closest('[data-add]');
+      if (add) { const p = products.find(x => x.key === add.dataset.add); if (p) toggle(p); return; }
+      const open = e.target.closest('[data-open]');
+      if (open) { const p = products.find(x => x.key === open.dataset.open); if (p) openSheet(p); }
+    });
+  }
+  function refresh() {
+    const n = basket().length;
+    document.querySelectorAll('[data-basket-count]').forEach(el => { el.textContent = n || ''; el.hidden = !n; });
+    document.querySelectorAll('[data-basket-bar]').forEach(el => { el.hidden = !n; });
+    document.querySelectorAll('[data-add]').forEach(btn => { const on = inBasket(btn.dataset.add); btn.setAttribute('aria-pressed', on); btn.textContent = addLabel(on); });
+  }
+  document.addEventListener('basket-change', refresh);
+  window.addEventListener('storage', refresh);
+  document.addEventListener('DOMContentLoaded', refresh);
+
+  return { FEATURED, CATEGORIES, load, won, esc, lowest, condition, thumb, card, wire, basket, remove, clear, addButton, utm };
 })();
