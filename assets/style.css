@@ -78,6 +78,8 @@ button,input,textarea,select{font:inherit}
 .card-open{display:block;text-align:left;background:none;border:0;padding:0;cursor:pointer;color:inherit;width:100%}
 .thumb{position:relative;aspect-ratio:1200/630;border-radius:var(--r-m);background:var(--tile);overflow:hidden;display:grid;place-items:center}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb img.fit{object-fit:contain;padding:8px}
+.sheet-img img.fit{max-height:260px;object-fit:contain;padding:12px}
 .thumb .ph{font-size:14px;font-weight:700;color:var(--faint)}
 .card-open:hover .thumb{outline:1px solid var(--ink)}
 .tag{position:absolute;right:8px;top:8px;background:var(--ink);color:#fff;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px}
@@ -196,6 +198,10 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .seg span{display:block;text-align:center;padding:11px 4px;border:1px solid var(--line);border-radius:var(--r-s);cursor:pointer;font-size:15px}
 .seg input:checked+span{border-color:var(--blue);background:var(--blue-soft);color:var(--blue);font-weight:700}
 .seg input:focus-visible+span{outline:3px solid var(--blue);outline-offset:2px}
+.privacy-box{margin:4px 0 12px;padding:12px 14px;background:var(--tile);border-radius:var(--r-s);font-size:13px;color:var(--soft)}
+.privacy-box div{display:grid;grid-template-columns:64px 1fr;gap:8px;padding:2px 0}
+.privacy-box dt{font-weight:700;color:var(--ink)}
+.privacy-box dd{margin:0}
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--soft);margin:4px 0 16px}
 .consent input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--blue)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}

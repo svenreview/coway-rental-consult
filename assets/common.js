@@ -60,7 +60,9 @@ const Site = (() => {
   }
   const condition = b => [b.years + '년 약정', b.variant, b.care].filter(Boolean).join(', ');
   const modelLabel = p => { const m = [...new Set(p.variants.map(v => v.model).filter(Boolean))]; return m.length > 1 ? m[0] + ' 외' : (m[0] || ''); };
-  const thumb = (p, tag) => `<div class="thumb">${p.img ? `<img src="${esc(p.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'${esc(p.category)}'}))">` : `<span class="ph">${esc(p.category)}</span>`}${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</div>`;
+  // 블로그 배너는 칸을 꽉 채우고, 제품만 찍힌 사진은 잘리지 않게 칸 안에 맞춘다
+  const fit = p => /cowaystatic/.test(p.img) ? ' class="fit"' : '';
+  const thumb = (p, tag) => `<div class="thumb">${p.img ? `<img${fit(p)} src="${esc(p.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'${esc(p.category)}'}))">` : `<span class="ph">${esc(p.category)}</span>`}${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</div>`;
 
   // ── 상담 바구니 (이 브라우저에만 저장된다) ──
   function basket() {
@@ -113,7 +115,7 @@ const Site = (() => {
     const cell = x => !x ? '—' : x.promo != null ? `<s>${won(x.rental)}</s><b>${won(x.promo)}</b>` : `<b>${won(x.rental)}</b>`;
     sheet.innerHTML = `<div class="sheet-in">
       <div class="sheet-head"><h2>${esc(p.name)}</h2><button type="button" class="sheet-close" data-close aria-label="닫기">×</button></div>
-      ${p.img ? `<div class="sheet-img"><img src="${esc(p.img)}" alt=""></div>` : ''}
+      ${p.img ? `<div class="sheet-img"><img${fit(p)} src="${esc(p.img)}" alt=""></div>` : ''}
       <div class="scroll-x"><table class="ptable num">
         <thead><tr><th>모델</th><th>관리</th>${years.map(y => `<th>${y}년</th>`).join('')}</tr></thead>
         <tbody>${p.variants.map(v => `<tr><td>${esc(v.model || '—')}<span class="sub">${esc(v.variant || '')}</span></td><td>${esc([v.care, v.cycle].filter(Boolean).join(' ') || '—')}</td>${years.map(y => `<td>${cell(v.prices.find(x => x.years === y))}</td>`).join('')}</tr>`).join('')}</tbody>

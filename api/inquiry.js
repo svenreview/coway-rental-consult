@@ -32,5 +32,31 @@ module.exports = async (req, res) => {
   if (!row.consent) return res.status(400).json({ error: '개인정보 수집·이용에 동의해 주세요' });
   const r = await fetch(`${SB_URL}/rest/v1/inquiries`, { method: 'POST', headers: { ...sbHeaders(), Prefer: 'return=minimal' }, body: JSON.stringify(row) });
   if (!r.ok) return res.status(500).json({ error: '저장하지 못했어요. 잠시 뒤 다시 시도해 주세요.' });
+  await notify(row, req.headers.host).catch(() => {}); // 알림이 실패해도 접수는 된 것으로 본다
   return res.status(200).json({ ok: true });
 };
+
+// 새 문의 알림 메일. RESEND_API_KEY 와 NOTIFY_EMAIL 환경변수가 둘 다 있을 때만 보낸다.
+// 연락처와 문의 내용은 메일에 넣지 않는다. 관리자 페이지에서 확인한다.
+async function notify(row, host) {
+  const key = process.env.RESEND_API_KEY;
+  const to = process.env.NOTIFY_EMAIL;
+  if (!key || !to) return;
+  const source = row.utm_source ? [row.utm_source, row.utm_medium, row.utm_campaign].filter(Boolean).join(' / ') : (row.referrer || '직접 방문');
+  const text = [
+    '새 상담 신청이 들어왔어요.',
+    '',
+    `이름: ${row.name}`,
+    `사용 장소: ${row.kind || '-'}`,
+    `상담받을 제품: ${row.products ? row.products.replace(/\n/g, ', ') : '(제품을 정하지 않음)'}`,
+    `유입 경로: ${source}`,
+    '',
+    `연락처와 문의 내용은 관리자 페이지에서 확인하세요: https://${host}/admin`,
+  ].join('\n');
+  await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ from: process.env.NOTIFY_FROM || '코웨이 상담 알림 <onboarding@resend.dev>', to: [to], subject: `새 상담 신청: ${row.name}`, text }),
+    signal: AbortSignal.timeout(5000),
+  });
+}
