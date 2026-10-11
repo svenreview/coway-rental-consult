@@ -9,6 +9,15 @@ const Site = (() => {
     '매트리스': [['비렉스 스마트 매트리스 S8+', '신제품'], ['시그니처 파이어쉴드 컴포트', '신제품'], ['하이브리드 4'], ['컴팩트 메모리폼']],
   };
   const CATEGORIES = ['정수기', '공기청정기', '비데', '매트리스'];
+  // 매트리스 종류: 카탈로그 목차의 분류를 따른다. 이름은 data/catalog-prices.json 의 name 과 똑같이 적는다.
+  const MATTRESS_TYPES = {
+    '스마트': ['비렉스 스마트 매트리스 S8+', '비렉스 스마트 매트리스 S6+'],
+    '스프링 9존': ['시그니처 파이어쉴드 컴포트', '시그니처 파이어쉴드', '시그니처 컴포트', '시그니처'],
+    '스프링 7존': ['하이브리드 4', '하이브리드 3', '루네어', '더블 사이드'],
+    '스프링 모노존': ['더블체인지', '모디', '엘리트'],
+    '메모리폼': ['컴팩트 메모리폼'],
+    '프레임 일체형': ['원바디 2'],
+  };
   const BASKET_KEY = 'consult-basket-v1';
   const UTM_KEY = 'utm-v1';
   const UTM_FIELDS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'];
@@ -37,7 +46,9 @@ const Site = (() => {
     const map = new Map();
     for (const r of rows) {
       const key = r.category + '|' + r.name;
-      if (!map.has(key)) map.set(key, { key, category: r.category, name: r.name, img: images[key] || '', variants: [] });
+      // 사진 자료는 두 가지 모양이다: 주소만 있는 것(블로그 배너), 주소와 제품이 있는 자리(box)가 함께 있는 것(제품 사진)
+      const im = images[key];
+      if (!map.has(key)) map.set(key, { key, category: r.category, name: r.name, img: im ? (im.src || im) : '', box: im && im.box, variants: [] });
       map.get(key).variants.push(r);
     }
     return [...map.values()];
@@ -60,9 +71,15 @@ const Site = (() => {
   }
   const condition = b => [b.years + '년 약정', b.variant, b.care].filter(Boolean).join(', ');
   const modelLabel = p => { const m = [...new Set(p.variants.map(v => v.model).filter(Boolean))]; return m.length > 1 ? m[0] + ' 외' : (m[0] || ''); };
-  // 블로그 배너는 칸을 꽉 채우고, 제품만 찍힌 사진은 잘리지 않게 칸 안에 맞춘다
-  const fit = p => /cowaystatic/.test(p.img) ? ' class="fit"' : '';
-  const thumb = (p, tag) => `<div class="thumb">${p.img ? `<img${fit(p)} src="${esc(p.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'${esc(p.category)}'}))">` : `<span class="ph">${esc(p.category)}</span>`}${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</div>`;
+  // 제품 사진은 제품이 있는 자리만 잘라 칸 가운데에 크게 그린다(SVG). 블로그 배너는 칸에 맞춰 그대로 보여 준다.
+  const picture = p => {
+    if (p.box) {
+      const [x, y, w, h, fullW, fullH] = p.box;
+      return `<svg class="shot" viewBox="${x} ${y} ${w} ${h}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${esc(p.name)}"><image href="${esc(p.img)}" width="${fullW}" height="${fullH}"/></svg>`;
+    }
+    return `<img class="banner" src="${esc(p.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'${esc(p.category)}'}))">`;
+  };
+  const thumb = (p, tag) => `<div class="thumb">${p.img ? picture(p) : `<span class="ph">${esc(p.category)}</span>`}${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</div>`;
 
   // ── 장바구니 (이 브라우저에만 저장된다) ──
   function basket() {
@@ -115,7 +132,7 @@ const Site = (() => {
     const cell = x => !x ? '—' : x.promo != null ? `<s>${won(x.rental)}</s><b>${won(x.promo)}</b>` : `<b>${won(x.rental)}</b>`;
     sheet.innerHTML = `<div class="sheet-in">
       <div class="sheet-head"><h2>${esc(p.name)}</h2><button type="button" class="sheet-close" data-close aria-label="닫기">×</button></div>
-      ${p.img ? `<div class="sheet-img"><img${fit(p)} src="${esc(p.img)}" alt=""></div>` : ''}
+      ${p.img ? `<div class="sheet-img${p.box ? ' is-shot' : ''}">${picture(p)}</div>` : ''}
       <div class="scroll-x"><table class="ptable num">
         <thead><tr><th>모델</th><th>관리</th>${years.map(y => `<th>${y}년</th>`).join('')}</tr></thead>
         <tbody>${p.variants.map(v => `<tr><td>${esc(v.model || '—')}<span class="sub">${esc(v.variant || '')}</span></td><td>${esc([v.care, v.cycle].filter(Boolean).join(' ') || '—')}</td>${years.map(y => `<td>${cell(v.prices.find(x => x.years === y))}</td>`).join('')}</tr>`).join('')}</tbody>
@@ -154,5 +171,5 @@ const Site = (() => {
   window.addEventListener('storage', refresh);
   document.addEventListener('DOMContentLoaded', refresh);
 
-  return { FEATURED, CATEGORIES, load, won, esc, lowest, condition, thumb, card, wire, basket, remove, clear, addButton, utm };
+  return { FEATURED, CATEGORIES, MATTRESS_TYPES, load, won, esc, lowest, condition, thumb, card, wire, basket, remove, clear, addButton, utm };
 })();
