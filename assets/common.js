@@ -1,4 +1,4 @@
-// 모든 페이지가 함께 쓰는 것: 금액 자료 읽기, 제품 카드, 금액표 창, 상담 바구니
+// 모든 페이지가 함께 쓰는 것: 금액 자료 읽기, 제품 카드, 금액표 창, 장바구니
 const Site = (() => {
   // 메인에 보여 줄 주력·신제품. 이름은 data/catalog-prices.json 의 name 과 똑같이 적는다.
   // 두 번째 칸에 '신제품'을 적으면 꼬리표가 붙는다.
@@ -64,7 +64,7 @@ const Site = (() => {
   const fit = p => /cowaystatic/.test(p.img) ? ' class="fit"' : '';
   const thumb = (p, tag) => `<div class="thumb">${p.img ? `<img${fit(p)} src="${esc(p.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'${esc(p.category)}'}))">` : `<span class="ph">${esc(p.category)}</span>`}${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</div>`;
 
-  // ── 상담 바구니 (이 브라우저에만 저장된다) ──
+  // ── 장바구니 (이 브라우저에만 저장된다) ──
   function basket() {
     try { return JSON.parse(localStorage.getItem(BASKET_KEY)) || []; } catch { return []; }
   }
@@ -82,7 +82,7 @@ const Site = (() => {
   const remove = key => saveBasket(basket().filter(i => i.key !== key));
   const clear = () => saveBasket([]);
 
-  const addLabel = on => on ? '담았어요' : '바구니 담기';
+  const addLabel = on => on ? '담았어요' : '장바구니 담기';
   function addButton(product, cls = 'btn-small') {
     const on = inBasket(product.key);
     return `<button type="button" class="btn btn-line btn-add ${cls}" data-add="${esc(product.key)}" aria-pressed="${on}">${addLabel(on)}</button>`;
@@ -122,7 +122,7 @@ const Site = (() => {
       </table></div>
       <p class="note" style="margin-top:12px">월 렌탈료(원), 약정 기간별. 2026년 9-10월 카탈로그 기준.</p>
     </div>
-    <div class="sheet-foot">${addButton(p, '')}<a class="btn btn-main" href="consult.html">상담 바구니</a></div>`;
+    <div class="sheet-foot">${addButton(p, '')}</div>`;
     sheet.showModal();
   }
 
@@ -131,7 +131,15 @@ const Site = (() => {
     if (wire.done) return; wire.done = true;
     document.addEventListener('click', e => {
       const add = e.target.closest('[data-add]');
-      if (add) { const p = products.find(x => x.key === add.dataset.add); if (p) toggle(p); return; }
+      if (add) {
+        const p = products.find(x => x.key === add.dataset.add);
+        if (!p) return;
+        const adding = !inBasket(p.key);
+        toggle(p);
+        // 금액표 창에서 담았으면 창을 닫는다. 아래 "담은 제품" 띠에서 장바구니로 갈 수 있다.
+        if (adding && sheet && sheet.open && sheet.contains(add)) sheet.close();
+        return;
+      }
       const open = e.target.closest('[data-open]');
       if (open) { const p = products.find(x => x.key === open.dataset.open); if (p) openSheet(p); }
     });

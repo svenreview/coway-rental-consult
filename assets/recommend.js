@@ -87,7 +87,7 @@
         <h1>${esc(n.result.why)}</h1>
         <div class="grid">${found.map(p => Site.card(p)).join('')}</div>
         <div class="result-actions">
-          <a class="btn btn-main" href="consult.html?note=${encodeURIComponent(note)}">상담 바구니</a>
+          <a class="btn btn-main" href="consult.html?note=${encodeURIComponent(note)}">장바구니 보기</a>
           <a class="btn btn-line" href="products.html#${encodeURIComponent(category())}">${esc(category())} 전체 보기</a>
         </div>
         ${back}`;

@@ -1,4 +1,4 @@
-// 상담 바구니: 담은 제품 보기·빼기, 상담 신청서 보내기
+// 장바구니: 담은 제품 보기·빼기, 상담 신청서 보내기
 (async () => {
   const { won, esc, lowest } = Site;
   const listEl = document.querySelector('#basket-list');
