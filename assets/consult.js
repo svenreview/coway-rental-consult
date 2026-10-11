@@ -22,7 +22,7 @@
       return `<li class="b-item">
         ${p ? Site.thumb(p) : '<div class="thumb"></div>'}
         <div><small>${esc(i.category)}</small><b>${esc(i.name)}</b>${low ? `<span class="p num">월 ${won(low.price)}원~</span>` : ''}</div>
-        <button type="button" data-remove="${esc(i.key)}" aria-label="${esc(i.name)} 빼기">빼기</button>
+        <button type="button" data-remove="${esc(i.key)}" aria-label="${esc(i.name)} 빼기">×</button>
       </li>`;
     }).join('');
     sumEl.hidden = items.length < 2 || !sum;
