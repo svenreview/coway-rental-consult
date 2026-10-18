@@ -231,10 +231,15 @@ a.service-type:hover strong{color:var(--blue)}
 .b-list{display:grid;gap:8px}
 .b-item{display:grid;grid-template-columns:88px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:var(--r-m);padding:8px}
 .b-item .thumb{border-radius:8px}
+.b-item .badge,.b-item .tag{display:none}
 .b-item .thumb .ph{font-size:11px}
 .b-item small{display:block;font-size:12px;color:var(--faint)}
 .b-item b{font-weight:500;font-size:15px;display:block;line-height:1.35}
-.b-item .p{font-size:13px;color:var(--soft)}
+.b-item .p{display:block;font-size:13px;color:var(--soft)}
+.b-item .info{display:block;font-size:12px;color:var(--faint);margin-top:1px}
+.promo{display:inline-block;vertical-align:2px;margin-left:4px;padding:1px 7px;border-radius:var(--r-pill);font-size:11px;font-weight:700;line-height:1.6;white-space:nowrap}
+.promo.red{background:#FDECEC;color:#C7363B}
+.promo.blue{background:#E6F0FC;color:#1565C0}
 .b-item button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--soft);font-size:20px;line-height:1;cursor:pointer;display:grid;place-items:center}
 .b-item button:hover{border-color:var(--ink);color:var(--ink)}
 .b-sum{margin-top:10px;background:var(--tile);border-radius:var(--r-m);padding:14px 16px;display:flex;justify-content:space-between;gap:10px;font-size:14px}
@@ -284,3 +289,12 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .doc p{color:var(--soft)}
 
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* 종합카탈로그 제품 설명 (금액표 창·장바구니) */
+.desc{list-style:none;margin:0;padding:0}
+.desc li{position:relative;padding-left:12px;font-size:14px;line-height:1.5;color:var(--ink)}
+.desc li::before{content:"";position:absolute;left:2px;top:.65em;width:4px;height:4px;border-radius:50%;background:var(--blue)}
+.sheet-desc{margin-top:14px;display:grid;gap:10px}
+.desc-group small{display:block;font-size:12px;color:var(--faint);margin-bottom:2px}
+.b-item .desc{margin:4px 0 2px}
+.b-item .desc li{font-size:12.5px;line-height:1.45;color:var(--soft)}

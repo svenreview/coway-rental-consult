@@ -9,7 +9,7 @@ const Site = (() => {
     '매트리스': [['비렉스 스마트 매트리스 S8+', '신제품'], ['시그니처 파이어쉴드 컴포트', '신제품'], ['하이브리드 4'], ['컴팩트 메모리폼']],
   };
   const CATEGORIES = ['정수기', '공기청정기', '비데', '매트리스'];
-  // 사진 위 혜택 배지 [문구, 색]. docs/blog-info.md 의 10월 프로모션 표를 따른다. 혜택이 바뀌면 여기만 고친다.
+  // 사진 위 혜택 배지 [문구, 색]. 블로그 10월 프로모션 글(coway.blogpro.so/draft-12)을 따른다. 혜택이 바뀌면 여기만 고친다.
   const BADGES = {
     '정수기|아이콘 정수기 3': ['월<br>1만원', 'red'],
     '정수기|아이콘 정수기 2': ['월<br>1만원', 'red'],
@@ -21,6 +21,16 @@ const Site = (() => {
     '정수기|카페 얼음정수기': ['렌탈료<br>반값', 'blue'],
     '정수기|워터 스탠드 플러스': ['렌탈료<br>반값', 'blue'],
     '정수기|워터 스탠드 2': ['렌탈료<br>반값', 'blue'],
+    '정수기|얼음정수기 RO': ['렌탈료<br>반값', 'blue'],
+    '정수기|얼음정수기 AIS 3.0': ['렌탈료<br>반값', 'blue'],
+    '정수기|얼음정수기 AIS 3.0 스파클링': ['렌탈료<br>반값', 'blue'],
+    '비데|더매너 비데 플러스': ['월<br>1만원', 'red'],
+    '비데|더블케어 비데 플러스': ['월<br>1만원', 'red'],
+    '비데|더블케어 비데': ['월<br>1만원', 'red'],
+    '비데|슬리믹 비데': ['월<br>1만원', 'red'],
+    '비데|스타일 비데 플러스': ['월<br>1만원', 'red'],
+    '비데|스타일 비데': ['월<br>1만원', 'red'],
+    '비데|저수압용 비데': ['월<br>1만원', 'red'],
   };
 
   // 매트리스 종류: 카탈로그 목차의 분류를 따른다. 이름은 data/catalog-prices.json 의 name 과 똑같이 적는다.
@@ -54,19 +64,30 @@ const Site = (() => {
   const load = () => cache || (cache = Promise.all([
     fetch('data/catalog-prices.json').then(r => { if (!r.ok) throw new Error('제품을 불러오지 못했어요'); return r.json(); }),
     fetch('data/images.json').then(r => r.ok ? r.json() : {}).catch(() => ({})), // 사진이 없어도 사이트는 동작한다
-  ]).then(([rows, images]) => group(rows, images)));
+    fetch('data/descriptions.json').then(r => r.ok ? r.json() : {}).catch(() => ({})), // 종합카탈로그 제품 설명
+  ]).then(([rows, images, descs]) => group(rows, images, descs)));
 
-  function group(rows, images) {
+  function group(rows, images, descs = {}) {
     const map = new Map();
     for (const r of rows) {
       const key = r.category + '|' + r.name;
       // 사진 자료는 두 가지 모양이다: 주소만 있는 것(블로그 배너), 주소와 제품이 있는 자리(box)가 함께 있는 것(제품 사진)
       const im = images[key];
-      if (!map.has(key)) map.set(key, { key, category: r.category, name: r.name, img: im ? (im.src || im) : '', box: im && im.box, variants: [] });
+      if (!map.has(key)) map.set(key, { key, category: r.category, name: r.name, img: im ? (im.src || im) : '', box: im && im.box, desc: descs[key] || [], variants: [] });
       map.get(key).variants.push(r);
     }
     return [...map.values()];
   }
+
+  // 종합카탈로그 제품 설명. 모델마다 설명이 다른 제품은 모델별로 묶여 있다. 화면에는 앞 3줄만 쓴다
+  const descLines = (p, model) => {
+    const g = (model && p.desc.find(d => d.models && d.models.includes(model))) || p.desc[0];
+    return g ? g.lines.slice(0, 3) : [];
+  };
+  const descList = lines => lines.length ? `<ul class="desc">${lines.map(l => `<li>${esc(l)}</li>`).join('')}</ul>` : '';
+  const descBlock = p => p.desc.some(d => d.models) && p.desc.length > 1
+    ? p.desc.map(d => `<div class="desc-group"><small>${esc(d.models.join(' · '))}</small>${descList(d.lines.slice(0, 3))}</div>`).join('')
+    : descList(descLines(p));
 
   const won = n => n.toLocaleString('ko-KR');
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -78,7 +99,7 @@ const Site = (() => {
       const price = p.promo ?? p.rental;
       if (price == null) continue;
       if (!best || price < best.price) {
-        best = { price, normal: p.promo != null ? p.rental : null, years: p.years, variant: v.variant, care: [v.care, v.cycle].filter(Boolean).join(' ') };
+        best = { price, normal: p.promo != null ? p.rental : null, years: p.years, model: v.model, variant: v.variant, care: [v.care, v.cycle].filter(Boolean).join(' ') };
       }
     }
     return best;
@@ -148,6 +169,7 @@ const Site = (() => {
     sheet.innerHTML = `<div class="sheet-in">
       <div class="sheet-head"><h2>${esc(p.name)}</h2><button type="button" class="sheet-close" data-close aria-label="닫기">×</button></div>
       ${p.img ? `<div class="sheet-img${p.box ? ' is-shot' : ''}">${picture(p)}</div>` : ''}
+      ${p.desc.length ? `<div class="sheet-desc">${descBlock(p)}</div>` : ''}
       <div class="scroll-x"><table class="ptable num">
         <thead><tr><th>모델</th><th>관리</th>${years.map(y => `<th>${y}년</th>`).join('')}</tr></thead>
         <tbody>${p.variants.map(v => `<tr><td>${esc(v.model || '—')}<span class="sub">${esc(v.variant || '')}</span></td><td>${esc([v.care, v.cycle].filter(Boolean).join(' ') || '—')}</td>${years.map(y => `<td>${cell(v.prices.find(x => x.years === y))}</td>`).join('')}</tr>`).join('')}</tbody>
@@ -186,5 +208,5 @@ const Site = (() => {
   window.addEventListener('storage', refresh);
   document.addEventListener('DOMContentLoaded', refresh);
 
-  return { FEATURED, CATEGORIES, MATTRESS_TYPES, load, won, esc, lowest, condition, thumb, picture, card, wire, basket, remove, clear, addButton, utm };
+  return { FEATURED, CATEGORIES, MATTRESS_TYPES, BADGES, load, descLines, descList, won, esc, lowest, condition, thumb, picture, card, wire, basket, remove, clear, addButton, utm };
 })();
