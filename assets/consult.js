@@ -12,15 +12,14 @@
 
   // 제품 이름 옆 혜택 글자 태그 (사진 위 배지와 같은 자료)
   const promo = key => { const b = Site.BADGES[key]; return b ? ` <span class="promo ${b[1]}">${b[0].replace(/<br>/g, ' ')}</span>` : ''; };
-  // 간단 정보 한 줄: 금액표 자료에 있는 기능(냉·온·정·얼음)이나 사이즈 수, 관리 방식만 쓴다
+  // 간단 정보 한 줄: 금액표 자료에 있는 기능(냉·온·정·얼음)이나 사이즈 수만 쓴다. 관리 방식은 상담 때 안내한다
   function info(p) {
     const uniq = a => [...new Set(a.filter(Boolean))];
     const variants = uniq(p.variants.map(v => v.variant));
-    const care = uniq(p.variants.map(v => v.care));
     const first = p.category === '매트리스'
       ? (variants.length ? variants.length + '가지 사이즈' : '')
       : (variants.sort((a, b) => b.length - a.length)[0] || '').replace(/\//g, '·');
-    return [first, care.join('·')].filter(Boolean).join(' · ');
+    return first;
   }
   function render() {
     const items = Site.basket();
