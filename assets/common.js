@@ -137,7 +137,7 @@ const Site = (() => {
         <thead><tr><th>모델</th><th>관리</th>${years.map(y => `<th>${y}년</th>`).join('')}</tr></thead>
         <tbody>${p.variants.map(v => `<tr><td>${esc(v.model || '—')}<span class="sub">${esc(v.variant || '')}</span></td><td>${esc([v.care, v.cycle].filter(Boolean).join(' ') || '—')}</td>${years.map(y => `<td>${cell(v.prices.find(x => x.years === y))}</td>`).join('')}</tr>`).join('')}</tbody>
       </table></div>
-      <p class="note" style="margin-top:12px">월 렌탈료(원), 약정 기간별. 2026년 9-10월 카탈로그 기준.</p>
+      <p class="note" style="margin-top:12px">월 렌탈료(원), 약정 기간별.</p>
     </div>
     <div class="sheet-foot">${addButton(p, '')}</div>`;
     sheet.showModal();

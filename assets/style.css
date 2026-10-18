@@ -153,8 +153,6 @@ a.service-type:hover strong{color:var(--blue)}
 /* consult band */
 .cta{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;background:var(--tile);border-radius:var(--r-m);padding:28px}
 .cta h2{font-size:22px;font-weight:700}
-.cta-sub{margin-top:4px;font-size:14px;color:var(--soft)}
-.cta-sub .num{white-space:nowrap}
 .cta-btns{display:flex;flex-wrap:wrap;gap:8px}
 
 /* footer */
