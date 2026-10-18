@@ -52,6 +52,7 @@ button,input,textarea,select{font:inherit}
 .logo{display:inline-flex;align-items:baseline;gap:6px}
 .logo b{color:#00A8E0;font-weight:800;font-size:22px;letter-spacing:-0.03em;line-height:1}
 @media(max-width:760px){.logo b{font-size:20px}}
+.logo-sub{font-size:12px;font-weight:700;color:var(--soft);background:var(--blue-soft);border-radius:var(--r-pill);padding:3px 9px;align-self:center}
 .nav-items{display:flex;gap:24px}
 .nav-items a{font-size:15px;font-weight:500;text-decoration:none;color:var(--soft);padding:8px 0}
 .nav-items a:hover,.nav-items a[aria-current=page]{color:var(--ink)}
@@ -80,6 +81,12 @@ button,input,textarea,select{font:inherit}
 .hero-product{position:relative;display:grid;place-items:center;min-height:380px;text-decoration:none}
 .hero-halo{position:absolute;width:min(380px,90%);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fff 0 28%,#C8DEFF88 58%,transparent 73%)}
 .hero-product .shot{position:relative;width:min(300px,80%);height:340px;filter:drop-shadow(20px 26px 22px #213B5C38)}
+.quick{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;padding:16px 8px;border:1px solid #DFE8F1;border-radius:22px;background:#FFFFFFB3}
+.quick a{display:flex;flex-direction:column;align-items:center;gap:6px;text-decoration:none;font-size:14px;font-weight:700;color:#234B81;padding:6px 2px;border-radius:14px}
+.quick a:hover{background:var(--blue-soft)}
+.quick svg{width:40px;height:40px;padding:8px;border-radius:50%;background:#fff;border:1px solid var(--line);fill:none;stroke:var(--blue);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.quick a.hot svg{stroke:#E5484D}
+@media(max-width:760px){.quick{grid-template-columns:repeat(3,1fr);gap:4px;padding:12px 6px}}
 .service-types{display:grid;grid-template-columns:repeat(4,1fr);padding:20px 8px;border:1px solid #DFE8F1;border-radius:22px;background:#FFFFFFB3}
 .service-type{display:grid;gap:2px;padding:2px 24px;text-decoration:none}
 .service-type strong{color:#234B81}
@@ -123,6 +130,9 @@ a.service-type:hover strong{color:var(--blue)}
 .sheet-img .banner{width:100%;display:block}
 .thumb .ph{font-size:14px;font-weight:700;color:var(--faint)}
 .card-open:hover .thumb{border-color:var(--blue);box-shadow:0 4px 12px #00A7D91F}
+.badge{position:absolute;left:8px;top:8px;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;text-align:center;color:#fff;font-size:11px;font-weight:800;line-height:1.15;letter-spacing:-0.02em;box-shadow:0 4px 10px #0000001f}
+.badge.red{background:#E5484D}
+.badge.blue{background:#1C7BE0}
 .tag{position:absolute;right:8px;top:8px;background:var(--blue);color:#fff;font-size:11px;font-weight:700;border-radius:6px;padding:2px 7px}
 .model{display:block;margin-top:10px;font-size:12px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card h3{font-size:15px;font-weight:500;line-height:1.4;margin-top:2px}
