@@ -299,3 +299,16 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .b-item .desc{margin:4px 0 2px}
 .b-item .desc li{font-size:12.5px;line-height:1.45;color:var(--soft)}
 .search-result{margin:0 0 12px}
+
+/* 종합카탈로그 제품 사양 (금액표 창) */
+.spec{margin-top:16px;border-top:1px solid var(--line);padding-top:12px}
+.spec h3{font-size:14px;font-weight:700;margin:0 0 6px;color:var(--ink)}
+.spec dl{margin:0}
+.spec dl>div{display:grid;grid-template-columns:76px 1fr;gap:8px;padding:5px 0;border-bottom:1px dashed var(--line);font-size:13px;line-height:1.5}
+.spec dl>div:last-child{border-bottom:0}
+.spec dt{color:var(--faint);font-weight:500}
+.spec dd{margin:0;color:var(--ink);white-space:pre-line;word-break:keep-all;overflow-wrap:anywhere}
+.spec .spec-model{grid-template-columns:1fr}
+.spec .spec-model>dt{color:var(--ink);font-weight:700}
+.spec .spec-model>dt span{font-weight:400;color:var(--soft);font-size:12px}
+.spec .spec-model dl>div{border-bottom:0;padding:2px 0}
