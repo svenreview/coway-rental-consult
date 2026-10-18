@@ -47,12 +47,39 @@
   const note = new URLSearchParams(location.search).get('note');
   if (note) form.message.value = note;
 
+  // 연락처: 숫자를 넣으면 하이픈을 자동으로 넣는다 (010-1234-5678, 02-123-4567, 1588-1234)
+  const hyphen = v => {
+    const d = v.replace(/\D/g, '').slice(0, 11);
+    if (/^02/.test(d)) return d.length < 3 ? d : d.length < 6 ? `${d.slice(0, 2)}-${d.slice(2)}` : d.length < 10 ? `${d.slice(0, 2)}-${d.slice(2, 5)}-${d.slice(5)}` : `${d.slice(0, 2)}-${d.slice(2, 6)}-${d.slice(6, 10)}`;
+    if (/^1[5-9]/.test(d) && d.length <= 8) return d.length < 5 ? d : `${d.slice(0, 4)}-${d.slice(4)}`;
+    if (d.length < 4) return d;
+    if (d.length < 8) return `${d.slice(0, 3)}-${d.slice(3)}`;
+    return d.length < 11 ? `${d.slice(0, 3)}-${d.slice(3, 6)}-${d.slice(6)}` : `${d.slice(0, 3)}-${d.slice(3, 7)}-${d.slice(7)}`;
+  };
+  let prevContact = form.contact.value;
+  form.contact.addEventListener('input', e => {
+    const el = form.contact, digits = x => x.replace(/\D/g, '');
+    let v = el.value;
+    if (!/^[\d\s-]*$/.test(v)) { prevContact = v; return; } // 숫자가 아닌 글자를 적으면 그대로 둔다
+    // 커서 앞 숫자 개수를 기억해 두었다가 하이픈을 넣은 뒤 같은 자리에 커서를 다시 놓는다
+    let before = digits(v.slice(0, el.selectionStart)).length;
+    // 하이픈만 지운 경우: 그 앞 숫자를 지운 것으로 본다 (안 그러면 하이픈이 다시 생겨 지워지지 않는다)
+    if (e.inputType === 'deleteContentBackward' && digits(v) === digits(prevContact) && before > 0) {
+      const d = digits(v); v = d.slice(0, before - 1) + d.slice(before); before--;
+    }
+    const out = hyphen(v);
+    el.value = prevContact = out;
+    let pos = 0, n = 0;
+    while (pos < out.length && n < before) { if (/\d/.test(out[pos])) n++; pos++; }
+    if (document.activeElement === el) el.setSelectionRange(pos, pos);
+  });
+
   form.addEventListener('submit', async e => {
     e.preventDefault();
     msg.hidden = true;
     const data = {
       name: form.name.value.trim(),
-      contact: form.contact.value.trim(),
+      contact: /^[\d\s-]+$/.test(form.contact.value) ? hyphen(form.contact.value) : form.contact.value.trim(),
       kind: form.kind.value,
       products: Site.basket().map(i => i.category + ' - ' + i.name),
       message: form.message.value.trim(),
