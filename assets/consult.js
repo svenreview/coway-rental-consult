@@ -10,6 +10,18 @@
   let products = [];
   try { products = await Site.load(); } catch {}
 
+  // 제품 이름 옆 혜택 글자 태그 (사진 위 배지와 같은 자료)
+  const promo = key => { const b = Site.BADGES[key]; return b ? ` <span class="promo ${b[1]}">${b[0].replace(/<br>/g, ' ')}</span>` : ''; };
+  // 간단 정보 한 줄: 금액표 자료에 있는 기능(냉·온·정·얼음)이나 사이즈 수, 관리 방식만 쓴다
+  function info(p) {
+    const uniq = a => [...new Set(a.filter(Boolean))];
+    const variants = uniq(p.variants.map(v => v.variant));
+    const care = uniq(p.variants.map(v => v.care));
+    const first = p.category === '매트리스'
+      ? (variants.length ? variants.length + '가지 사이즈' : '')
+      : (variants.sort((a, b) => b.length - a.length)[0] || '').replace(/\//g, '·');
+    return [first, care.join('·')].filter(Boolean).join(' · ');
+  }
   function render() {
     const items = Site.basket();
     emptyEl.hidden = items.length > 0;
@@ -21,7 +33,7 @@
       if (low) sum += low.price;
       return `<li class="b-item">
         ${p ? Site.thumb(p) : '<div class="thumb"></div>'}
-        <div><small>${esc(i.category)}</small><b>${esc(i.name)}</b>${low ? `<span class="p num">월 ${won(low.price)}원~</span>` : ''}</div>
+        <div><small>${esc(i.category)}</small><b>${esc(i.name)}${promo(i.key)}</b>${p && info(p) ? `<span class="info">${esc(info(p))}</span>` : ''}${low ? `<span class="p num">월 ${won(low.price)}원~</span>` : ''}</div>
         <button type="button" data-remove="${esc(i.key)}" aria-label="${esc(i.name)} 빼기">×</button>
       </li>`;
     }).join('');

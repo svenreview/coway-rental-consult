@@ -196,5 +196,5 @@ const Site = (() => {
   window.addEventListener('storage', refresh);
   document.addEventListener('DOMContentLoaded', refresh);
 
-  return { FEATURED, CATEGORIES, MATTRESS_TYPES, load, won, esc, lowest, condition, thumb, picture, card, wire, basket, remove, clear, addButton, utm };
+  return { FEATURED, CATEGORIES, MATTRESS_TYPES, BADGES, load, won, esc, lowest, condition, thumb, picture, card, wire, basket, remove, clear, addButton, utm };
 })();

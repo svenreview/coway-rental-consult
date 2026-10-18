@@ -235,7 +235,11 @@ a.service-type:hover strong{color:var(--blue)}
 .b-item .thumb .ph{font-size:11px}
 .b-item small{display:block;font-size:12px;color:var(--faint)}
 .b-item b{font-weight:500;font-size:15px;display:block;line-height:1.35}
-.b-item .p{font-size:13px;color:var(--soft)}
+.b-item .p{display:block;font-size:13px;color:var(--soft)}
+.b-item .info{display:block;font-size:12px;color:var(--faint);margin-top:1px}
+.promo{display:inline-block;vertical-align:2px;margin-left:4px;padding:1px 7px;border-radius:var(--r-pill);font-size:11px;font-weight:700;line-height:1.6;white-space:nowrap}
+.promo.red{background:#FDECEC;color:#C7363B}
+.promo.blue{background:#E6F0FC;color:#1565C0}
 .b-item button{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;color:var(--soft);font-size:20px;line-height:1;cursor:pointer;display:grid;place-items:center}
 .b-item button:hover{border-color:var(--ink);color:var(--ink)}
 .b-sum{margin-top:10px;background:var(--tile);border-radius:var(--r-m);padding:14px 16px;display:flex;justify-content:space-between;gap:10px;font-size:14px}
