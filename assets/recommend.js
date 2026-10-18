@@ -8,32 +8,67 @@
     q: '어떤 제품을 찾으세요?',
     options: [
       { label: '정수기', category: '정수기', next: {
-        q: '어디에 두실 건가요?',
+        q: '누가 쓰실 건가요?',
         options: [
-          { label: '집', hint: '1~4인 가구', next: {
-            q: '얼음도 필요하세요?',
+          { label: '개인·가정', hint: '1~4인 가구', next: {
+            q: '필요한 기능을 골라 주세요',
             options: [
-              { label: '얼음은 필요 없어요', next: {
+              { label: '정수만', hint: '렌탈료가 가장 낮아요', next: {
+                q: '어디에 설치하실 건가요?',
+                options: [
+                  { label: '싱크대 위', result: pick('정수 기능만 있는, 렌탈료가 낮은 정수기예요.', '스위치', '프라임 베이직') },
+                  { label: '싱크대 아래', hint: '본체를 숨기는 빌트인', result: pick('정수 기능만 있는, 본체를 싱크대 아래에 두는 빌트인 정수기예요.', '스위치 빌트인') },
+                ] } },
+              { label: '냉수·온수까지', next: {
                 q: '무엇이 가장 중요하세요?',
                 options: [
                   { label: '좁은 주방에도 놓기', result: pick('얼음 없이 냉수·온수·정수를 쓰는 작은 크기의 정수기예요.', '아이콘 정수기 3', '아이콘 정수기 2') },
-                  { label: '싱크대 위를 비우기', hint: '본체를 싱크대 아래에 넣는 빌트인', result: pick('본체를 싱크대 아래에 두는 빌트인 정수기예요.', '스위치 빌트인', '노블 빌트인 정수기') },
-                  { label: '렌탈료 낮추기', hint: '정수만 있으면 돼요', result: pick('정수 기능만 있는, 렌탈료가 낮은 정수기예요.', '스위치', '프라임 베이직') },
+                  { label: '디자인·편의 기능', result: pick('디자인과 편의 기능을 더한 냉온정 정수기예요.', '아이콘 프로', '노블 정수기 세로·가로') },
+                  { label: '싱크대 위를 비우기', hint: '본체를 싱크대 아래에 넣는 빌트인', result: pick('냉수·온수까지 되는 빌트인 정수기예요.', '엘리트 빌트인 정수기', '노블 빌트인 정수기') },
                 ] } },
-              { label: '얼음도 필요해요', next: {
-                q: '얼음을 얼마나 쓰세요?',
+              { label: '얼음까지', next: {
+                q: '몇 분이 함께 쓰세요?',
                 options: [
-                  { label: '가끔, 조금', result: pick('얼음정수기 중 크기가 가장 작은 제품이에요.', '아이콘 얼음정수기 미니') },
-                  { label: '매일, 보통', result: pick('크기는 작게, 얼음은 넉넉하게 쓰는 제품이에요.', '아이콘 얼음정수기 스탠다드', '아이콘 얼음정수기 오리지널') },
-                  { label: '많이', hint: '식구가 많거나 여름에 자주', result: pick('가정용 얼음정수기 중 얼음 용량이 가장 큰 제품이에요.', '아이콘 얼음정수기 맥스') },
+                  { label: '1~2인', hint: '얼음은 가끔, 조금', result: pick('얼음정수기 중 크기가 가장 작은 제품이에요.', '아이콘 얼음정수기 미니') },
+                  { label: '3~4인', hint: '얼음을 매일 써요', result: pick('크기는 작게, 얼음은 넉넉하게 쓰는 제품이에요.', '아이콘 얼음정수기 스탠다드', '아이콘 얼음정수기 오리지널') },
+                  { label: '5인 이상', hint: '여름에 얼음을 많이 써요', result: pick('가정용 얼음정수기 중 얼음 용량이 가장 큰 제품이에요.', '아이콘 얼음정수기 맥스') },
+                ] } },
+              { label: '커피까지', hint: '냉·온·정·얼음 + 커피', result: pick('냉수·온수·정수·얼음에 커피까지 되는 제품이에요.', '카페 얼음정수기') },
+            ] } },
+          { label: '개인사업자', hint: '가게·매장', next: {
+            q: '하루에 몇 분 정도 쓰세요?',
+            options: [
+              { label: '10명 미만', hint: '작은 가게, 10테이블 미만', next: {
+                q: '필요한 기능을 골라 주세요',
+                options: [
+                  { label: '정수·냉수·온수', result: pick('작은 매장에 두기 좋은 스탠드형 정수기예요.', '워터 스탠드 2', '워터 스탠드 플러스') },
+                  { label: '얼음까지', result: pick('작은 매장에서 얼음까지 쓰는 스탠드형 얼음정수기예요.', '아이스 스탠드 1.0', '아이스 스탠드 3.0') },
+                  { label: '커피까지', result: pick('냉수·온수·정수·얼음에 커피까지 되는 제품이에요.', '카페 얼음정수기') },
+                ] } },
+              { label: '10명 이상', hint: '10테이블 이상', next: {
+                q: '필요한 기능을 골라 주세요',
+                options: [
+                  { label: '정수·냉수·온수', result: pick('많은 사람이 쓰는 곳에 맞는 대용량 스탠드 정수기예요.', 'RO 직수 스탠드', '스탠드 정수기', '프라임 스탠드') },
+                  { label: '얼음까지', result: pick('얼음을 많이 쓰는 매장용 대용량 얼음정수기예요.', '아이스 스탠드 3.8', '아이스 스탠드 5.2') },
+                  { label: '커피까지', result: pick('냉수·온수·정수·얼음에 커피까지 되는 제품이에요.', '카페 얼음정수기') },
                 ] } },
             ] } },
-          { label: '가게·사무실', hint: '여러 사람이 함께 써요', next: {
-            q: '얼음도 필요하세요?',
+          { label: '법인·사무실', hint: '회사·기관', next: {
+            q: '몇 분이 함께 쓰세요?',
             options: [
-              { label: '얼음은 필요 없어요', result: pick('여러 사람이 쓰는 곳에 두는 스탠드형 정수기예요.', '워터 스탠드 2', '워터 스탠드 플러스', '프라임 스탠드') },
-              { label: '얼음도 필요해요', result: pick('매장·사무실에서 얼음까지 쓰는 스탠드형 얼음정수기예요.', '아이스 스탠드 1.0', '아이스 스탠드 3.0', '아이스 스탠드 5.2') },
-              { label: '커피도 뽑고 싶어요', result: pick('냉수·온수·정수·얼음에 커피까지 되는 제품이에요.', '카페 얼음정수기') },
+              { label: '20명 미만', next: {
+                q: '필요한 기능을 골라 주세요',
+                options: [
+                  { label: '정수·냉수·온수', result: pick('사무실에 두기 좋은 스탠드형 정수기예요.', '워터 스탠드 2', '워터 스탠드 플러스', '프라임 스탠드') },
+                  { label: '얼음까지', result: pick('사무실에서 얼음까지 쓰는 스탠드형 얼음정수기예요.', '아이스 스탠드 1.0', '아이스 스탠드 3.0') },
+                  { label: '커피까지', result: pick('냉수·온수·정수·얼음에 커피까지 되는 제품이에요.', '카페 얼음정수기') },
+                ] } },
+              { label: '20명 이상', next: {
+                q: '필요한 기능을 골라 주세요',
+                options: [
+                  { label: '정수·냉수·온수', result: pick('많은 인원이 쓰는 대용량 스탠드 정수기예요.', 'RO 직수 스탠드', '스탠드 정수기') },
+                  { label: '얼음까지', result: pick('많은 인원이 얼음까지 쓰는 대용량 얼음정수기예요.', '아이스 스탠드 3.8', '아이스 스탠드 5.2') },
+                ] } },
             ] } },
         ] } },
       { label: '공기청정기', category: '공기청정기', next: {
@@ -84,25 +119,32 @@
   const category = () => trail.length ? TREE.options[trail[0]].category : '';
   const answers = () => { let n = TREE; return trail.map(i => { const o = n.options[i]; n = o.next || n; return o.label; }); };
 
+  // 남은 질문 수(가장 긴 길 기준)로 진행 막대를 채운다
+  const depth = n => n.result ? 0 : 1 + Math.max(...n.options.map(o => depth(o.next || o)));
   function render() {
     const n = node();
+    const pct = n.result ? 100 : Math.round(trail.length / (trail.length + depth(n)) * 100);
+    const bar = `<div class="quiz-bar" aria-hidden="true"><i style="width:${Math.max(pct, 6)}%"></i></div>`;
     const back = trail.length ? `<button type="button" class="quiz-back" data-back>이전 질문으로</button>` : '';
     if (n.result) {
       const found = n.result.names.map(name => products.find(p => p.category === category() && p.name === name)).filter(Boolean);
       const note = `[맞춤 추천] ${answers().join(' / ')} → ${found.map(p => p.name).join(', ')}`;
-      box.innerHTML = `<p class="quiz-progress">${esc(answers().join(' › '))}</p>
+      box.innerHTML = `${bar}<p class="quiz-progress">${esc(answers().join(' › '))}</p>
         <h1>${esc(n.result.why)}</h1>
         <div class="grid">${found.map(p => Site.card(p)).join('')}</div>
         <div class="result-actions">
           <a class="btn btn-main" href="consult.html?note=${encodeURIComponent(note)}">장바구니 보기</a>
+          <a class="btn btn-kakao" href="https://open.kakao.com/o/st6dXvDg" target="_blank" rel="noopener">카카오톡 상담</a>
+          <a class="btn btn-line" href="tel:010-3490-8733">무료 상담 전화</a>
           <a class="btn btn-line" href="products.html#${encodeURIComponent(category())}">${esc(category())} 전체 보기</a>
         </div>
         ${back}`;
     } else {
-      box.innerHTML = `<p class="quiz-progress">${trail.length ? esc(answers().join(' › ')) : ''}</p>
+      box.innerHTML = `${bar}<section class="quiz-card">
+        <p class="quiz-progress">${trail.length ? esc(answers().join(' › ')) : ''}</p>
         <h1>${esc(n.q)}</h1>
         <div class="choices">${n.options.map((o, i) => `<button type="button" data-i="${i}"><b>${esc(o.label)}</b>${o.hint ? `<span>${esc(o.hint)}</span>` : ''}</button>`).join('')}</div>
-        ${back}`;
+        ${back}</section>`;
     }
     box.querySelector('h1').focus?.();
   }

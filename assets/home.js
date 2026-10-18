@@ -19,6 +19,10 @@
   try {
     products = await Site.load();
     Site.wire(products);
+    // 첫 화면 오른쪽 제품 사진
+    const hero = products.find(x => x.key === '정수기|아이콘 프로');
+    const heroBox = document.querySelector('#hero-product');
+    if (hero && hero.img && heroBox) heroBox.insertAdjacentHTML('beforeend', Site.picture(hero));
     chips.innerHTML = CATEGORIES.map(c => `<button type="button" data-cat="${c}">${c}</button>`).join('');
     chips.addEventListener('click', e => { const b = e.target.closest('button'); if (b) show(b.dataset.cat); });
     show(CATEGORIES[0]);
