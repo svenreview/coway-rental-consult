@@ -65,15 +65,16 @@ const Site = (() => {
     fetch('data/catalog-prices.json').then(r => { if (!r.ok) throw new Error('제품을 불러오지 못했어요'); return r.json(); }),
     fetch('data/images.json').then(r => r.ok ? r.json() : {}).catch(() => ({})), // 사진이 없어도 사이트는 동작한다
     fetch('data/descriptions.json').then(r => r.ok ? r.json() : {}).catch(() => ({})), // 종합카탈로그 제품 설명
-  ]).then(([rows, images, descs]) => group(rows, images, descs)));
+    fetch('data/specs.json').then(r => r.ok ? r.json() : {}).catch(() => ({})), // 종합카탈로그 제품 사양
+  ]).then(([rows, images, descs, specs]) => group(rows, images, descs, specs)));
 
-  function group(rows, images, descs = {}) {
+  function group(rows, images, descs = {}, specs = {}) {
     const map = new Map();
     for (const r of rows) {
       const key = r.category + '|' + r.name;
       // 사진 자료는 두 가지 모양이다: 주소만 있는 것(블로그 배너), 주소와 제품이 있는 자리(box)가 함께 있는 것(제품 사진)
       const im = images[key];
-      if (!map.has(key)) map.set(key, { key, category: r.category, name: r.name, img: im ? (im.src || im) : '', box: im && im.box, desc: descs[key] || [], variants: [] });
+      if (!map.has(key)) map.set(key, { key, category: r.category, name: r.name, img: im ? (im.src || im) : '', box: im && im.box, desc: descs[key] || [], spec: specs[key] || null, variants: [] });
       map.get(key).variants.push(r);
     }
     return [...map.values()];
@@ -88,6 +89,21 @@ const Site = (() => {
   const descBlock = p => p.desc.some(d => d.models) && p.desc.length > 1
     ? p.desc.map(d => `<div class="desc-group"><small>${esc(d.models.join(' · '))}</small>${descList(d.lines.slice(0, 3))}</div>`).join('')
     : descList(descLines(p));
+
+  // 종합카탈로그 사양표: 공통 항목(크기·필터 등) 뒤에 모델별 항목을 작은 목록으로 보여 준다
+  const specRows = rows => rows.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('');
+  const specBlock = p => {
+    const s = p.spec;
+    if (!s) return '';
+    const models = (s.models || []).filter(m => m.specs && m.specs.length);
+    const common = s.common || [];
+    // 모델마다 크기만 다른 매트리스는 한 줄씩 "퀸 1 500 x 2 000 x 300 mm"처럼 묶는다
+    const sizeOnly = models.length && models.every(m => m.specs.length === 1 && m.specs[0][0] === '크기');
+    const body = sizeOnly
+      ? specRows([...common, ['크기', models.map(m => `${m.variant || m.model} ${m.specs[0][1]}`).join('\n')]])
+      : specRows(common) + models.map(m => `<div class="spec-model"><dt>${esc(m.model)}${m.variant ? ` <span>${esc(m.variant)}</span>` : ''}</dt><dd><dl>${specRows(m.specs)}</dl></dd></div>`).join('');
+    return body ? `<div class="spec"><h3>제품 사양</h3><dl>${body}</dl></div>` : '';
+  };
 
   const won = n => n.toLocaleString('ko-KR');
   const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -170,6 +186,7 @@ const Site = (() => {
       <div class="sheet-head"><h2>${esc(p.name)}</h2><button type="button" class="sheet-close" data-close aria-label="닫기">×</button></div>
       ${p.img ? `<div class="sheet-img${p.box ? ' is-shot' : ''}">${picture(p)}</div>` : ''}
       ${p.desc.length ? `<div class="sheet-desc">${descBlock(p)}</div>` : ''}
+      ${specBlock(p)}
       <div class="scroll-x"><table class="ptable num">
         <thead><tr><th>모델</th><th>관리</th>${years.map(y => `<th>${y}년</th>`).join('')}</tr></thead>
         <tbody>${p.variants.map(v => `<tr><td>${esc(v.model || '—')}<span class="sub">${esc(v.variant || '')}</span></td><td>${esc([v.care, v.cycle].filter(Boolean).join(' ') || '—')}</td>${years.map(y => `<td>${cell(v.prices.find(x => x.years === y))}</td>`).join('')}</tr>`).join('')}</tbody>
