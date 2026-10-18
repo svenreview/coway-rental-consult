@@ -101,7 +101,9 @@ a.service-type:hover strong{color:var(--blue)}
   .hero-product{order:3;min-height:250px}
   .hero-product .shot{height:230px}
   .hero-halo{width:240px}
-  .hero-cta{order:4;grid-template-columns:1fr;margin-top:8px}
+  .hero-cta{order:4;grid-template-columns:1fr 1fr;margin-top:8px}
+  .hero-cta .btn{min-height:52px;font-size:15px}
+  .hero-cta .btn-grad{grid-column:1 / -1}
   .service-types{grid-template-columns:1fr 1fr;gap:14px;padding:18px}
   .service-type{padding:0}
 }
