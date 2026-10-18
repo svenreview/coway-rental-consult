@@ -9,6 +9,20 @@ const Site = (() => {
     '매트리스': [['비렉스 스마트 매트리스 S8+', '신제품'], ['시그니처 파이어쉴드 컴포트', '신제품'], ['하이브리드 4'], ['컴팩트 메모리폼']],
   };
   const CATEGORIES = ['정수기', '공기청정기', '비데', '매트리스'];
+  // 사진 위 혜택 배지 [문구, 색]. docs/blog-info.md 의 10월 프로모션 표를 따른다. 혜택이 바뀌면 여기만 고친다.
+  const BADGES = {
+    '정수기|아이콘 정수기 3': ['월<br>1만원', 'red'],
+    '정수기|아이콘 정수기 2': ['월<br>1만원', 'red'],
+    '정수기|아이콘 프로': ['렌탈료<br>반값', 'blue'],
+    '정수기|아이콘 얼음정수기 미니': ['렌탈료<br>반값', 'blue'],
+    '정수기|아이콘 얼음정수기 스탠다드': ['렌탈료<br>반값', 'blue'],
+    '정수기|아이콘 얼음정수기 오리지널': ['렌탈료<br>반값', 'blue'],
+    '정수기|아이콘 얼음정수기 맥스': ['렌탈료<br>반값', 'blue'],
+    '정수기|카페 얼음정수기': ['렌탈료<br>반값', 'blue'],
+    '정수기|워터 스탠드 플러스': ['렌탈료<br>반값', 'blue'],
+    '정수기|워터 스탠드 2': ['렌탈료<br>반값', 'blue'],
+  };
+
   // 매트리스 종류: 카탈로그 목차의 분류를 따른다. 이름은 data/catalog-prices.json 의 name 과 똑같이 적는다.
   const MATTRESS_TYPES = {
     '스마트': ['비렉스 스마트 매트리스 S8+', '비렉스 스마트 매트리스 S6+'],
@@ -79,7 +93,8 @@ const Site = (() => {
     }
     return `<img class="banner" src="${esc(p.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'${esc(p.category)}'}))">`;
   };
-  const thumb = (p, tag) => `<div class="thumb">${p.img ? picture(p) : `<span class="ph">${esc(p.category)}</span>`}${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</div>`;
+  const badge = p => BADGES[p.key] ? `<span class="badge ${BADGES[p.key][1]}">${BADGES[p.key][0]}</span>` : '';
+  const thumb = (p, tag) => `<div class="thumb">${p.img ? picture(p) : `<span class="ph">${esc(p.category)}</span>`}${badge(p)}${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</div>`;
 
   // ── 장바구니 (이 브라우저에만 저장된다) ──
   function basket() {
@@ -137,7 +152,7 @@ const Site = (() => {
         <thead><tr><th>모델</th><th>관리</th>${years.map(y => `<th>${y}년</th>`).join('')}</tr></thead>
         <tbody>${p.variants.map(v => `<tr><td>${esc(v.model || '—')}<span class="sub">${esc(v.variant || '')}</span></td><td>${esc([v.care, v.cycle].filter(Boolean).join(' ') || '—')}</td>${years.map(y => `<td>${cell(v.prices.find(x => x.years === y))}</td>`).join('')}</tr>`).join('')}</tbody>
       </table></div>
-      <p class="note" style="margin-top:12px">월 렌탈료(원), 약정 기간별. 2026년 9-10월 카탈로그 기준.</p>
+      <p class="note" style="margin-top:12px">월 렌탈료(원), 약정 기간별.</p>
     </div>
     <div class="sheet-foot">${addButton(p, '')}</div>`;
     sheet.showModal();

@@ -56,14 +56,14 @@
           { label: '법인·사무실', hint: '회사·기관', next: {
             q: '몇 분이 함께 쓰세요?',
             options: [
-              { label: '20명 미만', next: {
+              { label: '10명 미만', next: {
                 q: '필요한 기능을 골라 주세요',
                 options: [
                   { label: '정수·냉수·온수', result: pick('사무실에 두기 좋은 스탠드형 정수기예요.', '워터 스탠드 2', '워터 스탠드 플러스', '프라임 스탠드') },
                   { label: '얼음까지', result: pick('사무실에서 얼음까지 쓰는 스탠드형 얼음정수기예요.', '아이스 스탠드 1.0', '아이스 스탠드 3.0') },
                   { label: '커피까지', result: pick('냉수·온수·정수·얼음에 커피까지 되는 제품이에요.', '카페 얼음정수기') },
                 ] } },
-              { label: '20명 이상', next: {
+              { label: '10명 이상', next: {
                 q: '필요한 기능을 골라 주세요',
                 options: [
                   { label: '정수·냉수·온수', result: pick('많은 인원이 쓰는 대용량 스탠드 정수기예요.', 'RO 직수 스탠드', '스탠드 정수기') },
@@ -135,7 +135,7 @@
         <div class="result-actions">
           <a class="btn btn-main" href="consult.html?note=${encodeURIComponent(note)}">장바구니 보기</a>
           <a class="btn btn-kakao" href="https://open.kakao.com/o/st6dXvDg" target="_blank" rel="noopener">카카오톡 상담</a>
-          <a class="btn btn-line" href="tel:010-3490-8733">무료 상담 전화</a>
+          <a class="btn btn-line" href="tel:010-3490-8733"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>바로 문의</a>
           <a class="btn btn-line" href="products.html#${encodeURIComponent(category())}">${esc(category())} 전체 보기</a>
         </div>
         ${back}`;
