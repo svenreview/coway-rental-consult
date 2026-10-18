@@ -32,6 +32,9 @@ button,input,textarea,select{font:inherit}
 .btn-main:hover{background:#1158BD}
 .btn-line{background:#fff;border-color:var(--line);color:var(--ink)}
 .btn-line:hover{border-color:var(--ink)}
+.btn-kakao{background:#FEE500;color:#191919}
+.btn-kakao:hover{background:#F5DC00}
+.btn .ico{width:18px;height:18px;fill:currentColor;flex:none}
 .btn-small{min-height:40px;padding:0 14px;font-size:14px}
 .btn[disabled]{opacity:.5;cursor:not-allowed}
 .count-dot{background:#fff;color:var(--blue);border-radius:var(--r-pill);font-size:12px;padding:0 7px;line-height:1.6}
@@ -53,6 +56,7 @@ button,input,textarea,select{font:inherit}
   .tabbar{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;z-index:60;background:#fff;border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
   .tabbar a{padding:13px 4px;text-align:center;font-size:13px;font-weight:700;text-decoration:none;color:var(--soft)}
   .tabbar a.on{color:var(--blue)}
+  .tabbar a.tab-call{color:var(--blue)}
   body{padding-bottom:58px}
   .sec{padding-top:40px;padding-bottom:40px}
 }
@@ -79,7 +83,7 @@ button,input,textarea,select{font:inherit}
 @media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr);gap:24px 12px}}
 .card{display:flex;flex-direction:column;min-width:0}
 .card-open{display:block;text-align:left;background:none;border:0;padding:0;cursor:pointer;color:inherit;width:100%}
-.thumb{position:relative;aspect-ratio:4/3;border-radius:var(--r-m);background:var(--tile);overflow:hidden;display:grid;place-items:center}
+.thumb{position:relative;aspect-ratio:4/3;border-radius:var(--r-m);background:#fff;border:1px solid var(--line);overflow:hidden;display:grid;place-items:center}
 .thumb .shot{position:absolute;inset:12%;width:76%;height:76%;display:block}
 .thumb .banner{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;display:block}
 .sheet-img.is-shot{height:220px;position:relative}
@@ -119,6 +123,8 @@ button,input,textarea,select{font:inherit}
 /* consult band */
 .cta{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;background:var(--tile);border-radius:var(--r-m);padding:28px}
 .cta h2{font-size:22px;font-weight:700}
+.cta-sub{margin-top:4px;font-size:14px;color:var(--soft)}
+.cta-sub .num{white-space:nowrap}
 .cta-btns{display:flex;flex-wrap:wrap;gap:8px}
 
 /* footer */
@@ -142,7 +148,7 @@ button,input,textarea,select{font:inherit}
 .sheet-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
 .sheet-head h2{font-size:20px;font-weight:700;line-height:1.35}
 .sheet-close{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:#fff;font-size:20px;line-height:1;cursor:pointer}
-.sheet-img{margin-top:14px;border-radius:var(--r-m);overflow:hidden;background:var(--tile)}
+.sheet-img{margin-top:14px;border-radius:var(--r-m);overflow:hidden;background:#fff;border:1px solid var(--line)}
 .sheet-img img{width:100%;display:block}
 .ptable{width:100%;border-collapse:collapse;font-size:14px;min-width:540px;margin-top:16px}
 .ptable th,.ptable td{padding:9px 10px;text-align:right;border-top:1px solid var(--line);white-space:nowrap}
