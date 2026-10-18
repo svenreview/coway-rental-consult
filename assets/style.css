@@ -141,6 +141,8 @@ a.service-type:hover strong{color:var(--blue)}
 .price{margin-top:6px;font-size:13px;color:var(--soft)}
 .price s{color:var(--faint);margin-right:6px}
 .price b{font-size:17px;color:var(--ink)}
+.price{white-space:nowrap}
+@media(max-width:360px){.price s{display:block;margin:0 0 1px}}
 .card .btn{margin-top:10px;width:100%}
 .btn-add[aria-pressed=true]{background:var(--blue-soft);border-color:var(--blue-soft);color:var(--blue)}
 .more{display:flex;justify-content:center;margin-top:28px}
