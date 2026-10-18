@@ -247,8 +247,17 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .privacy-box div{display:grid;grid-template-columns:64px 1fr;gap:8px;padding:2px 0}
 .privacy-box dt{font-weight:700;color:var(--ink)}
 .privacy-box dd{margin:0}
-.consent{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--soft);margin:4px 0 16px}
-.consent input{width:20px;height:20px;flex:none;margin-top:1px;accent-color:var(--blue)}
+.consent-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 12px;margin:4px 0 16px}
+.consent{display:flex;gap:10px;align-items:center;font-size:14px;color:var(--ink);cursor:pointer}
+.consent b{color:var(--blue)}
+.privacy-more{display:contents}
+.privacy-more summary{list-style:none;cursor:pointer;font-size:13px;color:var(--soft);text-decoration:underline;padding:6px 0}
+.privacy-more summary::-webkit-details-marker{display:none}
+.privacy-more summary::after{content:" ▾"}
+.privacy-more[open] summary::after{content:" ▴"}
+.privacy-more .privacy-box{flex-basis:100%;margin:6px 0 0}
+.privacy-more a{flex-basis:100%;font-size:13px;color:var(--soft)}
+.consent input{width:20px;height:20px;flex:none;margin:0;accent-color:var(--blue)}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .form .btn{width:100%}
 .form-msg{margin-top:12px;padding:12px 14px;border-radius:var(--r-s);font-size:14px;background:#FDECEA;color:#8A1C0F}
