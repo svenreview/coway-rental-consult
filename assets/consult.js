@@ -32,7 +32,7 @@
       if (low) sum += low.price;
       return `<li class="b-item">
         ${p ? Site.thumb(p) : '<div class="thumb"></div>'}
-        <div><small>${esc(i.category)}</small><b>${esc(i.name)}${promo(i.key)}</b>${p && info(p) ? `<span class="info">${esc(info(p))}</span>` : ''}${low ? `<span class="p num">월 ${won(low.price)}원~</span>` : ''}</div>
+        <div><small>${esc(i.category)}</small><b>${esc(i.name)}${promo(i.key)}</b>${p && info(p) ? `<span class="info">${esc(info(p))}</span>` : ''}${p ? Site.descList(Site.descLines(p, low && low.model)) : ''}${low ? `<span class="p num">월 ${won(low.price)}원~</span>` : ''}</div>
         <button type="button" data-remove="${esc(i.key)}" aria-label="${esc(i.name)} 빼기">×</button>
       </li>`;
     }).join('');

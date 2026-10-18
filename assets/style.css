@@ -289,3 +289,12 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .doc p{color:var(--soft)}
 
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* 종합카탈로그 제품 설명 (금액표 창·장바구니) */
+.desc{list-style:none;margin:0;padding:0}
+.desc li{position:relative;padding-left:12px;font-size:14px;line-height:1.5;color:var(--ink)}
+.desc li::before{content:"";position:absolute;left:2px;top:.65em;width:4px;height:4px;border-radius:50%;background:var(--blue)}
+.sheet-desc{margin-top:14px;display:grid;gap:10px}
+.desc-group small{display:block;font-size:12px;color:var(--faint);margin-bottom:2px}
+.b-item .desc{margin:4px 0 2px}
+.b-item .desc li{font-size:12.5px;line-height:1.45;color:var(--soft)}
