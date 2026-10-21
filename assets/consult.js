@@ -37,6 +37,10 @@
         <button type="button" data-remove="${esc(i.key)}" aria-label="${esc(i.name)} 빼기">×</button>
       </li>`;
     }).join('');
+    // 신청 버튼 바로 위에서 장바구니 제품이 함께 접수되는지 알려 준다
+    document.querySelector('#with-cart').textContent = items.length
+      ? `장바구니 제품 ${items.length}개가 함께 접수돼요.`
+      : '제품 없이 상담만 신청해요. 제품은 상담에서 함께 골라도 돼요.';
     sumEl.hidden = items.length < 2 || !sum;
     sumEl.innerHTML = `<span>${items.length}개 합계</span><b class="num">월 ${won(sum)}원~</b>`;
   }

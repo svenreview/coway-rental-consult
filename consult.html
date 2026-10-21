@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>장바구니 | 코웨이 렌탈 맞춤 상담</title>
+<title>상담 신청 | 코웨이 렌탈 맞춤 상담</title>
 <meta name="description" content="담아 둔 제품을 확인하고 한 번에 무료 상담을 신청하세요.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +35,7 @@
   </div>
 
   <div id="consult-body">
-    <div class="page-head"><h1>장바구니</h1></div>
+    <div class="page-head"><h1>상담 신청</h1></div>
 
     <div class="consult-cols">
       <section aria-labelledby="form-title">
@@ -78,13 +78,14 @@
               <a href="privacy.html">처리방침 전체 보기</a>
             </details>
           </div>
+          <p class="with-cart" id="with-cart"></p>
           <button type="submit" class="btn btn-main">상담 신청하기</button>
           <p class="form-msg" id="form-msg" role="alert" hidden></p>
         </form>
       </section>
 
-      <section aria-labelledby="basket-title">
-        <h2 class="step-title" id="basket-title">담은 제품</h2>
+      <section class="cart-col" aria-labelledby="basket-title">
+        <h2 class="step-title" id="basket-title">장바구니 <span class="count-dot" data-basket-count hidden></span></h2>
         <ul class="b-list" id="basket-list" hidden></ul>
         <p class="b-sum" id="basket-sum" hidden></p>
         <p class="b-empty" id="basket-empty">담은 제품이 없어도 상담 신청할 수 있어요.</p>
