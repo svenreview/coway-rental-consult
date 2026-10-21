@@ -1,6 +1,6 @@
 // 장바구니: 담은 제품 보기·빼기, 상담 신청서 보내기
 (async () => {
-  const { won, esc, lowest } = Site;
+  const { esc, lowest } = Site;
   const listEl = document.querySelector('#basket-list');
   const emptyEl = document.querySelector('#basket-empty');
   const form = document.querySelector('#consult-form');
@@ -30,7 +30,7 @@
       const low = p && lowest(p);
       return `<li class="b-item">
         ${p ? Site.thumb(p) : '<div class="thumb"></div>'}
-        <div><small>${esc(i.category)}</small><b>${esc(i.name)}${promo(i.key)}</b>${p && info(p) ? `<span class="info">${esc(info(p))}</span>` : ''}${p ? Site.descList(Site.descLines(p, low && low.model)) : ''}${low ? `<span class="p num">월 ${won(low.price)}원~</span>` : ''}</div>
+        <div><small>${esc(i.category)}</small><b>${esc(i.name)}${promo(i.key)}</b>${p && info(p) ? `<span class="info">${esc(info(p))}</span>` : ''}${p ? Site.descList(Site.descLines(p, low && low.model)) : ''}</div>
         <button type="button" data-remove="${esc(i.key)}" aria-label="${esc(i.name)} 빼기">×</button>
       </li>`;
     }).join('');
