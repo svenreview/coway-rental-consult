@@ -37,7 +37,7 @@
     // 신청 버튼 바로 위에서 장바구니 제품이 함께 접수되는지 알려 준다
     document.querySelector('#with-cart').textContent = items.length
       ? `장바구니 제품 ${items.length}개가 함께 접수돼요.`
-      : '장바구니에 제품이 없어도 바로 상담 신청할 수 있어요.';
+      : '제품 없이 상담만 신청해요. 제품은 상담에서 함께 골라도 돼요.';
   }
   listEl.addEventListener('click', e => { const b = e.target.closest('[data-remove]'); if (b) Site.remove(b.dataset.remove); });
   document.addEventListener('basket-change', render);
