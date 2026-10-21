@@ -38,17 +38,6 @@
     <div class="page-head"><h1>장바구니</h1></div>
 
     <div class="consult-cols">
-      <section aria-labelledby="basket-title">
-        <h2 class="step-title" id="basket-title">담은 제품</h2>
-        <ul class="b-list" id="basket-list" hidden></ul>
-        <p class="b-sum" id="basket-sum" hidden></p>
-        <p class="b-empty" id="basket-empty">담은 제품이 없어요. 연락처만 남겨도 돼요.</p>
-        <div class="b-more">
-          <a class="btn btn-line btn-small" href="products.html">제품 더 담기</a>
-          <a class="btn btn-line btn-small" href="recommend.html">맞춤 추천</a>
-        </div>
-      </section>
-
       <section aria-labelledby="form-title">
         <h2 class="step-title" id="form-title">연락받을 곳</h2>
         <form class="form" id="consult-form" novalidate>
@@ -92,6 +81,17 @@
           <button type="submit" class="btn btn-main">상담 신청하기</button>
           <p class="form-msg" id="form-msg" role="alert" hidden></p>
         </form>
+      </section>
+
+      <section aria-labelledby="basket-title">
+        <h2 class="step-title" id="basket-title">담은 제품</h2>
+        <ul class="b-list" id="basket-list" hidden></ul>
+        <p class="b-sum" id="basket-sum" hidden></p>
+        <p class="b-empty" id="basket-empty">담은 제품이 없어도 상담 신청할 수 있어요.</p>
+        <div class="b-more">
+          <a class="btn btn-line btn-small" href="products.html" id="basket-more">제품 더 담기</a>
+          <a class="btn btn-line btn-small" href="recommend.html">맞춤 추천</a>
+        </div>
       </section>
     </div>
   </div>
