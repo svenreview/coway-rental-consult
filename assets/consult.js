@@ -3,7 +3,6 @@
   const { won, esc, lowest } = Site;
   const listEl = document.querySelector('#basket-list');
   const emptyEl = document.querySelector('#basket-empty');
-  const sumEl = document.querySelector('#basket-sum');
   const form = document.querySelector('#consult-form');
   const msg = document.querySelector('#form-msg');
   const done = document.querySelector('#consult-done');
@@ -26,11 +25,9 @@
     emptyEl.hidden = items.length > 0;
     listEl.hidden = items.length === 0;
     document.querySelector('#basket-more').textContent = items.length ? '제품 더 담기' : '제품 보러 가기';
-    let sum = 0;
     listEl.innerHTML = items.map(i => {
       const p = products.find(x => x.key === i.key);
       const low = p && lowest(p);
-      if (low) sum += low.price;
       return `<li class="b-item">
         ${p ? Site.thumb(p) : '<div class="thumb"></div>'}
         <div><small>${esc(i.category)}</small><b>${esc(i.name)}${promo(i.key)}</b>${p && info(p) ? `<span class="info">${esc(info(p))}</span>` : ''}${p ? Site.descList(Site.descLines(p, low && low.model)) : ''}${low ? `<span class="p num">월 ${won(low.price)}원~</span>` : ''}</div>
@@ -41,8 +38,6 @@
     document.querySelector('#with-cart').textContent = items.length
       ? `장바구니 제품 ${items.length}개가 함께 접수돼요.`
       : '장바구니에 제품이 없어도 바로 상담 신청할 수 있어요.';
-    sumEl.hidden = items.length < 2 || !sum;
-    sumEl.innerHTML = `<span>${items.length}개 합계</span><b class="num">월 ${won(sum)}원~</b>`;
   }
   listEl.addEventListener('click', e => { const b = e.target.closest('[data-remove]'); if (b) Site.remove(b.dataset.remove); });
   document.addEventListener('basket-change', render);
