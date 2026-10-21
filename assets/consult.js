@@ -25,6 +25,7 @@
     const items = Site.basket();
     emptyEl.hidden = items.length > 0;
     listEl.hidden = items.length === 0;
+    document.querySelector('#basket-more').textContent = items.length ? '제품 더 담기' : '제품 보러 가기';
     let sum = 0;
     listEl.innerHTML = items.map(i => {
       const p = products.find(x => x.key === i.key);

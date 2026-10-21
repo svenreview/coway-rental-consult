@@ -232,7 +232,6 @@ a.service-type:hover strong{color:var(--blue)}
 
 /* basket page */
 .consult-cols{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;padding-bottom:64px}
-@media(min-width:921px){.consult-cols>section:last-child{position:sticky;top:80px}}
 @media(max-width:920px){.consult-cols{grid-template-columns:1fr;gap:32px}}
 .step-title{font-size:16px;font-weight:700;margin-bottom:12px}
 .b-list{display:grid;gap:8px}
@@ -251,7 +250,7 @@ a.service-type:hover strong{color:var(--blue)}
 .b-item button:hover{border-color:var(--ink);color:var(--ink)}
 .b-sum{margin-top:10px;background:var(--tile);border-radius:var(--r-m);padding:14px 16px;display:flex;justify-content:space-between;gap:10px;font-size:14px}
 .b-sum b{font-size:16px}
-.b-empty{border:1px dashed var(--line);border-radius:var(--r-m);padding:20px;color:var(--soft);font-size:14px;text-align:center}
+.b-empty{color:var(--soft);font-size:14px;line-height:1.5}
 .b-more{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .form{border:1px solid var(--line);border-radius:var(--r-m);padding:22px}
 .field{margin-bottom:14px}
