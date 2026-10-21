@@ -237,8 +237,6 @@ a.service-type:hover strong{color:var(--blue)}
 .step-title .count-dot{background:var(--blue);color:#fff}
 /* 상담 신청: 신청서 테두리 상자를 없애 제목·항목 이름·입력칸이 모두 같은 왼쪽 선에서 시작하게 한다 */
 .consult-cols #consult-form{border:0;padding:0;border-radius:0;background:none}
-/* 큰 제목 글자의 왼쪽 빈틈을 살짝 당겨 아래 글자와 첫 시작을 맞춘다 */
-#consult-body .page-head h1{margin-left:-0.05em}
 .with-cart{font-size:13px;color:var(--soft);margin:4px 0 8px}
 .b-list{display:grid;gap:8px}
 .b-item{display:grid;grid-template-columns:88px 1fr auto;gap:12px;align-items:center;border:1px solid var(--line);border-radius:var(--r-m);padding:8px}
