@@ -220,24 +220,27 @@
         <div class="choices">${n.options.map((o, i) => `<button type="button" data-i="${i}"><b>${esc(o.label)}</b>${o.hint ? `<span>${esc(o.hint)}</span>` : ''}</button>`).join('')}</div>
         ${back}</section>`;
     }
+    const kakao = box.querySelector('[data-kakao-copy]');
+    if (kakao) {
+      kakao.addEventListener('click', () => {
+        const text = decodeURIComponent(kakao.dataset.kakaoCopy);
+        const guide = box.querySelector('[data-kakao-guide]');
+        kakao.textContent = '상담 내용 복사 중...';
+        copyText(text).then(copied => {
+          if (copied) {
+            kakao.textContent = '상담 내용 복사 완료';
+            if (guide) guide.textContent = '복사됐어요. 카카오톡 채팅창을 길게 눌러 붙여넣어 주세요.';
+          } else {
+            kakao.textContent = '카카오톡 상담';
+            if (guide) guide.textContent = '자동 복사가 제한됐어요. 상담 신청을 이용하거나 추천 화면을 캡처해 보내 주세요.';
+          }
+        });
+      });
+    }
     box.querySelector('h1').focus?.();
   }
 
   box.addEventListener('click', e => {
-    const kakao = e.target.closest('[data-kakao-copy]');
-    if (kakao) {
-      const text = decodeURIComponent(kakao.dataset.kakaoCopy);
-      const guide = box.querySelector('[data-kakao-guide]');
-      copyText(text).then(copied => {
-        if (copied) {
-          kakao.textContent = '상담 내용 복사 완료';
-          if (guide) guide.textContent = '복사됐어요. 카카오톡 채팅창을 길게 눌러 붙여넣어 주세요.';
-        } else if (guide) {
-          guide.textContent = '자동 복사가 제한됐어요. 상담 신청을 이용하거나 추천 화면을 캡처해 보내 주세요.';
-        }
-      });
-      return;
-    }
     const choice = e.target.closest('[data-i]');
     if (choice) { trail.push(+choice.dataset.i); render(); window.scrollTo({ top: 0 }); return; }
     if (e.target.closest('[data-back]')) { trail.pop(); render(); }
