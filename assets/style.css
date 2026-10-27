@@ -322,3 +322,35 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .spec .spec-model>dt{color:var(--ink);font-weight:700}
 .spec .spec-model>dt span{font-weight:400;color:var(--soft);font-size:12px}
 .spec .spec-model dl>div{border-bottom:0;padding:2px 0}
+
+
+/* mobile home layout polish */
+#benefit{scroll-margin-top:84px}
+.cta-mobile{display:none}
+@media(max-width:760px){
+  #benefit{scroll-margin-top:68px}
+  .hero-band{padding-bottom:24px}
+  .hero{gap:0;padding-top:22px;padding-bottom:18px}
+  .hero h1{margin:12px 0 10px;font-size:30px;line-height:1.2}
+  .hero-copy p{font-size:15px;line-height:1.5}
+  .hero-product{min-height:225px}
+  .hero-product .shot{width:min(310px,86%);height:260px}
+  .hero-halo{width:230px}
+  .hero-cta{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:10px;max-width:none}
+  .hero-cta .btn{min-height:46px;border-radius:13px;font-size:13px;padding:0 5px;gap:4px;white-space:nowrap}
+  .hero-cta .btn .ico{width:16px;height:16px}
+  .hero-cta .btn-grad{grid-column:auto}
+  #chips{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;overflow:visible;padding-bottom:0}
+  #chips button{grid-column:span 2;width:100%;min-height:40px;padding:0 6px;font-size:14px}
+  #chips button:nth-child(4),#chips button:nth-child(5){grid-column:span 3}
+  .cta{padding:20px;gap:14px}
+  .cta h2{font-size:20px;line-height:1.35}
+  .cta-desktop{display:none}
+  .cta-mobile{display:block;width:100%}
+  .cta-mobile summary{list-style:none;cursor:pointer;width:100%}
+  .cta-mobile summary::-webkit-details-marker{display:none}
+  .cta-mobile summary::after{content:" 선택";font-size:12px;font-weight:600;opacity:.8}
+  .cta-mobile[open] summary::after{content:" 닫기"}
+  .cta-mobile-options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:8px}
+  .cta-mobile-options .btn{min-height:44px;padding:0 5px;font-size:13px;border-radius:12px}
+}
