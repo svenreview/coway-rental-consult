@@ -44,8 +44,15 @@
   render();
 
   // 맞춤 추천에서 넘어온 내용이 있으면 문의 내용에 넣어 둔다
-  const note = new URLSearchParams(location.search).get('note');
+  const params = new URLSearchParams(location.search);
+  const note = params.get('note');
+  const kakaoAfterSubmit = params.get('next') === 'kakao';
   if (note) form.message.value = note;
+  const submitButton = form.querySelector('button[type=submit]');
+  if (kakaoAfterSubmit) {
+    submitButton.textContent = '상담 접수하고 카카오톡 열기';
+    submitButton.insertAdjacentHTML('beforebegin', '<p class="note">입력한 정보와 추천 결과가 먼저 접수된 뒤 카카오톡 채팅창으로 이동해요.</p>');
+  }
 
   // 연락처: 숫자를 넣으면 하이픈을 자동으로 넣는다 (010-1234-5678, 02-123-4567, 1588-1234)
   const hyphen = v => {
@@ -90,13 +97,17 @@
     const fail = text => { msg.textContent = text; msg.hidden = false; };
     if (!data.name || !data.contact) return fail('이름과 연락처를 적어 주세요.');
     if (!data.consent) return fail('개인정보 수집·이용에 동의해 주세요.');
-    const button = form.querySelector('button[type=submit]');
+    const button = submitButton;
     button.disabled = true;
     try {
       const res = await fetch('/api/inquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
       const body = await res.json().catch(() => ({}));
       if (!res.ok) return fail(body.error || '상담 신청이 접수되지 않았어요. 전화나 카카오톡으로 연락해 주세요.');
       Site.clear();
+      if (kakaoAfterSubmit) {
+        location.href = 'http://pf.kakao.com/_Upxian/chat';
+        return;
+      }
       document.querySelector('#consult-body').hidden = true;
       done.hidden = false;
       done.focus();

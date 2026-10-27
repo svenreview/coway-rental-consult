@@ -167,24 +167,6 @@
   const node = () => trail.reduce((n, i) => n.options[i].next || n.options[i], TREE);
   const category = () => trail.length ? TREE.options[trail[0]].category : '';
   const answers = () => { let n = TREE; return trail.map(i => { const o = n.options[i]; n = o.next || n; return o.label; }); };
-  const copyText = async text => {
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch (_) {
-      const area = document.createElement('textarea');
-      area.value = text;
-      area.setAttribute('readonly', '');
-      area.style.position = 'fixed';
-      area.style.opacity = '0';
-      document.body.appendChild(area);
-      area.select();
-      let copied = false;
-      try { copied = document.execCommand('copy'); } catch (_) {}
-      area.remove();
-      return copied;
-    }
-  };
 
   // 남은 질문 수(가장 긴 길 기준)로 진행 막대를 채운다
   const depth = n => n.result ? 0 : 1 + Math.max(...n.options.map(o => depth(o.next || o)));
@@ -197,7 +179,6 @@
       const found = n.result.names.map(name => products.find(p => p.category === category() && p.name === name)).filter(Boolean);
       const resultNames = found.length ? found.map(p => p.name).join(', ') : '설치·전문 상담 필요';
       const note = `[맞춤 추천] ${answers().join(' / ')} → ${resultNames}`;
-      const kakaoNote = `[코웨이 맞춤추천 상담]\n선택 조건: ${answers().join(' > ')}\n추천 제품: ${resultNames}\n문의: 위 조건으로 렌탈료와 혜택 상담 부탁드립니다.`;
       const cards = found.length
         ? `<div class="grid">${found.map((p, i) => Site.card(p, i === 0 ? '가장 적합' : '비교 후보')).join('')}</div>`
         : '<p class="empty">설치 환경과 사용 조건을 먼저 확인한 뒤 제품을 안내해 드려요.</p>';
@@ -207,11 +188,11 @@
         <p class="note">추천 결과의 가격표에서 약정과 관리 방식을 확인할 수 있어요. 최종 렌탈료·프로모션·설치 가능 여부는 상담 시 다시 확인합니다.</p>
         <div class="result-actions">
           <a class="btn btn-main" href="consult.html?note=${encodeURIComponent(note)}">${found.length ? '추천 결과로 상담 신청' : '설치 상담 신청'}</a>
-          <a class="btn btn-kakao" href="http://pf.kakao.com/_Upxian/chat" target="_blank" rel="noopener" data-kakao-copy="${encodeURIComponent(kakaoNote)}">상담 내용 복사하고 카카오톡</a>
+          <a class="btn btn-kakao" href="consult.html?note=${encodeURIComponent(note)}&next=kakao">정보 입력 후 카카오톡</a>
           <a class="btn btn-line" href="tel:010-3490-8733"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>바로 문의</a>
           <a class="btn btn-line" href="products.html#${encodeURIComponent(category())}">${esc(category())} 전체 보기</a>
         </div>
-        <p class="note" data-kakao-guide>카카오톡 버튼을 누르면 추천 내용이 자동 복사돼요. 열린 채팅창에 붙여넣어 주세요.</p>
+        <p class="note">이름·연락처와 개인정보 동의 후 추천 정보가 접수되고 카카오톡으로 이동해요.</p>
         ${back}`;
     } else {
       box.innerHTML = `${bar}<section class="quiz-card">
@@ -219,23 +200,6 @@
         <h1>${esc(n.q)}</h1>
         <div class="choices">${n.options.map((o, i) => `<button type="button" data-i="${i}"><b>${esc(o.label)}</b>${o.hint ? `<span>${esc(o.hint)}</span>` : ''}</button>`).join('')}</div>
         ${back}</section>`;
-    }
-    const kakao = box.querySelector('[data-kakao-copy]');
-    if (kakao) {
-      kakao.addEventListener('click', () => {
-        const text = decodeURIComponent(kakao.dataset.kakaoCopy);
-        const guide = box.querySelector('[data-kakao-guide]');
-        kakao.textContent = '상담 내용 복사 중...';
-        copyText(text).then(copied => {
-          if (copied) {
-            kakao.textContent = '상담 내용 복사 완료';
-            if (guide) guide.textContent = '복사됐어요. 카카오톡 채팅창을 길게 눌러 붙여넣어 주세요.';
-          } else {
-            kakao.textContent = '카카오톡 상담';
-            if (guide) guide.textContent = '자동 복사가 제한됐어요. 상담 신청을 이용하거나 추천 화면을 캡처해 보내 주세요.';
-          }
-        });
-      });
     }
     box.querySelector('h1').focus?.();
   }
