@@ -187,7 +187,7 @@
         ${cards}
         <p class="note">추천 결과의 가격표에서 약정과 관리 방식을 확인할 수 있어요. 최종 렌탈료·프로모션·설치 가능 여부는 상담 시 다시 확인합니다.</p>
         <div class="result-actions">
-          <a class="btn btn-main" href="consult.html?note=${encodeURIComponent(note)}">${found.length ? '장바구니 보기' : '설치 상담 신청'}</a>
+          <a class="btn btn-main" href="consult.html?note=${encodeURIComponent(note)}">${found.length ? '추천 결과로 상담 신청' : '설치 상담 신청'}</a>
           <a class="btn btn-kakao" href="https://open.kakao.com/o/st6dXvDg" target="_blank" rel="noopener">카카오톡 상담</a>
           <a class="btn btn-line" href="tel:010-3490-8733"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>바로 문의</a>
           <a class="btn btn-line" href="products.html#${encodeURIComponent(category())}">${esc(category())} 전체 보기</a>
