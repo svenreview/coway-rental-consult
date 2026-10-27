@@ -50,9 +50,37 @@
   if (note) form.message.value = note;
   const submitButton = form.querySelector('button[type=submit]');
   if (kakaoAfterSubmit) {
-    submitButton.textContent = '상담 접수하고 카카오톡 열기';
-    submitButton.insertAdjacentHTML('beforebegin', '<p class="note">입력한 정보와 추천 결과가 먼저 접수된 뒤 카카오톡 채팅창으로 이동해요.</p>');
+    submitButton.textContent = '상담 접수·복사 후 카카오톡 열기';
+    submitButton.insertAdjacentHTML('beforebegin', '<p class="note">접수 후 상담 내용이 자동 복사돼요. 열린 카카오톡 채팅창에서 붙여넣기 후 전송해 주세요.</p>');
   }
+
+  const copyText = async text => {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch (_) {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      let copied = false;
+      try { copied = document.execCommand('copy'); } catch (_) {}
+      area.remove();
+      return copied;
+    }
+  };
+  const kakaoMessage = data => [
+    '[코웨이 렌탈 상담]',
+    `이름: ${data.name}`,
+    `연락처: ${data.contact}`,
+    `사용 장소: ${data.kind}`,
+    data.products.length ? `관심 제품: ${data.products.join(', ')}` : '',
+    data.message ? `추천·문의: ${data.message}` : '',
+    '렌탈료와 혜택 상담 부탁드립니다.',
+  ].filter(Boolean).join('\n');
 
   // 연락처: 숫자를 넣으면 하이픈을 자동으로 넣는다 (010-1234-5678, 02-123-4567, 1588-1234)
   const hyphen = v => {
@@ -98,13 +126,17 @@
     if (!data.name || !data.contact) return fail('이름과 연락처를 적어 주세요.');
     if (!data.consent) return fail('개인정보 수집·이용에 동의해 주세요.');
     const button = submitButton;
+    const copyPromise = kakaoAfterSubmit ? copyText(kakaoMessage(data)) : Promise.resolve(false);
     button.disabled = true;
+    if (kakaoAfterSubmit) button.textContent = '상담 정보 접수 중...';
     try {
       const res = await fetch('/api/inquiry', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
       const body = await res.json().catch(() => ({}));
       if (!res.ok) return fail(body.error || '상담 신청이 접수되지 않았어요. 전화나 카카오톡으로 연락해 주세요.');
       Site.clear();
       if (kakaoAfterSubmit) {
+        const copied = await copyPromise;
+        button.textContent = copied ? '접수·복사 완료 · 카카오톡 이동 중' : '접수 완료 · 카카오톡 이동 중';
         location.href = 'http://pf.kakao.com/_Upxian/chat';
         return;
       }
@@ -116,6 +148,7 @@
       fail('상담 신청이 접수되지 않았어요. 전화나 카카오톡으로 연락해 주세요.');
     } finally {
       button.disabled = false;
+      if (kakaoAfterSubmit && location.hostname !== 'pf.kakao.com') button.textContent = '상담 접수·복사 후 카카오톡 열기';
     }
   });
 })();
