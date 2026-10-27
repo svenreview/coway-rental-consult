@@ -772,10 +772,10 @@
  "음식물처리기|미생물 음식물처리기": {
   "src": "https://mall.cowaystatic.com/static/upload/product/product/ID0101_8803_attimg_org.png",
   "box": [
-   175,
-   72,
-   350,
-   560,
+   180,
+   85,
+   343,
+   553,
    700,
    700
   ]
@@ -787,10 +787,10 @@
  "음식물처리기|음식물처리기 2L": {
   "src": "https://mall.cowaystatic.com/static/upload/product/product/ID0101_8347_attimg_org.png?v=221911",
   "box": [
-   220,
-   92,
-   310,
-   560,
+   227,
+   123,
+   296,
+   505,
    750,
    750
   ]
@@ -798,10 +798,10 @@
  "음식물처리기|음식물처리기 3L": {
   "src": "https://mall.cowaystatic.com/static/upload/product/product/ID0101_8357_attimg_org.png?v=221913",
   "box": [
-   180,
-   96,
-   390,
-   540,
+   188,
+   150,
+   374,
+   451,
    750,
    750
   ]
