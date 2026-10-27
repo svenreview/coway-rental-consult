@@ -10005,201 +10005,265 @@
  },
  {
   "category": "음식물처리기",
-  "page": "8L",
+  "page": "57",
   "name": "미생물 음식물처리기",
-  "model": "WMB-012L",
-  "variant": "일반형·1.2 kg/일",
+  "model": "WMB-0703",
+  "variant": "",
   "care": "방문관리",
-  "cycle": "",
-  "lumpSum": 1050000,
+  "cycle": "4개월",
+  "lumpSum": 1090000,
   "prices": [
    {
     "years": 3,
-    "rental": 39100,
-    "promo": null,
-    "reRental": null
-   },
-   {
-    "years": 4,
-    "rental": 35600,
-    "promo": null,
-    "reRental": null
+    "rental": 40900,
+    "promo": 36900,
+    "reRental": 36800,
+    "reRentalPromo": 33200
    },
    {
     "years": 5,
-    "rental": 34100,
-    "promo": null,
-    "reRental": null
+    "rental": 37900,
+    "promo": 33900,
+    "reRental": 34100,
+    "reRentalPromo": 30500
+   },
+   {
+    "years": 6,
+    "rental": 35900,
+    "promo": 31900,
+    "reRental": 32300,
+    "reRentalPromo": 28700
    }
   ]
  },
  {
   "category": "음식물처리기",
-  "page": "8L",
+  "page": "57",
   "name": "미생물 음식물처리기",
-  "model": "WMB-012L",
-  "variant": "일반형·1.2 kg/일",
-  "care": "자가관리",
-  "cycle": "",
-  "lumpSum": 1050000,
-  "prices": [
-   {
-    "years": 3,
-    "rental": 37100,
-    "promo": null,
-    "reRental": null
-   },
-   {
-    "years": 4,
-    "rental": 33600,
-    "promo": null,
-    "reRental": null
-   },
-   {
-    "years": 5,
-    "rental": 32100,
-    "promo": null,
-    "reRental": null
-   }
-  ]
- },
- {
-  "category": "음식물처리기",
-  "page": "8L",
-  "name": "미생물 음식물처리기",
-  "model": "WMB-022L",
-  "variant": "대용량·2 kg/일",
+  "model": "WMB-0703",
+  "variant": "",
   "care": "방문관리",
-  "cycle": "",
-  "lumpSum": 1190000,
+  "cycle": "6개월",
+  "lumpSum": 1090000,
   "prices": [
    {
     "years": 3,
-    "rental": 44200,
-    "promo": null,
-    "reRental": null
-   },
-   {
-    "years": 4,
-    "rental": 40200,
-    "promo": null,
-    "reRental": null
+    "rental": 38900,
+    "promo": 34900,
+    "reRental": 35000,
+    "reRentalPromo": 31400
    },
    {
     "years": 5,
-    "rental": 38700,
-    "promo": null,
-    "reRental": null
+    "rental": 35900,
+    "promo": 31900,
+    "reRental": 32300,
+    "reRentalPromo": 28700
+   },
+   {
+    "years": 6,
+    "rental": 33900,
+    "promo": 29900,
+    "reRental": 30500,
+    "reRentalPromo": 26900
    }
   ]
  },
  {
   "category": "음식물처리기",
-  "page": "8L",
+  "page": "57",
   "name": "미생물 음식물처리기",
-  "model": "WMB-022L",
-  "variant": "대용량·2 kg/일",
+  "model": "WMB-0703",
+  "variant": "",
   "care": "자가관리",
-  "cycle": "",
-  "lumpSum": 1190000,
+  "cycle": "4개월",
+  "lumpSum": 1090000,
   "prices": [
    {
     "years": 3,
-    "rental": 42200,
-    "promo": null,
-    "reRental": null
-   },
-   {
-    "years": 4,
-    "rental": 38200,
-    "promo": null,
-    "reRental": null
+    "rental": 38900,
+    "promo": 34900,
+    "reRental": 35000,
+    "reRentalPromo": 31400
    },
    {
     "years": 5,
-    "rental": 36700,
-    "promo": null,
-    "reRental": null
+    "rental": 35900,
+    "promo": 31900,
+    "reRental": 32300,
+    "reRentalPromo": 28700
+   },
+   {
+    "years": 6,
+    "rental": 33900,
+    "promo": 29900,
+    "reRental": 30500,
+    "reRentalPromo": 26900
    }
   ]
  },
  {
   "category": "음식물처리기",
-  "page": "9L",
+  "page": "57",
+  "name": "미생물 음식물처리기",
+  "model": "WMB-0703",
+  "variant": "",
+  "care": "자가관리",
+  "cycle": "6개월",
+  "lumpSum": 1090000,
+  "prices": [
+   {
+    "years": 3,
+    "rental": 36900,
+    "promo": 32900,
+    "reRental": 33200,
+    "reRentalPromo": 29600
+   },
+   {
+    "years": 5,
+    "rental": 33900,
+    "promo": 29900,
+    "reRental": 30500,
+    "reRentalPromo": 26900
+   },
+   {
+    "years": 6,
+    "rental": 31900,
+    "promo": 27900,
+    "reRental": 28700,
+    "reRentalPromo": 25100
+   }
+  ]
+ },
+ {
+  "category": "음식물처리기",
+  "page": "57",
   "name": "음식물처리기 2L",
   "model": "WMG-2005",
-  "variant": "2 L",
-  "care": "서비스프리",
-  "cycle": "",
-  "lumpSum": 930000,
+  "variant": "",
+  "care": "자가관리",
+  "cycle": "4개월",
+  "lumpSum": 670000,
   "prices": [
    {
     "years": 3,
-    "rental": 35900,
-    "promo": 33900,
-    "reRental": null,
-    "reRentalPromo": null
-   },
-   {
-    "years": 4,
-    "rental": 32400,
-    "promo": 30400,
-    "reRental": null,
-    "reRentalPromo": null
+    "rental": 27900,
+    "promo": 23900,
+    "reRental": 25100,
+    "reRentalPromo": 21500
    },
    {
     "years": 5,
-    "rental": 29400,
-    "promo": 27400,
-    "reRental": null,
-    "reRentalPromo": null
+    "rental": 25900,
+    "promo": 21900,
+    "reRental": 23300,
+    "reRentalPromo": 19700
    },
    {
-    "years": 7,
+    "years": 6,
     "rental": 24900,
-    "promo": 22900,
-    "reRental": null,
-    "reRentalPromo": null
+    "promo": 20900,
+    "reRental": 22400,
+    "reRentalPromo": 18800
    }
   ]
  },
  {
   "category": "음식물처리기",
-  "page": "9R",
-  "name": "음식물처리기 3L",
-  "model": "WMG-3004",
-  "variant": "3 L",
-  "care": "서비스프리",
-  "cycle": "",
-  "lumpSum": 1380000,
+  "page": "57",
+  "name": "음식물처리기 2L",
+  "model": "WMG-2005",
+  "variant": "",
+  "care": "자가관리",
+  "cycle": "6개월",
+  "lumpSum": 670000,
   "prices": [
    {
     "years": 3,
-    "rental": 54900,
-    "promo": 49900,
-    "reRental": null,
-    "reRentalPromo": null
-   },
-   {
-    "years": 4,
-    "rental": 49900,
-    "promo": 44900,
-    "reRental": null,
-    "reRentalPromo": null
+    "rental": 25900,
+    "promo": 21900,
+    "reRental": 23300,
+    "reRentalPromo": 19700
    },
    {
     "years": 5,
-    "rental": 44900,
-    "promo": 39900,
-    "reRental": null,
-    "reRentalPromo": null
+    "rental": 23900,
+    "promo": 19900,
+    "reRental": 21500,
+    "reRentalPromo": 17900
    },
    {
-    "years": 7,
-    "rental": 35900,
-    "promo": 30900,
-    "reRental": null,
-    "reRentalPromo": null
+    "years": 6,
+    "rental": 22900,
+    "promo": 18900,
+    "reRental": 20600,
+    "reRentalPromo": 17000
+   }
+  ]
+ },
+ {
+  "category": "음식물처리기",
+  "page": "57",
+  "name": "음식물처리기 3L",
+  "model": "WMG-3004",
+  "variant": "",
+  "care": "자가관리",
+  "cycle": "4개월",
+  "lumpSum": 790000,
+  "prices": [
+   {
+    "years": 3,
+    "rental": 29900,
+    "promo": 25900,
+    "reRental": 26900,
+    "reRentalPromo": 23300
+   },
+   {
+    "years": 5,
+    "rental": 27900,
+    "promo": 23900,
+    "reRental": 25100,
+    "reRentalPromo": 21500
+   },
+   {
+    "years": 6,
+    "rental": 26900,
+    "promo": 22900,
+    "reRental": 24200,
+    "reRentalPromo": 20600
+   }
+  ]
+ },
+ {
+  "category": "음식물처리기",
+  "page": "57",
+  "name": "음식물처리기 3L",
+  "model": "WMG-3004",
+  "variant": "",
+  "care": "자가관리",
+  "cycle": "6개월",
+  "lumpSum": 790000,
+  "prices": [
+   {
+    "years": 3,
+    "rental": 27900,
+    "promo": 23900,
+    "reRental": 25100,
+    "reRentalPromo": 21500
+   },
+   {
+    "years": 5,
+    "rental": 25900,
+    "promo": 21900,
+    "reRental": 23300,
+    "reRentalPromo": 19700
+   },
+   {
+    "years": 6,
+    "rental": 24900,
+    "promo": 20900,
+    "reRental": 22400,
+    "reRentalPromo": 18800
    }
   ]
  }
