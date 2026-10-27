@@ -197,7 +197,7 @@
 
 ## 6. 블로그에 적힌 연락 방법 (사이트에 써도 되는지 확인 필요)
 - 상담 전화: 010-3490-8733
-- 카카오톡 오픈채팅: https://open.kakao.com/o/st6dXvDg
+- 카카오톡 오픈채팅: http://pf.kakao.com/_Upxian/chat
 - 메일: dreamket@naver.com
 - 네이버 블로그: https://blog.naver.com/dreamket
 - 글쓴이 표기: 한 글에 "김선기 대표"로 나온다. 블로그 소개에는 "코웨이 본사 세일즈 팀장".
