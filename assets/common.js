@@ -124,10 +124,25 @@ const Site = (() => {
   const condition = b => [b.years + '년 약정', b.variant, b.care].filter(Boolean).join(', ');
   const modelLabel = p => { const m = [...new Set(p.variants.map(v => v.model).filter(Boolean))]; return m.length > 1 ? m[0] + ' 외' : (m[0] || ''); };
   // 제품 사진은 제품이 있는 자리만 잘라 칸 가운데에 크게 그린다(SVG). 블로그 배너는 칸에 맞춰 그대로 보여 준다.
+  // 제품컷 좌표에는 자동 안전 여백을 더한다. 수동 좌표가 조금 달라도 제품 상하좌우가 잘리지 않게 한다.
+  const safeViewBox = box => {
+    const [x, y, w, h, fullW, fullH] = box.map(Number);
+    if (![x, y, w, h, fullW, fullH].every(Number.isFinite) || w <= 0 || h <= 0 || fullW <= 0 || fullH <= 0) return null;
+    const padX = Math.max(16, w * 0.12);
+    const padY = Math.max(16, h * 0.12);
+    const left = Math.max(0, x - padX);
+    const top = Math.max(0, y - padY);
+    const right = Math.min(fullW, x + w + padX);
+    const bottom = Math.min(fullH, y + h + padY);
+    return [left, top, right - left, bottom - top, fullW, fullH];
+  };
   const picture = p => {
     if (p.box) {
-      const [x, y, w, h, fullW, fullH] = p.box;
-      return `<svg class="shot" viewBox="${x} ${y} ${w} ${h}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${esc(p.name)}"><image href="${esc(p.img)}" width="${fullW}" height="${fullH}"/></svg>`;
+      const safe = safeViewBox(p.box);
+      if (safe) {
+        const [x, y, w, h, fullW, fullH] = safe;
+        return `<svg class="shot" viewBox="${x} ${y} ${w} ${h}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${esc(p.name)}"><image href="${esc(p.img)}" width="${fullW}" height="${fullH}"/></svg>`;
+      }
     }
     return `<img class="banner" src="${esc(p.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'${esc(p.category)}'}))">`;
   };
