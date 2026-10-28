@@ -76,7 +76,7 @@
                       { label: '스탠드형', result: pick('온수 기능이 필요 없는 사업장에 맞는 스탠드형 제품을 상담으로 확인해 드려요.') },
                     ] } },
                   { label: '냉수·온수·정수', next: {
-                    q: '하루 이용 인원은 어느 정도인가요?',
+                    q: '이용 인원이나 설치 형태를 골라 주세요',
                     options: [
                       { label: '10명 미만', hint: '작은 매장·사무공간, 스탠드형', result: pick('작은 사업장에서 물을 편하게 쓰는 스탠드형 제품이에요.', '워터 스탠드 2', '워터 스탠드 플러스') },
                       { label: '10명 이상', hint: '사용량 많은 매장', result: pick('이용 인원과 가장 붐비는 시간의 사용량을 고려한 스탠드형 제품이에요.', '프라임 스탠드', 'RO 직수 스탠드', '스탠드 정수기') },
@@ -233,7 +233,7 @@
         ${cards}
         <p class="note">추천 결과의 가격표에서 약정과 관리 방식을 확인할 수 있어요. 최종 렌탈료·프로모션·설치 가능 여부는 상담 시 다시 확인합니다.</p>
         <div class="result-actions">
-          <a class="btn btn-main" href="consult.html?note=${encodeURIComponent(note)}">${found.length ? '추천 결과로 상담 신청' : '설치 상담 신청'}</a>
+          <a class="btn btn-main" href="consult.html?note=${encodeURIComponent(note)}">${found.length ? '추천 결과로 상담 신청' : (category() ? '설치 상담 신청' : '상담 신청')}</a>
           <a class="btn btn-kakao" href="consult.html?note=${encodeURIComponent(note)}&next=kakao">정보 입력 후 카카오톡</a>
           <a class="btn btn-line" href="tel:010-3490-8733"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>바로 문의</a>
           ${category() ? `${category() ? `<a class="btn btn-line" href="products.html#${encodeURIComponent(category())}">${esc(category())} 전체 보기</a>` : ''}` : ''}
