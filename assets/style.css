@@ -225,6 +225,8 @@ a.service-type:hover strong{color:var(--blue)}
 .choices button:hover{border-color:#00A7D9;background:var(--blue-soft);transform:scale(1.01);box-shadow:0 4px 12px #00A7D92E}
 .choices b{display:block;font-size:17px}
 .choices span{display:block;margin-top:2px;font-size:14px;color:var(--soft)}
+.choices-2{grid-template-columns:1fr 1fr}
+.choices-2 button{height:100%}
 .quiz-back{margin-top:16px;background:none;border:0;font-size:14px;color:var(--soft);text-decoration:underline;cursor:pointer;padding:8px 0}
 .quiz .grid{grid-template-columns:repeat(3,1fr)}
 @media(max-width:700px){.quiz .grid{grid-template-columns:repeat(2,1fr)}}
