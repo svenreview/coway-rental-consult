@@ -14,16 +14,16 @@
             q: '어떤 물을 사용하시나요?', cols: 2,
             options: [
               { label: '상수도', next: {
-                q: '어떤 기능이 필요하신가요?',
+                q: '어떤 기능이 필요하신가요?', fx: 1,
                 options: [
-                  { label: '정수만', hint: '냉수·온수 없이 깨끗한 물만', next: {
+                  { label: '정수만', next: {
                     q: '어떤 설치 방식이 좋으신가요?',
                     options: [
                       { label: '일반 설치', hint: '싱크대 위', result: pick('정수 기능에 집중한 데스크형 제품이에요.', '스위치', '프라임 베이직') },
                       { label: '싱크대 빌트인', result: pick('본체를 하부장에 설치해 주방 상판을 넓게 쓸 수 있어요. 타공과 설치 공간 확인이 필요합니다.', '스위치 빌트인') },
                       { label: '설치 방식을 모르겠어요', result: pick('설치 공간과 타공 가능 여부를 확인한 뒤 맞는 제품을 안내해 드려요.') },
                     ] } },
-                  { label: '냉수·정수', hint: '온수는 필요 없어요', next: {
+                  { label: '냉수·정수', next: {
                     q: '무엇이 가장 중요하세요?',
                     options: [
                       { label: '좁은 공간·슬림한 디자인', result: pick('온수 기능 없이 냉수와 정수를 쓰는 슬림한 제품이에요. 온수 없는 냉정 모델로 안내해 드려요.', '아이콘 정수기 3', '아이콘 정수기 2') },
@@ -37,7 +37,7 @@
                       { label: '누구나 쉽게 쓰는 레버형', hint: '남녀노소·어르신도 편하게', result: pick('복잡한 화면 조작보다 간편한 레버 방식을 좋아하시는 분께 맞는 제품이에요.', '엘리트 정수기', '프라임 1.0') },
                       { label: '싱크대 빌트인', result: pick('주방 상판 공간을 비우면서 냉수·온수·정수를 쓰는 제품이에요. 설치 조건 확인이 필요합니다.', '노블 빌트인 정수기', '엘리트 빌트인 정수기') },
                     ] } },
-                  { label: '얼음·냉수·정수', hint: '얼음은 필요하지만 온수는 필요 없어요', next: {
+                  { label: '얼음·냉수·정수', next: {
                     q: '얼음을 얼마나 사용하시나요?',
                     options: [
                       { label: '가끔 사용해요', result: pick('온수 없이 냉수·정수·얼음을 쓰는 제품이에요. 냉정 얼음 모델로 안내해 드려요.', '아이콘 얼음정수기 오리지널') },
@@ -59,7 +59,7 @@
             q: '어떤 물을 사용하시나요?', cols: 2,
             options: [
               { label: '상수도', next: {
-                q: '어떤 기능이 필요하신가요?',
+                q: '어떤 기능이 필요하신가요?', fx: 1,
                 options: [
                   { label: '정수만', next: {
                     q: '어떤 형태로 설치하시나요?',
@@ -68,7 +68,7 @@
                       { label: '빌트인', result: pick('상판을 깔끔하게 유지할 수 있는 정수 전용 빌트인 제품이에요.', '스위치 빌트인') },
                       { label: '스탠드형', result: pick('이용 인원과 정수 사용량에 맞는 스탠드형 제품을 상담으로 안내해 드려요.') },
                     ] } },
-                  { label: '냉수·정수', hint: '온수는 필요 없어요', next: {
+                  { label: '냉수·정수', next: {
                     q: '어디에 설치하시나요?',
                     options: [
                       { label: '데스크형', result: pick('온수 없이 냉수와 정수를 쓰는 소형 제품이에요. 온수 없는 냉정 모델로 안내해 드려요.', '아이콘 정수기 3', '아이콘 정수기 2') },
@@ -105,7 +105,7 @@
                 q: '어떤 물을 사용하시나요?', cols: 2,
                 options: [
                   { label: '상수도', next: {
-                    q: '필요한 기능과 설치 형태를 골라 주세요',
+                    q: '필요한 기능과 설치 형태를 골라 주세요', fx: 1,
                     options: [
                       { label: '정수만·데스크형', result: pick('작은 사무실에서 정수만 간편하게 쓰는 제품이에요.', '스위치') },
                       { label: '정수만·빌트인', result: pick('하부장 설치와 타공이 가능한 공간에 맞는 정수 전용 제품이에요.', '스위치 빌트인') },
@@ -241,7 +241,7 @@
       box.innerHTML = `${bar}<section class="quiz-card">
         <p class="quiz-progress">${trail.length ? esc(answers().join(' › ')) : ''}</p>
         <h1>${esc(n.q)}</h1>
-        <div class="choices${n.cols === 2 ? ' choices-2' : ''}">${n.options.map((o, i) => `<button type="button" data-i="${i}"><b>${esc(o.label)}</b>${o.hint ? `<span>${esc(o.hint)}</span>` : ''}</button>`).join('')}</div>
+        <div class="choices${n.cols === 2 ? ' choices-2' : ''}">${n.options.map((o, i) => `<button type="button" data-i="${i}"><b>${n.fx ? esc(o.label).replace(/온수/g, '<em class="kw-hot">온수</em>').replace(/얼음/g, '<em class="kw-ice">얼음</em>') : esc(o.label)}</b>${o.hint ? `<span>${esc(o.hint)}</span>` : ''}</button>`).join('')}</div>
         ${back}</section>`;
     }
     box.querySelector('h1').focus?.();
