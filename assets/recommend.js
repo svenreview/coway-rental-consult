@@ -11,9 +11,9 @@
         q: '어디에서 사용하시나요?',
         options: [
           { label: '개인·가정', hint: '집·아파트·원룸', next: {
-            q: '어떤 물을 사용하시나요?',
+            q: '어떤 물을 사용하시나요?', cols: 2,
             options: [
-              { label: '상수도', next: {
+              { label: '상수도', hint: '일반 가정·아파트·상가', next: {
                 q: '어떤 기능이 필요하신가요?',
                 options: [
                   { label: '정수만', hint: '냉수·온수 없이 깨끗한 물만', next: {
@@ -53,13 +53,12 @@
                     ] } },
                   { label: '커피·얼음·냉수·온수·정수', result: pick('캡슐 커피와 얼음, 냉수·온수·정수를 한 대로 쓰는 올인원 제품이에요.', '카페 얼음정수기') },
                 ] } },
-              { label: '지하수·기타 용수', hint: '설치 전 확인 필요', result: pick('지하수는 수질과 수압 등 설치 조건 확인이 필요해 전문 상담으로 안내해 드려요.') },
-              { label: '어떤 물인지 모르겠어요', result: pick('사용하시는 물의 종류부터 확인한 뒤 설치할 수 있는 제품을 안내해 드려요.') },
+              { label: '지하수', hint: '지하수를 끌어 쓰는 곳', result: pick('지하수는 수질과 수압 등 설치 조건 확인이 필요해 전문 상담으로 안내해 드려요.') },
             ] } },
           { label: '개인사업자·사업장', hint: '카페·음식점·매장·사무실', next: {
-            q: '어떤 물을 사용하시나요?',
+            q: '어떤 물을 사용하시나요?', cols: 2,
             options: [
-              { label: '상수도', next: {
+              { label: '상수도', hint: '일반 가정·아파트·상가', next: {
                 q: '어떤 기능이 필요하신가요?',
                 options: [
                   { label: '정수만', next: {
@@ -96,17 +95,16 @@
                       { label: '판매용·다량 제조', result: pick('음료 판매량과 피크 시간 얼음 사용량을 확인한 뒤 안내해 드려요.') },
                     ] } },
                 ] } },
-              { label: '지하수·기타 용수', hint: '설치 전 확인 필요', result: pick('사업장의 수질과 수압, 필요한 정수량을 먼저 확인해야 해요. 전문 상담으로 안내해 드려요.') },
-              { label: '어떤 물인지 모르겠어요', result: pick('설치 장소의 물 종류를 확인한 뒤 맞는 제품을 안내해 드려요.') },
+              { label: '지하수', hint: '지하수를 끌어 쓰는 곳', result: pick('사업장의 수질과 수압, 필요한 정수량을 먼저 확인해야 해요. 전문 상담으로 안내해 드려요.') },
             ] } },
           { label: '법인', hint: '기업·사무실·사업장·기관', next: {
             q: '이용 인원과 설치 규모는 어떻게 되나요?',
             options: [
               { label: '30명 이상 또는 여러 장소 설치', result: pick('이용 인원과 설치 장소별 환경을 확인해 법인 맞춤 견적으로 안내해 드려요.') },
               { label: '30명 미만·한 장소', next: {
-                q: '어떤 물을 사용하시나요?',
+                q: '어떤 물을 사용하시나요?', cols: 2,
                 options: [
-                  { label: '상수도', next: {
+                  { label: '상수도', hint: '일반 가정·아파트·상가', next: {
                     q: '필요한 기능과 설치 형태를 골라 주세요',
                     options: [
                       { label: '정수만·데스크형', result: pick('작은 사무실에서 정수만 간편하게 쓰는 제품이에요.', '스위치') },
@@ -119,8 +117,7 @@
                       { label: '얼음 사용 (10~30명)', result: pick('중형 사무실에서 얼음까지 쓰는 제품이에요. 얼음 사용 빈도와 설치 공간은 상담 때 함께 확인해요.', '아이스 스탠드 3.0', '아이스 스탠드 3.8') },
                       { label: '그 밖의 설치 조건', result: pick('요청하신 설치 형태와 사용 환경에 맞춰 법인 전문 상담을 진행해요.') },
                     ] } },
-                  { label: '지하수·기타 용수', hint: '설치 전 확인 필요', result: pick('법인 사업장의 수질과 설치 조건을 확인한 뒤 안내해 드려요.') },
-                  { label: '어떤 물인지 모르겠어요', result: pick('사용하시는 물의 종류를 확인한 뒤 맞는 제품을 안내해 드려요.') },
+                  { label: '지하수', hint: '지하수를 끌어 쓰는 곳', result: pick('법인 사업장의 수질과 설치 조건을 확인한 뒤 안내해 드려요.') },
                 ] } },
             ] } },
         ] } },
@@ -244,7 +241,7 @@
       box.innerHTML = `${bar}<section class="quiz-card">
         <p class="quiz-progress">${trail.length ? esc(answers().join(' › ')) : ''}</p>
         <h1>${esc(n.q)}</h1>
-        <div class="choices">${n.options.map((o, i) => `<button type="button" data-i="${i}"><b>${esc(o.label)}</b>${o.hint ? `<span>${esc(o.hint)}</span>` : ''}</button>`).join('')}</div>
+        <div class="choices${n.cols === 2 ? ' choices-2' : ''}">${n.options.map((o, i) => `<button type="button" data-i="${i}"><b>${esc(o.label)}</b>${o.hint ? `<span>${esc(o.hint)}</span>` : ''}</button>`).join('')}</div>
         ${back}</section>`;
     }
     box.querySelector('h1').focus?.();
