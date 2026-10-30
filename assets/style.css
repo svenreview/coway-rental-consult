@@ -81,6 +81,7 @@ button,input,textarea,select{font:inherit}
 .hero-copy p{color:#526A88;font-size:18px;line-height:1.65}
 .hero-cta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:28px;max-width:600px}
 .hero-cta .btn{min-height:56px;border-radius:16px;font-size:16px;padding:0 12px}
+.hero-cta .btn{margin:0 !important}
 .hero-product{position:relative;display:grid;place-items:center;min-height:380px;text-decoration:none}
 .hero-halo{position:absolute;width:min(380px,90%);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#fff 0 28%,#C8DEFF88 58%,transparent 73%)}
 .hero-product .shot{position:relative;width:min(300px,80%);height:340px;filter:drop-shadow(20px 26px 22px #213B5C38)}
