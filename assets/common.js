@@ -10,8 +10,9 @@ const Site = (() => {
     '음식물처리기': [['미생물 음식물처리기', '신제품'], ['음식물처리기 2L', '신제품'], ['음식물처리기 3L', '신제품']],
   };
   const CATEGORIES = ['정수기', '공기청정기', '비데', '매트리스', '음식물처리기'];
-  // 사진 위 혜택 배지 [문구, 색]. 블로그 11월 프로모션 글(coway.blogpro.so 2026 코웨이 블랙프라이데이-11월 렌탈 특별 프로모션 총정리)을 따른다. 혜택이 바뀌면 여기만 고친다.
-  // 11월 글에 모델이 적힌 제품만 배지를 단다. 공기청정기·비데는 '행사 대상'으로만 적혀 있어 세부 모델 확인 전까지 배지를 달지 않는다.
+  // 사진 위 혜택 배지 [문구, 색]. 코웨이 '[26년 11월] 환경가전 제품 판매 활성화 프로모션 안내'(2026-10-29)와 블로그 11월 프로모션 글을 따른다. 혜택이 바뀌면 여기만 고친다.
+  // 반값: 아이콘 프로, 데스크탑 얼음정수기(카페 얼음정수기 CHPCI-8400N 제외), 워터 스탠드 플러스·스탠드2.
+  // 월 1만원: 아이콘2·3, 청정기 전제품(온풍·제습·가습청정기 포함, 단독 제습기·가습기 제외), 비데 전제품. 단종 제품 재고 소진 시 적용 불가.
   const BADGES = {
     '정수기|아이콘 정수기 3': ['월<br>1만원', 'red'],
     '정수기|아이콘 정수기 2': ['월<br>1만원', 'red'],
@@ -24,7 +25,12 @@ const Site = (() => {
     '정수기|워터 스탠드 2': ['렌탈료<br>반값', 'blue'],
     '정수기|얼음정수기 RO': ['렌탈료<br>반값', 'blue'],
     '정수기|얼음정수기 AIS 3.0': ['렌탈료<br>반값', 'blue'],
+    '정수기|얼음정수기 AIS 3.0 스파클링': ['렌탈료<br>반값', 'blue'],
   };
+  // 제품군 전체 배지: 청정기(이름에 '청정기'가 있는 제품)와 비데 전 제품
+  const badgeOf = p => BADGES[p.key]
+    || (p.category === '비데' ? ['월<br>1만원', 'red'] : null)
+    || (p.category === '공기청정기' && /청정기/.test(p.name) ? ['월<br>1만원', 'red'] : null);
 
   // 매트리스 종류: 카탈로그 목차의 분류를 따른다. 이름은 data/catalog-prices.json 의 name 과 똑같이 적는다.
   const MATTRESS_TYPES = {
@@ -138,7 +144,7 @@ const Site = (() => {
     }
     return `<img class="banner" src="${esc(p.img)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'ph',textContent:'${esc(p.category)}'}))">`;
   };
-  const badge = p => BADGES[p.key] ? `<span class="badge ${BADGES[p.key][1]}">${BADGES[p.key][0]}</span>` : '';
+  const badge = p => { const b = badgeOf(p); return b ? `<span class="badge ${b[1]}">${b[0]}</span>` : ''; };
   const thumb = (p, tag) => `<div class="thumb">${p.img ? picture(p) : `<span class="ph">${esc(p.category)}</span>`}${badge(p)}${tag ? `<span class="tag">${esc(tag)}</span>` : ''}</div>`;
 
   // ── 장바구니 (이 브라우저에만 저장된다) ──
