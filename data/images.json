@@ -527,6 +527,17 @@
    700
   ]
  },
+ "비데|더매너 비데": {
+  "src": "https://mall.cowaystatic.com/static/upload/product/product/ID0101_8877_attimg_org.png",
+  "box": [
+   173,
+   108,
+   357,
+   486,
+   700,
+   700
+  ]
+ },
  "비데|더블케어 비데 플러스": {
   "src": "https://mall.cowaystatic.com/static/upload/product/product/ID0101_5951_attimg_org.png",
   "box": [
@@ -589,6 +600,28 @@
    123,
    462,
    504,
+   750,
+   750
+  ]
+ },
+ "비데|컴팩트 비데 2": {
+  "src": "https://mall.cowaystatic.com/static/upload/product/product/ID0101_8573_attimg_org.png",
+  "box": [
+   151,
+   114,
+   389,
+   506,
+   700,
+   700
+  ]
+ },
+ "비데|컴팩트 비데 1": {
+  "src": "https://mall.cowaystatic.com/static/upload/product/product/ID0101_8549_attimg_org.png",
+  "box": [
+   179,
+   126,
+   392,
+   498,
    750,
    750
   ]
