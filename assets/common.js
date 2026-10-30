@@ -171,6 +171,23 @@ const Site = (() => {
     return `<button type="button" class="btn btn-line btn-add ${cls}" data-add="${esc(product.key)}" aria-pressed="${on}">${addLabel(on)}</button>`;
   }
 
+
+  // 카드 이름 아래 기능 표시. 종합카탈로그 사양(기타 항목의 '어린이 기능', '저수압 설치')과 소형 양변기 설치 가능 모델 표기를 따른다.
+  // 프라임 비데는 BA20-D에 어린이 기능이 없어 '어린이'를 달지 않는다. 소형 변기는 BA52-A 기준.
+  const FEATS = {
+    '비데|저수압용 비데': ['저수압'],
+    '비데|더매너 비데 플러스': ['어린이'],
+    '비데|더매너 비데': ['어린이'],
+    '비데|더블케어 비데 플러스': ['어린이'],
+    '비데|슬리믹 비데': ['어린이'],
+    '비데|스타일 비데 플러스': ['어린이', '소형 변기'],
+    '비데|스타일 비데': ['어린이', '소형 변기'],
+    '비데|컴팩트 비데 2': ['어린이', '소형 변기'],
+    '비데|컴팩트 비데 1': ['어린이', '소형 변기'],
+    '비데|프라임 비데': ['소형 변기'],
+  };
+  const feats = p => (FEATS[p.key] || []).length ? `<span class="feats">${FEATS[p.key].map(f => `<i>${esc(f)}</i>`).join('')}</span>` : '';
+
   // ── 제품 카드 ──
   function card(p, tag) {
     const low = lowest(p);
@@ -179,6 +196,7 @@ const Site = (() => {
         ${thumb(p, tag)}
         <span class="model">${esc(modelLabel(p))}</span>
         <h3>${esc(p.name)}</h3>
+        ${feats(p)}
         <p class="price num">${low.normal ? `<s>${won(low.normal)}</s>` : ''}월 <b>${won(low.price)}</b>원~</p>
       </button>
       ${addButton(p)}
