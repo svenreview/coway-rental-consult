@@ -68,7 +68,7 @@ button,input,textarea,select{font:inherit}
   .tabbar a{padding:13px 4px;text-align:center;font-size:13px;font-weight:700;text-decoration:none;color:var(--soft)}
   .tabbar a.on{color:var(--blue)}
   .tabbar a.tab-call{color:var(--blue)}
-  body{padding-bottom:58px}
+  body{padding-bottom:calc(58px + env(safe-area-inset-bottom,0px))}
   .sec{padding-top:40px;padding-bottom:40px}
 }
 
@@ -189,7 +189,7 @@ a.service-type:hover strong{color:var(--blue)}
 .toolbar{position:sticky;top:69px;z-index:20;background:#fff;padding-top:10px;padding-bottom:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .search{flex:1;min-width:180px;min-height:42px;font-size:16px;border:1px solid var(--line);border-radius:var(--r-pill);padding:0 18px;background:#fff;color:var(--ink)}
 .plist{padding-top:18px;padding-bottom:72px}
-@media(max-width:760px){.toolbar{top:52px}}
+@media(max-width:760px){.toolbar{position:static}.plist{padding-bottom:96px}}
 
 /* product sheet */
 .sheet{border:0;padding:0;border-radius:20px;width:min(720px,calc(100vw - 24px));max-height:min(86vh,820px);color:var(--ink)}
@@ -213,7 +213,7 @@ a.service-type:hover strong{color:var(--blue)}
 
 /* basket bar */
 .basket-bar{position:fixed;right:20px;bottom:20px;z-index:55;display:flex;align-items:center;gap:14px;background:var(--deep);color:#fff;border-radius:var(--r-m);padding:8px 8px 8px 18px;box-shadow:0 12px 28px -10px rgba(14,34,56,.6);font-weight:700;font-size:15px}
-@media(max-width:760px){.basket-bar{left:12px;right:12px;bottom:70px;justify-content:space-between}}
+@media(max-width:760px){.basket-bar{left:12px;right:12px;bottom:calc(68px + env(safe-area-inset-bottom,0px));justify-content:space-between}}
 
 /* recommend */
 .quiz-page{background:#F7FBFC}
