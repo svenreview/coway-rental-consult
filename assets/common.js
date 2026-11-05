@@ -156,12 +156,15 @@ const Site = (() => {
     document.dispatchEvent(new CustomEvent('basket-change'));
   }
   const inBasket = key => basket().some(i => i.key === key);
-  function toggle(product) {
+  // extra: 담을 때 함께 기억할 내용 (예: 맞춤 추천에서 고른 답 { rec: '정수기 / 개인·가정 / …' })
+  function toggle(product, extra = {}) {
     const items = basket();
     const at = items.findIndex(i => i.key === product.key);
-    if (at >= 0) items.splice(at, 1); else items.push({ key: product.key, category: product.category, name: product.name });
+    if (at >= 0) items.splice(at, 1); else items.push({ key: product.key, category: product.category, name: product.name, model: modelLabel(product), ...extra });
     saveBasket(items);
   }
+  // 상담 신청서·카카오톡·알림 메일에 쓰는 제품 한 줄: "정수기 - 아이콘 정수기 3 (CHP-7211N)"
+  const itemLine = i => `${i.category} - ${i.name}${i.model ? ` (${i.model})` : ''}`;
   const remove = key => saveBasket(basket().filter(i => i.key !== key));
   const clear = () => saveBasket([]);
 
@@ -231,7 +234,8 @@ const Site = (() => {
   }
 
   // 카드가 들어 있는 곳에 한 번 걸어 두면 담기와 금액표 열기가 동작한다
-  function wire(products) {
+  // extra(p): 담을 때 장바구니에 함께 적어 둘 내용을 돌려주는 함수 (맞춤 추천 페이지가 쓴다)
+  function wire(products, extra) {
     if (wire.done) return; wire.done = true;
     document.addEventListener('click', e => {
       const add = e.target.closest('[data-add]');
@@ -239,7 +243,7 @@ const Site = (() => {
         const p = products.find(x => x.key === add.dataset.add);
         if (!p) return;
         const adding = !inBasket(p.key);
-        toggle(p);
+        toggle(p, adding && extra ? extra(p) : {});
         // 금액표 창에서 담았으면 창을 닫는다. 아래 "담은 제품" 띠에서 장바구니로 갈 수 있다.
         if (adding && sheet && sheet.open && sheet.contains(add)) sheet.close();
         return;
@@ -258,5 +262,5 @@ const Site = (() => {
   window.addEventListener('storage', refresh);
   document.addEventListener('DOMContentLoaded', refresh);
 
-  return { FEATURED, CATEGORIES, MATTRESS_TYPES, BADGES, load, descLines, descList, won, esc, lowest, condition, thumb, picture, card, wire, basket, remove, clear, addButton, utm };
+  return { FEATURED, CATEGORIES, MATTRESS_TYPES, BADGES, load, descLines, descList, won, esc, lowest, condition, thumb, picture, card, wire, basket, remove, clear, addButton, utm, itemLine, modelLabel };
 })();
