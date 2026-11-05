@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/((?!api/).*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "coway-rental-consult.vercel.app"
+        }
+      ],
+      "destination": "https://www.coway-rental.com/$1",
+      "permanent": true
+    }
+  ]
+}
