@@ -25,7 +25,10 @@ module.exports = async (req, res) => {
   if (req.method === 'GET') {
     const r = await fetch(`${SB_URL}/rest/v1/inquiries?select=*&order=created_at.desc&limit=500`, { headers: sbHeaders() });
     if (!r.ok) return res.status(500).json({ error: '불러오지 못했어요.' });
-    return res.status(200).json({ rows: await r.json() });
+    // 사은품 구매처는 비밀번호를 확인한 관리자에게만 보낸다 (환경변수 GIFT_SOURCES)
+    let gifts = {};
+    try { gifts = JSON.parse(process.env.GIFT_SOURCES || '{}'); } catch { gifts = {}; }
+    return res.status(200).json({ rows: await r.json(), gifts });
   }
   if (req.method === 'PATCH') {
     let b = req.body || {};

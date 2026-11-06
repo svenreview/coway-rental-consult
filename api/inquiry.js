@@ -43,6 +43,8 @@ async function notify(row, host) {
   const to = process.env.NOTIFY_EMAIL;
   if (!key || !to) return;
   const source = row.utm_source ? [row.utm_source, row.utm_medium, row.utm_campaign].filter(Boolean).join(' / ') : (row.referrer || '직접 방문');
+  // 사은품 신청이면 구매처(마켓·링크·가격)를 담당자 메일에만 붙인다. 구매처는 환경변수 GIFT_SOURCES 에만 있다.
+  const giftLines = giftSources(row.products);
   const text = [
     '새 상담 신청이 들어왔어요.',
     '',
@@ -56,13 +58,15 @@ async function notify(row, host) {
     '문의 내용:',
     row.message || '(별도 문의 내용 없음)',
     '',
+    ...(giftLines.length ? ['', '사은품 구매처:', ...giftLines] : []),
+    '',
     `유입 경로: ${source}`,
     `관리자 페이지: https://${host}/admin`,
   ].join('\n');
   await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ from: process.env.NOTIFY_FROM || '코웨이 상담 알림 <onboarding@resend.dev>', to: [to], subject: `새 상담 신청: ${row.name}`, text }),
+    body: JSON.stringify({ from: process.env.NOTIFY_FROM || '코웨이 상담 알림 <onboarding@resend.dev>', to: [to], subject: `${giftLines.length ? '새 사은품 신청' : '새 상담 신청'}: ${row.name}`, text }),
     signal: AbortSignal.timeout(5000),
   });
 }
