@@ -500,3 +500,47 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .bn-gift-cta{width:100%;max-width:420px;background:linear-gradient(100deg,#F06A3B,#E8456B)}
 .bn-last h2{line-height:1.35}
 @media(max-width:600px){.bn-tiers{gap:6px}.bn-tier{padding:12px 6px}.bn-tier b{font-size:16px}.bn-tier small{font-size:11px}.bn-tier p{font-size:12.5px}.bn-gallery{grid-auto-columns:128px}}
+
+/* 혜택 페이지 v3 (사은품 중심, 짧은 구성) */
+.b2-hero{background:linear-gradient(180deg,#FFF3EC,#FFFFFF 85%);padding:28px 0 36px}
+.b2-hero-in{display:grid;gap:18px;max-width:640px}
+.b2-who{display:inline-block;font-size:14px;font-weight:700;color:#C2410C}
+.b2-copy h1{margin:8px 0 8px;font-size:clamp(30px,6vw,44px);line-height:1.2;letter-spacing:-0.03em;color:var(--navy);font-weight:700}
+.b2-copy h1 em{font-style:normal;color:#E8456B}
+.b2-sub{font-size:18px;color:var(--ink)}
+.b2-sub b{color:#E8456B}
+.b2-strip{list-style:none;margin:0 -20px;padding:4px 20px;display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.b2-strip::-webkit-scrollbar{display:none}
+.b2-strip li{flex:none;scroll-snap-align:start}
+.b2-g{width:104px;height:104px;border-radius:18px;background:#fff;border:1px solid #F3E2DA;display:grid;place-items:center;overflow:hidden}
+.b2-g img{width:82%;height:82%;object-fit:contain}
+.b2-form{background:#fff;border:0;box-shadow:0 14px 34px #C2410C1F;padding:18px}
+.b2-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.b2-form .field{margin-bottom:12px}
+.b2-form .consent{margin:2px 0 14px;font-size:15px}
+.b2-form .consent a{color:var(--soft);margin-left:4px}
+.b2-btn{width:100%;min-height:56px;font-size:18px;color:#fff;background:linear-gradient(100deg,#F06A3B,#E8456B);border:0}
+.b2-btn:hover{filter:brightness(1.05)}
+.b2-sec{padding-top:44px;padding-bottom:44px;max-width:640px}
+.b2-title{font-size:24px;line-height:1.35;font-weight:700;color:var(--navy);margin-bottom:18px}
+.b2-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.b2-tier{border:1px solid #F3D9CF;border-radius:var(--r-m);padding:18px 8px;text-align:center;background:#fff}
+.b2-tier span{display:block;font-size:15px;color:var(--soft)}
+.b2-tier b{display:block;font-size:26px;color:#E8456B;margin-top:4px}
+.b2-tier.top{border:2px solid #E8456B;background:#FFF6F3}
+.b2-plain{margin-top:14px;font-size:16px;color:var(--ink)}
+.b2-band{background:var(--tile)}
+.b2-why{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.b2-why li{background:#fff;border-radius:var(--r-m);padding:16px 18px;font-size:16px;color:var(--soft)}
+.b2-why b{display:block;font-size:18px;color:var(--navy);margin-bottom:2px}
+.b2-review{margin:0 0 36px;padding:20px;border-left:4px solid #E8456B;background:#FFF8F5;border-radius:0 var(--r-m) var(--r-m) 0}
+.b2-review blockquote{margin:0;font-size:18px;line-height:1.6;color:var(--ink)}
+.b2-review figcaption{margin-top:8px;font-size:14px;color:var(--soft)}
+.b2-last{background:var(--navy);padding:44px 0 56px}
+.b2-last .wrap{max-width:640px}
+.b2-last h2{color:#fff;font-size:26px;font-weight:700;margin-bottom:16px;text-align:center}
+.bn-page .bn-faq details{border:1px solid var(--line)}
+.bn-page .bn-faq summary{font-size:16px}
+.bn-page .bn-faq p{font-size:15px}
+@media(max-width:760px){.bn-sticky{background:linear-gradient(100deg,#F06A3B,#E8456B);box-shadow:0 10px 24px #E8456B55}}
+@media(max-width:420px){.b2-row{grid-template-columns:1fr}.b2-title{font-size:22px}.b2-tier b{font-size:23px}.b2-tier span{font-size:14px}}
