@@ -90,7 +90,14 @@ button,input{font:inherit}
   const $ = s => document.querySelector(s);
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   let rows = [];
+  let gifts = {};
   let filter = '전체';
+  // 사은품 신청이면 구매처(마켓·가격·링크)를 보여 준다
+  const giftBlock = r => {
+    const ids = [...String(r.products || '').matchAll(/\[(g\d{2,3})\]/g)].map(m => m[1]);
+    if (!ids.length) return '';
+    return `<div class="block"><span>사은품 구매처</span><p>${ids.map(id => { const s = gifts[id]; return s ? `[${esc(id)}] ${esc(s.n)} · ${esc(s.m)} · ${esc(s.p)}<br><a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.u)}</a>` : `[${esc(id)}] 구매처 정보 없음`; }).join('<br><br>')}</p></div>`;
+  };
 
   const pass = () => sessionStorage.getItem(KEY) || '';
   const api = (method, body) => fetch('/api/admin', {
@@ -126,6 +133,7 @@ button,input{font:inherit}
       <button type="button" class="contact" data-copy="${esc(r.contact)}">${esc(r.contact)}</button>
       ${r.products ? `<div class="block"><span>상담받을 제품</span><p>${esc(r.products)}</p></div>` : ''}
       ${r.message ? `<div class="block"><span>문의 내용</span><p>${esc(r.message)}</p></div>` : ''}
+      ${giftBlock(r)}
       <div class="block"><span>유입 경로</span><p>${esc(sourceText(r))}</p></div>
       <div class="states">${STATES.map(s => `<button type="button" data-id="${r.id}" data-status="${s}" aria-pressed="${r.status === s}">${s}</button>`).join('')}</div>
     </li>`).join('') : `<li class="empty">${filter === '전체' ? '아직 들어온 문의가 없어요.' : '이 상태의 문의가 없어요.'}</li>`;
@@ -137,6 +145,7 @@ button,input{font:inherit}
     if (res.status === 401) { sessionStorage.removeItem(KEY); showLogin(body.error || '비밀번호가 맞지 않아요.'); return false; }
     if (!res.ok) { showApp(); $('#app-err').textContent = body.error || '불러오지 못했어요.'; $('#app-err').hidden = false; return true; }
     rows = body.rows || [];
+    gifts = body.gifts || {};
     $('#app-err').hidden = true;
     showApp(); render();
     return true;
