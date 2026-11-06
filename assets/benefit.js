@@ -28,7 +28,7 @@
   const TIER = { 1: '베이직부터', 2: '플러스부터', 3: '프리미엄' };
   const gal = document.querySelector('#bn-gallery');
   if (gal) fetch('data/gifts.json').then(r => r.json()).then(list => {
-    gal.innerHTML = list.map(g => `<li class="t${g.tier}"><div class="bn-g-img">${g.img ? `<img src="${esc(g.img)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ''}</div><span class="bn-g-tag">${TIER[g.tier] || ''}</span><p>${esc(g.name)}</p></li>`).join('');
+    gal.innerHTML = list.slice().sort((a, b) => b.tier - a.tier).map(g => `<li class="t${g.tier}"><div class="bn-g-img">${g.img ? `<img src="${esc(g.img)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ''}</div><span class="bn-g-tag">${TIER[g.tier] || ''}</span><p>${esc(g.name)}</p></li>`).join('');
   }).catch(() => { gal.hidden = true; });
   document.querySelectorAll('[data-bn-jump]').forEach(a => a.addEventListener('click', e => {
     e.preventDefault();
