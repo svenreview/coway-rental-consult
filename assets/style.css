@@ -471,3 +471,4 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 .gf-consents .privacy-more summary{padding:0 0 4px 30px}
 @media(max-width:900px){.gf-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:600px){.gf-grid{grid-template-columns:repeat(2,1fr);gap:16px 10px}.gf-head h1{font-size:22px}.gf-sheet{width:100vw;max-width:100vw;margin:auto 0 0;border-radius:20px 20px 0 0}}
+.gf-bar span{white-space:nowrap}
