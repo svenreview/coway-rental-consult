@@ -140,3 +140,13 @@
   .album-version .st-final h2{font-size:26px;line-height:1.42}
   .album-version .st-final .st-btn.big{width:100%;min-height:58px;font-size:15px;padding-inline:14px}
 }
+
+
+/* final mobile album alignment */
+@media(max-width:640px){
+  .album-version .space-album-head{display:grid;grid-template-columns:36px minmax(0,1fr);align-items:center}
+  .album-version .space-album-head>span{grid-column:1;grid-row:1}
+  .album-version .space-album-head>div{display:contents}
+  .album-version .space-album-head h3{grid-column:2;grid-row:1}
+  .album-version .space-album-head p{grid-column:1/-1;grid-row:2;max-width:100%;margin-top:8px}
+}
