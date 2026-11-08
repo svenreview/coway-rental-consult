@@ -96,7 +96,7 @@ button,input{font:inherit}
   const giftBlock = r => {
     const ids = [...String(r.products || '').matchAll(/\[(g\d{2,3})\]/g)].map(m => m[1]);
     if (!ids.length) return '';
-    return `<div class="block"><span>사은품 구매처</span><p>${ids.map(id => { const s = gifts[id]; return s ? `[${esc(id)}] ${esc(s.n)} · ${esc(s.m)} · ${esc(s.p)}<br><a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.u)}</a>` : `[${esc(id)}] 구매처 정보 없음`; }).join('<br><br>')}</p></div>`;
+    return `<div class="block"><span>사은품 구매처</span><p>${ids.map(id => { const s = gifts[id]; return s ? `[${esc(id)}] ${esc(s.n)} · ${esc(s.p || '')}${s.c ? `<br>쿠팡 상품: <a href="${esc(s.c)}" target="_blank" rel="noopener">${esc(s.c)}</a>` : ''}<br>${esc(s.m || '아마존')} 주문: <a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.u)}</a>` : `[${esc(id)}] 구매처 정보 없음`; }).join('<br><br>')}</p></div>`;
   };
 
   const pass = () => sessionStorage.getItem(KEY) || '';
