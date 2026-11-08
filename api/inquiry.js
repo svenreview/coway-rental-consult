@@ -36,6 +36,25 @@ module.exports = async (req, res) => {
   return res.status(200).json({ ok: true });
 };
 
+// 사은품 신청이면 상품 번호([g01])로 GIFT_SOURCES 환경변수에서 쿠팡 링크와 실제 주문할 아마존 링크를 찾아 붙인다.
+// 형식: {"g01":{"n":"상품명","m":"아마존","p":"$9.99 + 한국배송 $8.36","u":"아마존 링크","c":"쿠팡 링크"}}
+function giftSources(products) {
+  const ids = [...String(products || '').matchAll(/\[(g\d{2,3})\]/g)].map(m => m[1]);
+  if (!ids.length) return [];
+  let map = {};
+  try { map = JSON.parse(process.env.GIFT_SOURCES || '{}'); } catch { map = {}; }
+  return ids.flatMap(id => {
+    const s = map[id];
+    if (!s) return [`[${id}] 구매처 정보 없음`, ''];
+    return [
+      `[${id}] ${s.n || ''}`,
+      s.c ? `  쿠팡 상품: ${s.c}` : '',
+      s.u ? `  아마존 주문: ${s.u}` : '',
+      s.p ? `  참고가: ${s.p}` : '',
+    ].filter(Boolean).concat('');
+  });
+}
+
 // 새 문의 알림 메일. RESEND_API_KEY 와 NOTIFY_EMAIL 환경변수가 둘 다 있을 때만 보낸다.
 // 개인정보 동의를 받은 상담 신청의 연락처·제품·문의 내용을 담당자 이메일로 함께 보낸다.
 async function notify(row, host) {
