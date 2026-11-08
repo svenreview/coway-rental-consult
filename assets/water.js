@@ -12,6 +12,15 @@
   } catch {}
   const img = name => (images['정수기|' + name] || {}).src || '';
 
+  // 첫 화면 제품 사진: 메인과 같은 아이콘 프로 사진
+  const heroBox = document.querySelector('#hero-product');
+  try {
+    const all = await Site.load();
+    const hero = all.find(x => x.key === '정수기|아이콘 프로');
+    if (hero && hero.img && heroBox) heroBox.insertAdjacentHTML('beforeend', Site.picture(hero));
+    else throw 0;
+  } catch { if (heroBox && img('아이콘 프로')) heroBox.insertAdjacentHTML('beforeend', `<img src="${img('아이콘 프로')}" alt="코웨이 아이콘 프로">`); }
+
   // 총비용 예시 카드: 아이콘 정수기 3 냉/온/정 방문관리 5년
   const ex = rows.find(r => r.name === '아이콘 정수기 3' && r.variant === '냉/온/정' && r.care === '방문관리');
   const pImg = document.querySelector('#price-img');
