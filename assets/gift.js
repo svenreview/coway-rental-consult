@@ -1,8 +1,9 @@
-// 사은품: 받은 링크(g=코드)의 등급 안 상품만 갤러리로 보여 주고, 담아서 신청하면 문의함으로 접수한다.
+// 사은품 리스트: 24개 전체를 6×4로 보여 주고, 받은 링크(g=코드)의 등급 안 상품만 담아서 신청할 수 있다.
+// 사진을 누르면 쿠팡 상품 페이지가 새 탭으로 열린다.
 // 고객 화면에는 가격·구매처를 두지 않는다. 구매처는 서버 환경변수(GIFT_SOURCES)에만 있다.
 (async () => {
   const { esc } = Site;
-  // 링크 코드 → 등급. 1 = 5만원 이하, 2 = 10만원 이하, 3 = 전체
+  // 링크 코드 → 등급. 1 = 위 3줄(5만원 미만 구간), 2·3 = 24개 전체
   const CODES = {
     'bs7k2q': { tier: 1, label: '베이직', lead: '월 렌탈료 3만원 이하 고객님 전용 사은품이에요.' },
     'pl4m9x': { tier: 2, label: '플러스', lead: '월 렌탈료 4만원 이하 고객님 전용 사은품이에요.' },
@@ -14,54 +15,50 @@
   const max = Math.min(Math.max(parseInt(q.get('n'), 10) || 1, 1), 3); // 고를 수 있는 개수 (기본 1, 1+1은 n=2)
 
   const grid = document.querySelector('#gf-grid');
-  const tabs = document.querySelector('#gf-tabs');
-  if (!level) {
-    document.querySelector('#gf-title').textContent = '사은품 링크를 확인해 주세요';
-    document.querySelector('#gf-lead').textContent = '받으신 링크로 다시 들어와 주세요. 링크가 없으면 담당자에게 문의해 주세요.';
-    grid.innerHTML = '';
-    document.querySelector('.gf-notes').hidden = true;
-    return;
+  if (level) {
+    document.querySelector('#gf-badge').textContent = `${level.label} 등급`;
+    document.querySelector('#gf-lead').textContent = `${level.lead} ${max}개를 고를 수 있어요. 사진을 누르면 상품을 자세히 볼 수 있어요.`;
+  } else {
+    document.querySelector('#gf-lead').textContent = '사진을 누르면 상품을 자세히 볼 수 있어요. 신청은 담당자에게 받은 링크로 들어오시면 할 수 있어요.';
   }
-  document.querySelector('#gf-badge').textContent = `${level.label} 등급`;
-  document.querySelector('#gf-lead').textContent = `${level.lead} ${max}개를 고를 수 있어요.`;
+  const myTier = level ? level.tier : 0;
 
   let items = [];
   try {
     const res = await fetch('data/gifts.json', { cache: 'no-cache' });
-    items = (await res.json()).filter(g => g.tier <= level.tier);
+    items = (await res.json()).sort((a, b) => (a.row - b.row) || a.id.localeCompare(b.id));
   } catch {
     grid.innerHTML = '<li class="empty">목록을 불러오지 못했어요. 새로 고침 해 주세요.</li>';
     return;
   }
 
   const KEY = 'gift-cart-' + code;
+  const can = g => myTier > 0 && g.tier <= myTier;
   let cart = [];
-  try { cart = (JSON.parse(sessionStorage.getItem(KEY)) || []).filter(id => items.some(g => g.id === id)); } catch {}
+  try { cart = (JSON.parse(sessionStorage.getItem(KEY)) || []).filter(id => items.some(g => g.id === id && can(g))); } catch {}
   const save = () => sessionStorage.setItem(KEY, JSON.stringify(cart));
-
-  const cats = ['전체', ...new Set(items.map(g => g.cat))];
-  let cat = '전체';
-  tabs.innerHTML = cats.map(c => `<button type="button" role="tab" data-cat="${esc(c)}">${esc(c)}</button>`).join('');
 
   const bar = document.querySelector('#gf-bar');
   function render() {
-    tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-selected', b.dataset.cat === cat));
-    const shown = items.filter(g => cat === '전체' || g.cat === cat);
-    grid.innerHTML = shown.map(g => {
+    grid.innerHTML = items.map(g => {
       const on = cart.includes(g.id);
-      return `<li class="gf-card${on ? ' on' : ''}">
-        <div class="gf-img">${g.img ? `<img src="${esc(g.img)}" alt="" loading="lazy" referrerpolicy="no-referrer">` : ''}</div>
-        <p class="gf-name">${esc(g.name)}</p>
-        <button type="button" class="btn ${on ? 'btn-main' : 'btn-line'} btn-small" data-id="${esc(g.id)}" aria-pressed="${on}">${on ? '담았어요' : '담기'}</button>
-      </li>`;
+      const ok = can(g);
+      const img = g.img ? `<img src="${esc(g.img)}" alt="${esc(g.name)}" loading="lazy" referrerpolicy="no-referrer">` : '';
+      const pic = g.link
+        ? `<a class="gf-img" href="${esc(g.link)}" target="_blank" rel="noopener" title="쿠팡에서 상품 자세히 보기">${img}<span class="gf-view">자세히 보기</span></a>`
+        : `<div class="gf-img">${img}</div>`;
+      const btn = !level ? ''
+        : ok ? `<button type="button" class="btn ${on ? 'btn-main' : 'btn-line'} btn-small" data-id="${esc(g.id)}" aria-pressed="${on}">${on ? '담았어요' : '담기'}</button>`
+        : '<span class="gf-lock">플러스 등급부터</span>';
+      return `<li class="gf-card${on ? ' on' : ''}${level && !ok ? ' off' : ''}">${pic}<p class="gf-name">${esc(g.name)}</p>${btn}</li>`;
     }).join('');
     bar.hidden = cart.length === 0;
     document.querySelector('#gf-bar-text').textContent = `${cart.length} / ${max}개 담음`;
   }
-  tabs.addEventListener('click', e => { const b = e.target.closest('button'); if (b) { cat = b.dataset.cat; render(); } });
   grid.addEventListener('click', e => {
-    const b = e.target.closest('[data-id]'); if (!b) return;
+    const b = e.target.closest('button[data-id]'); if (!b) return;
     const id = b.dataset.id;
+    if (!can(items.find(x => x.id === id))) return;
     if (cart.includes(id)) cart = cart.filter(x => x !== id);
     else if (cart.length >= max) { if (max === 1) cart = [id]; else { alert(`${max}개까지 고를 수 있어요. 담은 것을 빼고 다시 골라 주세요.`); return; } }
     else cart.push(id);
@@ -70,6 +67,7 @@
   render();
 
   // 신청서
+  if (!level) return;
   const sheet = document.querySelector('#gf-sheet');
   const form = document.querySelector('#gf-form');
   const msg = document.querySelector('#gf-msg');
