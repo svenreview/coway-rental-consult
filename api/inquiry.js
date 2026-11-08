@@ -42,7 +42,7 @@ function giftSources(products) {
   const ids = [...String(products || '').matchAll(/\[(g\d{2,3})\]/g)].map(m => m[1]);
   if (!ids.length) return [];
   let map = {};
-  try { map = JSON.parse(process.env.GIFT_SOURCES || '{}'); } catch { map = {}; }
+  try { map = JSON.parse(process.env.GIFT_SOURCES_V2 || process.env.GIFT_SOURCES || '{}'); } catch { map = {}; }
   return ids.flatMap(id => {
     const s = map[id];
     if (!s) return [`[${id}] 구매처 정보 없음`, ''];
