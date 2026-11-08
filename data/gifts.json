@@ -2,148 +2,136 @@
  {
   "id": "g01",
   "tier": 1,
-  "cat": "주방",
-  "name": "에텍시티 디지털 주방 저울",
-  "img": "https://m.media-amazon.com/images/I/7196hyCLk8L._AC_SL600_.jpg"
+  "row": 1,
+  "cat": "생활",
+  "name": "문걸이 후크 15개 세트",
+  "img": "assets/gifts/g01.jpg",
+  "link": "https://www.coupang.com/vp/products/9685837282?itemId=28965839867"
  },
  {
   "id": "g02",
   "tier": 1,
-  "cat": "디지털",
-  "name": "샤오미 보조배터리 10000mAh",
-  "img": "https://ae-pic-a1.aliexpress-media.com/kf/S73b0c0ae3cf14c54a48f1f22be3a8846P.jpg"
+  "row": 1,
+  "cat": "생활",
+  "name": "옷장 사이즈 칸막이 40개",
+  "img": "assets/gifts/g02.jpg",
+  "link": "https://www.coupang.com/vp/products/9742446606?itemId=29161490264&vendorItemId=96083640828"
  },
  {
   "id": "g03",
   "tier": 1,
-  "cat": "캠핑·차량",
-  "name": "차량용 자석 무선충전 거치대",
-  "img": "https://ae-pic-a1.aliexpress-media.com/kf/Sfe4ff9ae357f45a7ad588df5c1a86884a.png"
+  "row": 1,
+  "cat": "생활",
+  "name": "원목 열쇠·우편 걸이",
+  "img": "assets/gifts/g03.jpg",
+  "link": "https://www.coupang.com/vp/products/9742376981?itemId=29161198135&vendorItemId=96083364977"
  },
  {
   "id": "g04",
   "tier": 1,
-  "cat": "주방",
-  "name": "오왈라 프리십 보틀 32oz",
-  "img": "https://m.media-amazon.com/images/I/61k6Lw6z8jL._AC_SL600_.jpg"
+  "row": 1,
+  "cat": "생활",
+  "name": "와이어 수납 바구니",
+  "img": "assets/gifts/g04.jpg",
+  "link": "https://www.coupang.com/vp/products/9742428689?itemId=29161413414&vendorItemId=96083567700"
  },
  {
   "id": "g05",
   "tier": 1,
-  "cat": "주방",
-  "name": "하이드로저그 트래블러 40oz",
-  "img": "https://m.media-amazon.com/images/I/51rnEI9emNL._AC_SL600_.jpg"
+  "row": 1,
+  "cat": "생활",
+  "name": "옷걸이 연결 후크 200개",
+  "img": "assets/gifts/g05.jpg",
+  "link": "https://www.coupang.com/vp/products/9742460028?itemId=29161548740&vendorItemId=96083696629"
  },
  {
   "id": "g06",
   "tier": 1,
-  "cat": "주방",
-  "name": "스탠리 퀜처 H2.0 텀블러 40oz",
-  "img": "https://m.media-amazon.com/images/I/41vs1l35W7L._AC_SL600_.jpg"
+  "row": 1,
+  "cat": "생활",
+  "name": "메탈 와이어 수납 바구니",
+  "img": "assets/gifts/g06.jpg",
+  "link": "https://www.coupang.com/vp/products/9742428264?itemId=29161412102&vendorItemId=96083566471"
  },
  {
   "id": "g07",
   "tier": 1,
-  "cat": "디지털",
-  "name": "사운드코어 P20i 무선 이어버즈",
-  "img": "https://m.media-amazon.com/images/I/51+qzpA7y+L._AC_SL600_.jpg"
+  "row": 1,
+  "cat": "생활",
+  "name": "골드 그리드 벽 바구니",
+  "img": "assets/gifts/g07.jpg",
+  "link": "https://www.coupang.com/vp/products/9663237088?itemId=28889155946&vendorItemId=96083562756"
  },
  {
   "id": "g08",
   "tier": 1,
-  "cat": "디지털",
-  "name": "사운드코어 2 블루투스 스피커",
-  "img": "https://m.media-amazon.com/images/I/51gFkzxWQtL._AC_SL600_.jpg"
+  "row": 1,
+  "cat": "생활",
+  "name": "메탈 옷걸이 연결 후크 30개",
+  "img": "assets/gifts/g08.jpg",
+  "link": "https://www.coupang.com/vp/products/9742462505?itemId=29161561551&vendorItemId=96083708836"
  },
  {
   "id": "g09",
   "tier": 1,
-  "cat": "주방",
-  "name": "써모프로 고기 온도계",
-  "img": "https://m.media-amazon.com/images/I/71gDqeutfYL._AC_SL600_.jpg"
+  "row": 1,
+  "cat": "생활",
+  "name": "회전 정리 트레이 2개",
+  "img": "assets/gifts/g09.jpg",
+  "link": "https://www.coupang.com/vp/products/9754846943?itemId=29207638423&vendorItemId=96127674300"
  },
  {
   "id": "g10",
-  "tier": 1,
-  "cat": "주방",
-  "name": "하리오 V60 핸드드립 세트",
-  "img": "https://m.media-amazon.com/images/I/81t6Ae7XnRL._AC_SL600_.jpg"
+  "tier": 2,
+  "row": 2,
+  "cat": "생활",
+  "name": "투명 수납 서랍",
+  "img": "assets/gifts/g10.jpg",
+  "link": "https://www.coupang.com/vp/products/9477248158?itemId=28213779157&vendorItemId=96083258638"
  },
  {
   "id": "g11",
-  "tier": 1,
-  "cat": "캠핑·차량",
-  "name": "충전식 캠핑 랜턴",
-  "img": "https://m.media-amazon.com/images/I/61vCaxACgjL._AC_SL600_.jpg"
+  "tier": 2,
+  "row": 2,
+  "cat": "생활",
+  "name": "라탄 수납 바구니 3개 세트",
+  "img": "assets/gifts/g11.jpg",
+  "link": "https://www.coupang.com/vp/products/9642519329?itemId=28813035335&vendorItemId=96083566072"
  },
  {
   "id": "g12",
-  "tier": 1,
+  "tier": 2,
+  "row": 2,
   "cat": "생활",
-  "name": "지수라이프 넥밴드 선풍기",
-  "img": "https://m.media-amazon.com/images/I/61VWR1oxOIL._AC_SL600_.jpg"
+  "name": "투명 아크릴 북엔드 16개",
+  "img": "assets/gifts/g12.jpg",
+  "link": "https://www.coupang.com/vp/products/9663524678?itemId=28890182022&vendorItemId=95822765393"
  },
  {
   "id": "g13",
   "tier": 2,
-  "cat": "주방",
-  "name": "닌자 블라스트 휴대용 블렌더",
-  "img": "https://m.media-amazon.com/images/I/71mq2bihOPL._AC_SL600_.jpg"
+  "row": 2,
+  "cat": "생활",
+  "name": "문걸이 수납 바구니",
+  "img": "assets/gifts/g13.jpg",
+  "link": "https://www.coupang.com/vp/products/9742427840?itemId=29161410614&vendorItemId=96083565114"
  },
  {
   "id": "g14",
   "tier": 2,
+  "row": 2,
   "cat": "생활",
-  "name": "아보리프 미니 마사지건",
-  "img": "https://m.media-amazon.com/images/I/61NkeHfJQeL._AC_SL600_.jpg"
+  "name": "원목 받침 와이어 바구니 2개",
+  "img": "assets/gifts/g14.jpg",
+  "link": "https://www.coupang.com/vp/products/9742429001?itemId=29161414596&vendorItemId=96083569003"
  },
  {
   "id": "g15",
   "tier": 2,
-  "cat": "디지털",
-  "name": "샤오미 스마트밴드 9 프로",
-  "img": "https://ae-pic-a1.aliexpress-media.com/kf/S2411fab7d7834bd4b79f4ea8df0980b8J.jpg"
- },
- {
-  "id": "g16",
-  "tier": 2,
-  "cat": "캠핑·차량",
-  "name": "아이오티 오토센스 차량 무선충전 거치대",
-  "img": "https://m.media-amazon.com/images/I/816jn2Wtx8L._AC_SL600_.jpg"
- },
- {
-  "id": "g17",
-  "tier": 3,
-  "cat": "디지털",
-  "name": "로지텍 MX Master 3S 무선 마우스",
-  "img": "https://m.media-amazon.com/images/I/61oEwT0WpSL._AC_SL600_.jpg"
- },
- {
-  "id": "g18",
-  "tier": 3,
-  "cat": "디지털",
-  "name": "사운드코어 Liberty 4 NC 노이즈캔슬링 이어버즈",
-  "img": "https://m.media-amazon.com/images/I/5130BCxweAL._AC_SL600_.jpg"
- },
- {
-  "id": "g19",
-  "tier": 3,
-  "cat": "디지털",
-  "name": "사운드코어 스페이스 원 노이즈캔슬링 헤드폰",
-  "img": "https://m.media-amazon.com/images/I/51aTiRISYTL._AC_SL600_.jpg"
- },
- {
-  "id": "g20",
-  "tier": 3,
-  "cat": "디지털",
-  "name": "JBL 플립7 블루투스 스피커",
-  "img": "https://m.media-amazon.com/images/I/81nviKDJTrL._AC_SL600_.jpg"
- },
- {
-  "id": "g21",
-  "tier": 3,
-  "cat": "디지털",
-  "name": "로지텍 MX Keys S 무선 키보드",
-  "img": "https://m.media-amazon.com/images/I/615iZxXTWTL._AC_SL600_.jpg"
+  "row": 2,
+  "cat": "생활",
+  "name": "360도 회전 정리 트레이",
+  "img": "assets/gifts/g15.jpg",
+  "link": "https://www.coupang.com/vp/products/9742343143?itemId=29161082942&vendorItemId=96083257102"
  }
 ]
