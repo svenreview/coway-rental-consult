@@ -131,6 +131,10 @@
 
   // ── 신청 ──
   const form = document.querySelector('#wt-form');
+  // 사업장·법인 카드에서 누르면 사용 장소를 미리 골라 둔다
+  document.querySelectorAll('[data-kind]').forEach(a => a.addEventListener('click', () => {
+    const r = form.querySelector(`input[name=kind][value="${a.dataset.kind}"]`); if (r) r.checked = true;
+  }));
   const msg = document.querySelector('#wt-msg');
   const hyphen = v => { const d = v.replace(/\D/g, '').slice(0, 11); return d.length < 4 ? d : d.length < 8 ? `${d.slice(0, 3)}-${d.slice(3)}` : d.length < 11 ? `${d.slice(0, 3)}-${d.slice(3, 6)}-${d.slice(6)}` : `${d.slice(0, 3)}-${d.slice(3, 7)}-${d.slice(7)}`; };
   form.contact.addEventListener('blur', () => { if (/^[\d\s-]+$/.test(form.contact.value)) form.contact.value = hyphen(form.contact.value); });

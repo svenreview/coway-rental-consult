@@ -120,4 +120,32 @@
 .wt-sticky .btn{flex:1;min-height:52px;border-radius:14px;font-size:16px;background:var(--grad);color:#fff}
 .wt-sticky-call{flex:none;width:64px;display:grid;place-items:center;border-radius:14px;background:rgba(255,255,255,.12);color:#fff;font-weight:700;font-size:14px;text-decoration:none}
 
+/* 10년 현장 */
+.wt-photos{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.wt-photos figure{margin:0;position:relative;border-radius:14px;overflow:hidden;background:#EEF3F8;aspect-ratio:4/3}
+.wt-photos .wt-photo-main{grid-column:1 / -1;aspect-ratio:16/9}
+.wt-photos img{width:100%;height:100%;object-fit:cover;display:block}
+.wt-photos figcaption{position:absolute;left:8px;bottom:8px;right:8px;font-size:12px;font-weight:700;color:#fff;background:rgba(16,42,76,.72);border-radius:8px;padding:4px 8px;line-height:1.4}
+.wt-promise{list-style:none;padding:0;margin:16px 0 0;display:grid;gap:8px}
+.wt-promise li{position:relative;padding:12px 14px 12px 40px;border:1px solid var(--line);border-radius:12px;font-size:14.5px;font-weight:600;color:var(--ink);background:#fff}
+.wt-promise li::before{content:"";position:absolute;left:14px;top:50%;width:16px;height:16px;margin-top:-8px;border-radius:50%;background:#E5F0FF url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%233278E3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
+.wt-install{margin-top:12px;padding:14px;border-radius:14px;background:#F0F7FF;display:grid;gap:4px}
+.wt-install b{color:var(--navy);font-size:15px}
+.wt-install span{font-size:12.5px;color:var(--soft);line-height:1.55}
+.wt-more{display:inline-block;margin-top:14px;font-weight:700;color:#3278E3;text-decoration:none;font-size:14.5px}
+/* 후기 */
+.wt-reviews{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.wt-reviews li{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px}
+.wt-stars{color:#F5A524;letter-spacing:2px;font-size:14px;margin-bottom:6px}
+.wt-reviews li p:not(.wt-stars){font-size:14.5px;line-height:1.65;color:var(--ink)}
+.wt-reviews small{display:block;margin-top:8px;font-size:12px;color:var(--faint)}
+/* 고객 유형 */
+.wt-types{display:grid;gap:10px}
+.wt-types article{border:1px solid #D6E6FA;border-radius:18px;padding:18px;background:linear-gradient(135deg,#F7FAFF,#fff)}
+.wt-type-tag{display:inline-block;font-size:12px;font-weight:800;color:#3474CD;background:#fff;border:1px solid #D6E6FA;border-radius:var(--r-pill);padding:4px 10px}
+.wt-types b{display:block;margin-top:10px;font-size:17px;color:var(--navy)}
+.wt-types p{font-size:14px;color:var(--soft);margin-top:4px;line-height:1.55}
+.wt-types ul{margin:10px 0 0;padding-left:18px;font-size:13.5px;color:var(--ink);line-height:1.7}
+.wt-types a{display:inline-block;margin-top:10px;font-weight:700;font-size:14px;color:#3278E3;text-decoration:none}
+
 @media(max-width:380px){.wt-hero h1{font-size:24px}.wt-sec h2{font-size:21px}.wt-nav a{font-size:12.5px}}
