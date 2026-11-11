@@ -25,6 +25,9 @@ h3{font-size:var(--fs-h3);line-height:1.4}
 .ms-note{margin:12px 0 0;font-size:var(--fs-xs);line-height:1.6;color:var(--sub)}
 .ms-em,h1 em{font-style:normal;color:var(--point-d)}
 
+.nw{white-space:nowrap}
+h1{text-wrap:wrap}
+
 /* 헤더 */
 .ms-header{position:sticky;top:0;z-index:40;height:var(--header);background:rgba(255,255,255,.95);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
 .ms-header-in{height:100%;display:flex;align-items:center;justify-content:space-between;gap:12px}
