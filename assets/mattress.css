@@ -168,3 +168,58 @@ h2{font-size:26px;line-height:1.38}
   .ms-wrap{max-width:640px}
   .ms-hero{padding-top:56px}
 }
+
+/* ===== v8 : 임팩트 강화 (같은 디자인 시스템 안에서) ===== */
+/* 히어로 : 딥 네이비 */
+.ms-hero-dark{background:radial-gradient(120% 80% at 80% 0%,#1E3A57 0%,var(--navy) 60%);color:#fff;padding-top:28px}
+.ms-hero-dark h1{color:#fff;font-size:34px;line-height:1.3}
+.ms-hero-dark h1 em,.ms-em{font-style:normal;color:var(--point)}
+.ms-hero-dark h1 em{color:#3DD3EE}
+.ms-hero-dark .ms-sub{color:#B8C2CF}
+.ms-hero-dark .ms-media{box-shadow:0 24px 48px -28px rgba(0,0,0,.6)}
+.ms-hero-dark .ms-hero-media img{aspect-ratio:4/4.2}
+.ms-hero-dark .ms-points{border-color:rgba(255,255,255,.14);background:rgba(255,255,255,.04)}
+.ms-hero-dark .ms-points li+li{border-color:rgba(255,255,255,.14)}
+.ms-hero-dark .ms-points b{color:#fff}
+.ms-hero-dark .ms-points span{color:#9FB0C3}
+.ms-badge{display:inline-flex;align-items:stretch;margin:0 0 18px;border-radius:999px;overflow:hidden;font-size:13.5px;border:1px solid rgba(255,255,255,.18)}
+.ms-badge span{padding:7px 12px;color:#fff;font-weight:700;background:rgba(255,255,255,.08)}
+.ms-badge b{padding:7px 12px;background:#fff;color:var(--navy);font-weight:800;display:flex;align-items:baseline;gap:4px}
+.ms-badge small{font-size:11px;font-weight:500;color:var(--sub)}
+
+/* 반반 비교 이미지 라벨 */
+.ms-split-media img{aspect-ratio:1/0.82}
+.ms-split-l,.ms-split-r{position:absolute;top:12px;font-size:12.5px;font-weight:700;padding:5px 10px;border-radius:999px}
+.ms-split-l{left:12px;background:rgba(23,35,52,.72);color:#fff}
+.ms-split-r{right:12px;background:var(--point);color:#fff}
+.ms-split-media .ms-tag{left:auto;right:12px}
+
+/* 필터 */
+.ms-proof-big img{max-height:none;aspect-ratio:946/450}
+.ms-proof-big figcaption{display:grid;grid-template-columns:1fr 1fr;padding:0}
+.ms-proof-big figcaption span{padding:12px 14px;font-size:14px;font-weight:700;color:var(--ink);text-align:center}
+.ms-proof-big figcaption .is-after{color:var(--point-d);border-left:1px solid var(--line)}
+
+/* 케어 (다크 섹션) */
+.ms-dark .ms-kicker{color:#3DD3EE}
+.ms-duo{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
+.ms-duo img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:16px}
+.ms-dark .ms-steps li{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.12)}
+.ms-dark .ms-steps b{color:#fff}
+.ms-dark .ms-steps p{color:#9FB0C3}
+.ms-dark .ms-ico{background:rgba(61,211,238,.14)}
+.ms-dark .ms-ico svg{stroke:#3DD3EE}
+.ms-dark .ms-table-wrap{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12)}
+.ms-dark .ms-table caption{color:#fff}
+.ms-dark .ms-table th,.ms-dark .ms-table td{border-color:rgba(255,255,255,.1)}
+.ms-dark .ms-table thead th{color:#9FB0C3}
+.ms-dark .ms-table tbody th{color:#E6EBEF}
+.ms-dark .ms-table td{color:#5D6F84}
+.ms-dark .ms-table td.y{color:#3DD3EE}
+
+/* 가격 카드 강조 */
+.ms-price{border:2px solid var(--point)}
+.ms-price-rows .is-total dd strong{font-size:30px}
+
+@media (max-width:370px){.ms-hero-dark h1{font-size:30px}.ms-badge{font-size:12.5px}}
+@media (min-width:768px){.ms-hero-dark h1{font-size:44px}}
