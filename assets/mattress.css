@@ -20,3 +20,29 @@
 .mt-steps li::before{content:counter(s);position:absolute;left:16px;top:16px;width:28px;height:28px;border-radius:50%;background:#2F6FEB;color:#fff;font-weight:700;display:grid;place-items:center}
 .mt-steps b{display:block;font-size:17px;color:var(--navy)}
 @media (max-width:420px){.mt-line{grid-template-columns:1fr}}
+/* v2: 점검 체크, 이유 카드, 11월 박스, 솔직 박스 */
+.mt-hero .b2-sub b{color:var(--navy)}
+.mt-check{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.mt-check button{width:100%;text-align:left;font:inherit;font-size:16px;color:var(--soft);background:#F6F8FC;border:2px solid transparent;border-radius:var(--r-m);padding:14px 16px 14px 48px;position:relative;cursor:pointer}
+.mt-check button::before{content:"";position:absolute;left:16px;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:6px;border:2px solid #B9C4D6;background:#fff}
+.mt-check button b{color:var(--navy)}
+.mt-check button[aria-pressed="true"]{border-color:#2F6FEB;background:#F3F7FF}
+.mt-check button[aria-pressed="true"]::before{background:#2F6FEB;border-color:#2F6FEB;box-shadow:inset 0 0 0 3px #fff}
+.mt-check-result{margin:14px 0 0;text-align:center;font-size:16px;color:var(--soft)}
+.mt-check-result.hit{color:#2F6FEB;font-weight:700}
+.mt-reason{display:grid;gap:12px}
+.mt-r{background:#fff;border-radius:var(--r-m);padding:18px}
+.mt-q{display:block;font-size:15px;color:#E8456B;margin-bottom:6px}
+.mt-r b{display:block;font-size:18px;color:var(--navy);margin-bottom:6px;line-height:1.4}
+.mt-r p{margin:0;font-size:15px;color:var(--soft);line-height:1.6}
+.mt-r small{display:inline-block;margin-left:4px;font-size:12px;color:#7A8699;background:#F1F4F9;border-radius:6px;padding:1px 6px}
+.mt-nov{border:2px solid #2F6FEB;border-radius:var(--r-m);padding:20px;background:#F3F7FF}
+.mt-nov h2{margin:0 0 10px;font-size:20px;color:var(--navy)}
+.mt-nov ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:16px;color:var(--soft)}
+.mt-nov b{color:#2F6FEB}
+.mt-nov p{margin:12px 0 0;font-size:13px;color:var(--soft)}
+.mt-honest{display:grid;gap:12px}
+.mt-honest>div{background:#fff;border-radius:var(--r-m);padding:18px}
+.mt-honest b{display:block;font-size:17px;color:var(--navy);margin-bottom:6px}
+.mt-honest ul{margin:0;padding-left:18px;font-size:15px;color:var(--soft);display:grid;gap:4px}
+.mt-honest p{margin:8px 0 0;font-size:14px;color:var(--soft)}

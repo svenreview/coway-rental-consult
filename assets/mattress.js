@@ -16,6 +16,22 @@
     if (!gal.innerHTML.trim()) gal.hidden = true;
   }).catch(() => { gal.hidden = true; });
 
+  // 1-2. 우리 집 매트리스 점검 체크
+  const chk = document.querySelector('#mt-check');
+  const chkOut = document.querySelector('#mt-check-result');
+  let picked = 0;
+  if (chk) chk.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    const on = b.getAttribute('aria-pressed') !== 'true';
+    b.setAttribute('aria-pressed', String(on));
+    picked = chk.querySelectorAll('[aria-pressed="true"]').length;
+    chkOut.classList.toggle('hit', picked >= 2);
+    chkOut.textContent = picked === 0 ? '해당되는 항목을 눌러 보세요'
+      : picked === 1 ? '1개 해당돼요. 지금 매트리스 상태를 한 번 확인해 보세요'
+      : `${picked}개 해당돼요. 관리받는 매트리스, 상담받아 볼 만해요`;
+  });
+
   // 2. 신청서
   const hyphen = v => {
     const d = v.replace(/\D/g, '').slice(0, 11);
@@ -42,7 +58,7 @@
         contact: /^[\d\s-]+$/.test(form.contact.value) ? hyphen(form.contact.value) : form.contact.value.trim(),
         kind: '가정',
         products: ['매트리스' + (size ? ` (${size})` : '')],
-        message: `[매트리스 페이지] 매트리스 상담 요청${size ? ' · 사이즈 ' + size : ''}${ad ? ' · 광고 ' + ad : ''}`,
+        message: `[매트리스 페이지] 매트리스 상담 요청${size ? ' · 사이즈 ' + size : ''}${picked ? ' · 점검 ' + picked + '개 해당' : ''}${ad ? ' · 광고 ' + ad : ''}`,
         consent: form.consent.checked,
         website: form.website.value,
         utm: Site.utm(),
