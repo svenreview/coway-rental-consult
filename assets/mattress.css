@@ -217,7 +217,7 @@ h1{text-wrap:wrap}
 }
 
 /* 푸터 */
-.ms-footer{padding:28px 0 32px;border-top:1px solid var(--line);background:var(--bg2);font-size:13px;line-height:1.7;color:var(--sub)}
+.ms-footer{padding:28px 0 calc(32px + var(--sticky) + env(safe-area-inset-bottom));margin-bottom:calc(-1 * (var(--sticky) + env(safe-area-inset-bottom)));border-top:1px solid var(--line);background:var(--bg2);font-size:13px;line-height:1.7;color:var(--sub)}
 .ms-footer p{margin:0}
 .ms-footer-name{font-weight:700;color:var(--head)}
 .ms-footer-info{display:flex;flex-wrap:wrap;gap:0 8px;margin-top:4px}
