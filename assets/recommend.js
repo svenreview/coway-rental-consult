@@ -271,6 +271,7 @@
     }
     if (e.target.closest('[data-back]')) { trail.pop(); render(); }
   });
-  Site.wire(products);
+  // 추천 결과에서 담은 제품은 어떤 답을 골라 추천받았는지 함께 기억한다 (상담 신청서 문의 내용에 들어간다)
+  Site.wire(products, () => node().result ? { rec: answers().join(' / ') } : {});
   render();
 })();

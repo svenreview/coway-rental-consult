@@ -8,6 +8,10 @@
   const done = document.querySelector('#consult-done');
   let products = [];
   try { products = await Site.load(); } catch {}
+  // 맞춤 추천의 "추천 결과로 상담 신청"에서 넘어온 내용이 있으면 문의 내용 맨 앞에 넣어 둔다
+  const params = new URLSearchParams(location.search);
+  const note = params.get('note');
+  if (note) form.message.value = note;
 
   // 제품 이름 옆 혜택 글자 태그 (사진 위 배지와 같은 자료)
   const promo = key => { const b = Site.BADGES[key]; return b ? ` <span class="promo ${b[1]}">${b[0].replace(/<br>/g, ' ')}</span>` : ''; };
@@ -38,16 +42,40 @@
     document.querySelector('#with-cart').textContent = items.length
       ? `장바구니 제품 ${items.length}개가 함께 접수돼요.`
       : '제품 없이 상담만 신청해요. 제품은 상담에서 함께 골라도 돼요.';
+    fillMessage();
   }
+  // 문의 내용 칸에 장바구니 제품(모델명, 맞춤 추천에서 고른 답)을 자동으로 적어 둔다.
+  // 손님이 직접 쓴 글은 건드리지 않고, 자동으로 적은 부분만 장바구니가 바뀔 때 새로 고친다.
+  function cartBlock(items) {
+    if (!items.length) return '';
+    const lines = ['[장바구니 제품]'];
+    for (const i of items) {
+      const p = products.find(x => x.key === i.key);
+      lines.push('- ' + Site.itemLine({ ...i, model: i.model || (p ? Site.modelLabel(p) : '') }));
+      if (i.rec && !(note || '').includes(i.rec)) lines.push(`  맞춤 추천: ${i.rec}`);
+    }
+    return lines.join('\n');
+  }
+  let autoText = '';
+  function fillMessage() {
+    const next = cartBlock(Site.basket());
+    const cur = form.message.value;
+    if (autoText && cur.includes(autoText)) {
+      form.message.value = cur.replace(autoText, next).replace(/\n{3,}/g, '\n\n').trim();
+    } else if (next && !cur.includes(next)) {
+      form.message.value = [cur.trim(), next].filter(Boolean).join('\n\n');
+    }
+    autoText = next;
+    // 자동으로 적은 내용이 다 보이도록 칸 높이를 늘린다
+    const ta = form.message;
+    if (ta.scrollHeight > ta.clientHeight) ta.style.height = ta.scrollHeight + 2 + 'px';
+  }
+
   listEl.addEventListener('click', e => { const b = e.target.closest('[data-remove]'); if (b) Site.remove(b.dataset.remove); });
   document.addEventListener('basket-change', render);
   render();
 
-  // 맞춤 추천에서 넘어온 내용이 있으면 문의 내용에 넣어 둔다
-  const params = new URLSearchParams(location.search);
-  const note = params.get('note');
   const kakaoAfterSubmit = params.get('next') === 'kakao';
-  if (note) form.message.value = note;
   const submitButton = form.querySelector('button[type=submit]');
   if (kakaoAfterSubmit) {
     submitButton.textContent = '상담 접수·복사 후 카카오톡 열기';
@@ -116,7 +144,7 @@
       name: form.name.value.trim(),
       contact: /^[\d\s-]+$/.test(form.contact.value) ? hyphen(form.contact.value) : form.contact.value.trim(),
       kind: form.kind.value,
-      products: Site.basket().map(i => i.category + ' - ' + i.name),
+      products: Site.basket().map(Site.itemLine),
       message: form.message.value.trim(),
       consent: form.consent.checked,
       website: form.website.value,
