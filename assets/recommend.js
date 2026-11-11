@@ -258,7 +258,17 @@
 
   box.addEventListener('click', e => {
     const choice = e.target.closest('[data-i]');
-    if (choice) { trail.push(+choice.dataset.i); render(); window.scrollTo({ top: 0 }); return; }
+    if (choice) {
+      const i = +choice.dataset.i;
+      // 첫 질문에서 매트리스를 고르면 매트리스 전용 랜딩(상담 신청 포함)으로 보낸다. 유입 경로 값은 그대로 넘긴다.
+      if (!trail.length && TREE.options[i].category === '매트리스') {
+        const p = new URLSearchParams(location.search);
+        p.set('from', 'recommend');
+        location.href = 'mattress.html?' + p.toString();
+        return;
+      }
+      trail.push(i); render(); window.scrollTo({ top: 0 }); return;
+    }
     if (e.target.closest('[data-back]')) { trail.pop(); render(); }
   });
   Site.wire(products);
