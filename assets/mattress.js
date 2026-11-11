@@ -26,7 +26,7 @@
   try { imgs = await (await fetch('data/images.json')).json(); } catch {}
   const src = n => { const v = imgs['매트리스|' + n]; return v ? (typeof v === 'string' ? v : v.src) : ''; };
 
-  const hero = document.querySelector('#mx-hero-img');
+  const hero = document.querySelector('#mx-hero-img'); // v5는 사진을 직접 넣어서 없음
   if (hero) { const s = src('하이브리드 4') || src('엘리트'); if (s) hero.src = s; else hero.closest('.mx-hero-img').hidden = true; }
 
   const cards = document.querySelector('#mx-cards');

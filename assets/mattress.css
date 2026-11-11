@@ -91,3 +91,44 @@
 .mx-sticky{position:fixed;left:14px;right:14px;bottom:14px;z-index:30;text-align:center;font-size:17px;font-weight:900;color:#fff;background:var(--accent);padding:16px;border-radius:16px;text-decoration:none;box-shadow:0 10px 26px -10px rgba(0,0,0,.45);transform:translateY(140%);transition:transform .25s}
 .mx-sticky.show{transform:none}
 @media (min-width:700px){.mx-hero h1{font-size:46px}.mx-sticky{left:50%;right:auto;width:420px;margin-left:-210px}}
+
+/* v5: 진드기 첫 화면, 반반 비교, 필터 전후, 케어 장비, 카드 가격 */
+.mx-hero2{padding-bottom:30px}
+.mx-hero2 h1{font-size:36px}
+.mx-hero-photo,.mx-split-img{position:relative;margin:24px 0 0}
+.mx-hero-photo img,.mx-split-img img{display:block;width:100%;height:auto}
+.mx-tagimg{position:absolute;right:10px;bottom:10px;font-size:11px;color:#fff;background:rgba(0,0,0,.45);padding:3px 8px;border-radius:6px}
+.mx-split{padding:54px 0 48px}
+.mx-split h2{margin-bottom:0}
+.mx-split-lab{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.mx-split-lab>div{border-radius:16px;padding:16px 14px}
+.mx-split-lab em{display:block;font-style:normal;font-size:12.5px;font-weight:700}
+.mx-split-lab b{display:block;font-size:16px;margin:4px 0 8px;line-height:1.35}
+.mx-split-lab ul{margin:0;padding-left:16px;font-size:14px;line-height:1.7}
+.mx-split-lab .bad{background:#F3EEE7;color:#6B5A44}
+.mx-split-lab .bad em{color:#A0785A}
+.mx-split-lab .good{background:#EAF3FB;color:#1F4E79}
+.mx-split-lab .good em{color:#2F6FEB}
+.mx-kicker{display:inline-block;font-size:13px;font-weight:900;color:var(--accent);margin:0 0 8px}
+.mx-kicker.light{color:#F7A58C}
+.mx-filter{background:var(--cream);padding:54px 0}
+.mx-fig{margin:0 0 14px;background:#fff;border-radius:18px;overflow:hidden}
+.mx-fig img{display:block;width:100%;height:auto}
+.mx-fig.dark{background:#111}
+.mx-fig figcaption{font-size:13.5px;color:var(--soft);padding:10px 14px;background:#fff}
+.mx-kirby{background:var(--night);color:#fff;padding:54px 0}
+.mx-kirby h2{color:#fff}
+.mx-kirby-imgs{display:grid;grid-template-columns:1fr 1.2fr;gap:10px}
+.mx-kirby-imgs img{width:100%;height:100%;object-fit:cover;border-radius:16px;background:#fff}
+.mx-kirby-pts{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:10px}
+.mx-kirby-pts li{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:14px;padding:14px 16px;font-size:15px;color:#C9CEDA}
+.mx-kirby-pts b{display:block;font-size:17px;color:#fff;margin-bottom:2px}
+.mx-kirby .mx-fine{color:#9AA1B2}
+.mx-price{padding:54px 0;background:var(--cream)}
+.mx-price-card{background:#fff;border-radius:22px;padding:24px 20px;text-align:center;margin-bottom:22px;box-shadow:0 14px 34px -24px rgba(60,40,20,.5)}
+.mx-price-model{margin:0;font-size:15px;font-weight:700;color:var(--soft)}
+.mx-price-reg{margin:8px 0 0;font-size:17px;color:var(--soft)}
+.mx-price-card-line{margin:10px 0 0;font-size:14px;font-weight:700;color:var(--accent)}
+.mx-price-big{margin:2px 0 0;font-size:22px;font-weight:700}
+.mx-price-big strong{font-size:52px;font-weight:900;color:var(--accent);letter-spacing:-.02em}
+.mx-price-cond{margin:10px 0 0;font-size:12.5px;color:var(--soft);line-height:1.5}
