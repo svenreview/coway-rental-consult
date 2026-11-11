@@ -74,7 +74,7 @@ h1{text-wrap:wrap}
 .ms-points{list-style:none;margin:20px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:var(--r)}
 .ms-points li{padding:14px 4px;text-align:center}
 .ms-points li+li{border-left:1px solid var(--line)}
-.ms-points b{display:block;font-size:17px;font-weight:700;line-height:1.3}
+.ms-points b{display:block;font-size:16px;font-weight:700;line-height:1.3;letter-spacing:-.04em;white-space:nowrap}
 .ms-points span{display:block;margin-top:2px;font-size:13px;line-height:1.4}
 .ms-btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:54px;margin-top:20px;padding:0 20px;border:0;border-radius:14px;background:var(--point);color:#fff;font:inherit;font-size:17px;font-weight:700;letter-spacing:-.02em;text-decoration:none;cursor:pointer;transition:background .15s}
 .ms-btn:hover,.ms-btn:active{background:var(--point-d)}
