@@ -32,6 +32,25 @@
       : `${picked}개 해당돼요. 관리받는 매트리스, 상담받아 볼 만해요`;
   });
 
+  // 1-3. 이중 선택: 좋아하는 느낌 고르기 → 맞는 라인업 표시, 신청서에 담기
+  const pick = document.querySelector('#mt-pick');
+  const pickOut = document.querySelector('#mt-pick-out');
+  let pref = '';
+  const PICK_MSG = {
+    '단단한 쪽': '시그니처 또는 엘리트 계열부터 비교해 드릴게요',
+    '푹신한 쪽': '하이브리드 · 루네어 계열부터 비교해 드릴게요',
+    '둘이 달라요': '단단함을 조절하는 비렉스 스마트부터 비교해 드릴게요',
+  };
+  if (pick) pick.addEventListener('click', e => {
+    const b = e.target.closest('button');
+    if (!b) return;
+    pref = b.dataset.pref;
+    pick.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    document.querySelectorAll('.mt-card').forEach(c => c.classList.toggle('hl', c.dataset.for === pref));
+    document.querySelectorAll('[data-mt-form] [name=pref]').forEach(i => { i.value = pref; });
+    pickOut.textContent = `${PICK_MSG[pref]}. 비교표에 반영할게요`;
+  });
+
   // 2. 신청서
   const hyphen = v => {
     const d = v.replace(/\D/g, '').slice(0, 11);
@@ -58,7 +77,7 @@
         contact: /^[\d\s-]+$/.test(form.contact.value) ? hyphen(form.contact.value) : form.contact.value.trim(),
         kind: '가정',
         products: ['매트리스' + (size ? ` (${size})` : '')],
-        message: `[매트리스 페이지] 매트리스 상담 요청${size ? ' · 사이즈 ' + size : ''}${picked ? ' · 점검 ' + picked + '개 해당' : ''}${ad ? ' · 광고 ' + ad : ''}`,
+        message: `[매트리스 페이지] 비교표 3개 요청${size ? ' · 사이즈 ' + size : ''}${picked ? ' · 점검 ' + picked + '개 해당' : ''}${pref ? ' · 선호 ' + pref : ''}${ad ? ' · 광고 ' + ad : ''}`,
         consent: form.consent.checked,
         website: form.website.value,
         utm: Site.utm(),
