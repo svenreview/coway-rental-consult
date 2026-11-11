@@ -215,3 +215,12 @@ h1{text-wrap:wrap}
   .ms-hero-media img{aspect-ratio:4/3}
   .ms-scroll img{width:100%}
 }
+
+/* 푸터 */
+.ms-footer{padding:28px 0 32px;border-top:1px solid var(--line);background:var(--bg2);font-size:13px;line-height:1.7;color:var(--sub)}
+.ms-footer p{margin:0}
+.ms-footer-name{font-weight:700;color:var(--head)}
+.ms-footer-info{display:flex;flex-wrap:wrap;gap:0 8px;margin-top:4px}
+.ms-footer-links{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:8px}
+.ms-footer a{color:var(--sub);text-decoration:none}
+.ms-footer a:hover{text-decoration:underline}
