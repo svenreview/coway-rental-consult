@@ -1,57 +1,54 @@
-// 매트리스 (메타 광고 랜딩): 제품 사진 띠, 짧은 신청서 2곳
+// 매트리스 메타 랜딩 v4: 첫 화면 사진, 취향별 모델 카드, 짧은 신청서
 (async () => {
   const { esc } = Site;
   const q = new URLSearchParams(location.search);
   const ad = (q.get('utm_content') || Site.utm().utm_content || '').toLowerCase();
 
-  // 1. 제품 사진 띠 (상담 사이트 이미지 데이터 재사용)
-  const SHOW = ['비렉스 스마트 매트리스 S8+', '비렉스 스마트 매트리스 S6+', '시그니처 파이어쉴드 컴포트', '하이브리드 4', '하이브리드 3', '루네어', '더블체인지', '엘리트'];
-  const gal = document.querySelector('#mt-gallery');
-  if (gal) fetch('data/images.json').then(r => r.json()).then(imgs => {
-    gal.innerHTML = SHOW.map(n => {
-      const v = imgs['매트리스|' + n];
-      const src = v && (typeof v === 'string' ? v : v.src);
-      return src ? `<li><div class="b2-g"><img src="${esc(src)}" alt="${esc(n)}" loading="lazy" referrerpolicy="no-referrer"></div></li>` : '';
-    }).join('');
-    if (!gal.innerHTML.trim()) gal.hidden = true;
-  }).catch(() => { gal.hidden = true; });
-
-  // 1-2. 우리 집 매트리스 점검 체크
-  const chk = document.querySelector('#mt-check');
-  const chkOut = document.querySelector('#mt-check-result');
-  let picked = 0;
-  if (chk) chk.addEventListener('click', e => {
-    const b = e.target.closest('button');
-    if (!b) return;
-    const on = b.getAttribute('aria-pressed') !== 'true';
-    b.setAttribute('aria-pressed', String(on));
-    picked = chk.querySelectorAll('[aria-pressed="true"]').length;
-    chkOut.classList.toggle('hit', picked >= 2);
-    chkOut.textContent = picked === 0 ? '해당되는 항목을 눌러 보세요'
-      : picked === 1 ? '1개 해당돼요. 지금 매트리스 상태를 한 번 확인해 보세요'
-      : `${picked}개 해당돼요. 관리받는 매트리스, 상담받아 볼 만해요`;
-  });
-
-  // 1-3. 이중 선택: 좋아하는 느낌 고르기 → 맞는 라인업 표시, 신청서에 담기
-  const pick = document.querySelector('#mt-pick');
-  const pickOut = document.querySelector('#mt-pick-out');
-  let pref = '';
-  const PICK_MSG = {
-    '단단한 쪽': '시그니처 또는 엘리트 계열부터 비교해 드릴게요',
-    '푹신한 쪽': '하이브리드 · 루네어 계열부터 비교해 드릴게요',
-    '둘이 달라요': '단단함을 조절하는 비렉스 스마트부터 비교해 드릴게요',
+  // 모델 (가격 = 퀸, 2026년 11월 상담 사이트 data/catalog-prices.json 중 최저)
+  const MODELS = {
+    firm: [
+      { n: '엘리트', tag: '가장 부담 없이', d: '단단한 독립 스프링 (EXTRA HARD)', p: 21900 },
+      { n: '더블체인지', tag: '탄탄하게', d: '독립 스프링 (HARD)', p: 24900 },
+      { n: '시그니처 파이어쉴드 컴포트', tag: '호텔 침대처럼', d: '9존 스프링, 난연 원단', p: 58900 },
+    ],
+    soft: [
+      { n: '루네어', tag: '부드럽게', d: '7존 스프링', p: 25900 },
+      { n: '하이브리드 3', tag: '쫀쫀하게', d: '천연 라텍스 6cm, 7존 스프링', p: 28900 },
+      { n: '하이브리드 4', tag: '포근하게', d: '메리노 양모 메모리폼 탑퍼, 7존 스프링', p: 29900 },
+    ],
+    smart: [
+      { n: '비렉스 스마트 매트리스 S6+', tag: '그날그날 다르게', d: '단단함 9단계 조절', p: 76900 },
+      { n: '비렉스 스마트 매트리스 S8+', tag: '더 섬세하게', d: '단단함 9단계 조절, 상위 모델', p: 97900 },
+    ],
   };
-  if (pick) pick.addEventListener('click', e => {
-    const b = e.target.closest('button');
-    if (!b) return;
-    pref = b.dataset.pref;
-    pick.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-    document.querySelectorAll('.mt-card').forEach(c => c.classList.toggle('hl', c.dataset.for === pref));
-    document.querySelectorAll('[data-mt-form] [name=pref]').forEach(i => { i.value = pref; });
-    pickOut.textContent = `${PICK_MSG[pref]}. 비교표에 반영할게요`;
-  });
+  const PREF = { firm: '단단하게', soft: '푹신하게', smart: '둘이 달라요(경도 조절)' };
+  let imgs = {};
+  try { imgs = await (await fetch('data/images.json')).json(); } catch {}
+  const src = n => { const v = imgs['매트리스|' + n]; return v ? (typeof v === 'string' ? v : v.src) : ''; };
 
-  // 2. 신청서
+  const hero = document.querySelector('#mx-hero-img');
+  if (hero) { const s = src('하이브리드 4') || src('엘리트'); if (s) hero.src = s; else hero.closest('.mx-hero-img').hidden = true; }
+
+  const cards = document.querySelector('#mx-cards');
+  const won = v => v.toLocaleString('ko-KR');
+  let pref = '';
+  const render = k => {
+    cards.innerHTML = MODELS[k].map(m => `<div class="mx-card"><div class="mx-card-img">${src(m.n) ? `<img src="${esc(src(m.n))}" alt="${esc(m.n)}" loading="lazy" referrerpolicy="no-referrer">` : ''}</div><div class="mx-card-txt"><em>${esc(m.tag)}</em><b>${esc(m.n)}</b><p>${esc(m.d)}</p><p class="pr">퀸 월 <strong>${won(m.p)}</strong>원부터</p></div></div>`).join('');
+  };
+  const tabs = document.querySelector('#mx-tabs');
+  if (tabs && cards) {
+    render('firm');
+    tabs.addEventListener('click', e => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      tabs.querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', String(x === b)));
+      render(b.dataset.k);
+      pref = PREF[b.dataset.k];
+      document.querySelectorAll('[data-mt-form] [name=pref]').forEach(i => { i.value = pref; });
+    });
+  }
+
+  // 신청서
   const hyphen = v => {
     const d = v.replace(/\D/g, '').slice(0, 11);
     if (/^02/.test(d)) return d.length < 3 ? d : d.length < 6 ? `${d.slice(0, 2)}-${d.slice(2)}` : d.length < 10 ? `${d.slice(0, 2)}-${d.slice(2, 5)}-${d.slice(5)}` : `${d.slice(0, 2)}-${d.slice(2, 6)}-${d.slice(6, 10)}`;
@@ -77,7 +74,7 @@
         contact: /^[\d\s-]+$/.test(form.contact.value) ? hyphen(form.contact.value) : form.contact.value.trim(),
         kind: '가정',
         products: ['매트리스' + (size ? ` (${size})` : '')],
-        message: `[매트리스 페이지] 비교표 3개 요청${size ? ' · 사이즈 ' + size : ''}${picked ? ' · 점검 ' + picked + '개 해당' : ''}${pref ? ' · 선호 ' + pref : ''}${ad ? ' · 광고 ' + ad : ''}`,
+        message: `[매트리스 페이지] 견적 요청${size ? ' · 사이즈 ' + size : ''}${pref ? ' · 선호 ' + pref : ''}${ad ? ' · 광고 ' + ad : ''}`,
         consent: form.consent.checked,
         website: form.website.value,
         utm: Site.utm(),
@@ -103,12 +100,12 @@
     });
   });
 
-  // 3. 신청서가 화면에 없으면 아래 고정 버튼 (모바일)
-  const forms = [...document.querySelectorAll('[data-mt-form]')];
+  // 첫 화면을 지나면 아래 고정 버튼, 신청서가 보이면 숨김
+  const heroSec = document.querySelector('.mx-hero');
+  const formSec = document.querySelector('#mx-form');
   if (sticky && 'IntersectionObserver' in window) {
-    const seen = new Set();
-    const io = new IntersectionObserver(es => { es.forEach(en => en.isIntersecting ? seen.add(en.target) : seen.delete(en.target)); sticky.classList.toggle('show', seen.size === 0); });
-    forms.forEach(f => io.observe(f));
-    sticky.addEventListener('click', e => { e.preventDefault(); forms[0].scrollIntoView({ behavior: 'smooth', block: 'center' }); setTimeout(() => forms[0].name.focus({ preventScroll: true }), 400); });
+    const vis = new Map();
+    const io = new IntersectionObserver(es => { es.forEach(en => vis.set(en.target, en.isIntersecting)); sticky.classList.toggle('show', !vis.get(heroSec) && !vis.get(formSec)); });
+    [heroSec, formSec].forEach(el => el && io.observe(el));
   }
 })();

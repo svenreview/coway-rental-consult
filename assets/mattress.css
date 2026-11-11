@@ -1,77 +1,93 @@
-/* 매트리스 메타 광고 랜딩 (benefit 페이지 b2 스타일 위에 덧씀) */
-.mt-hero{background:linear-gradient(180deg,#EEF4FF,#FFFFFF 85%)}
-.mt-page .b2-g{width:132px;height:104px;border-color:#DCE6F7}
-.mt-page .b2-g img{width:92%;height:88%}
-.mt-page select{width:100%;font:inherit;font-size:16px;padding:12px 14px;border:1px solid #D6DCE6;border-radius:12px;background:#fff}
-.mt-pain{list-style:none;padding:0;margin:0;display:grid;gap:10px}
-.mt-pain li{background:#F6F8FC;border-radius:var(--r-m);padding:14px 16px;font-size:16px;color:var(--soft)}
-.mt-pain b{color:var(--navy)}
-.mt-line{display:grid;gap:10px;grid-template-columns:1fr 1fr}
-.mt-card{border:1px solid #DCE6F7;border-radius:var(--r-m);padding:16px 14px;background:#fff}
-.mt-card span{display:block;font-size:14px;color:var(--soft)}
-.mt-card b{display:block;font-size:16px;color:var(--navy);margin:4px 0 6px;line-height:1.35}
-.mt-card p{margin:0;font-size:14px;color:var(--soft)}
-.mt-card.top{border:2px solid #2F6FEB;background:#F3F7FF}
-.mt-price{margin:18px 0 0;text-align:center;font-size:18px;color:var(--navy)}
-.mt-price b{font-size:26px;color:#2F6FEB}
-.mt-price small{display:block;margin-top:6px;font-size:13px;color:var(--soft)}
-.mt-steps{margin:0;padding:0;list-style:none;counter-reset:s;display:grid;gap:10px}
-.mt-steps li{counter-increment:s;background:#fff;border-radius:var(--r-m);padding:16px 18px 16px 56px;position:relative;font-size:16px;color:var(--soft)}
-.mt-steps li::before{content:counter(s);position:absolute;left:16px;top:16px;width:28px;height:28px;border-radius:50%;background:#2F6FEB;color:#fff;font-weight:700;display:grid;place-items:center}
-.mt-steps b{display:block;font-size:17px;color:var(--navy)}
-@media (max-width:420px){.mt-line{grid-template-columns:1fr}}
-/* v2: 점검 체크, 이유 카드, 11월 박스, 솔직 박스 */
-.mt-hero .b2-sub b{color:var(--navy)}
-.mt-check{list-style:none;padding:0;margin:0;display:grid;gap:8px}
-.mt-check button{width:100%;text-align:left;font:inherit;font-size:16px;color:var(--soft);background:#F6F8FC;border:2px solid transparent;border-radius:var(--r-m);padding:14px 16px 14px 48px;position:relative;cursor:pointer}
-.mt-check button::before{content:"";position:absolute;left:16px;top:50%;width:20px;height:20px;margin-top:-10px;border-radius:6px;border:2px solid #B9C4D6;background:#fff}
-.mt-check button b{color:var(--navy)}
-.mt-check button[aria-pressed="true"]{border-color:#2F6FEB;background:#F3F7FF}
-.mt-check button[aria-pressed="true"]::before{background:#2F6FEB;border-color:#2F6FEB;box-shadow:inset 0 0 0 3px #fff}
-.mt-check-result{margin:14px 0 0;text-align:center;font-size:16px;color:var(--soft)}
-.mt-check-result.hit{color:#2F6FEB;font-weight:700}
-.mt-reason{display:grid;gap:12px}
-.mt-r{background:#fff;border-radius:var(--r-m);padding:18px}
-.mt-q{display:block;font-size:15px;color:#E8456B;margin-bottom:6px}
-.mt-r b{display:block;font-size:18px;color:var(--navy);margin-bottom:6px;line-height:1.4}
-.mt-r p{margin:0;font-size:15px;color:var(--soft);line-height:1.6}
-.mt-r small{display:inline-block;margin-left:4px;font-size:12px;color:#7A8699;background:#F1F4F9;border-radius:6px;padding:1px 6px}
-.mt-nov{border:2px solid #2F6FEB;border-radius:var(--r-m);padding:20px;background:#F3F7FF}
-.mt-nov h2{margin:0 0 10px;font-size:20px;color:var(--navy)}
-.mt-nov ul{margin:0;padding-left:18px;display:grid;gap:6px;font-size:16px;color:var(--soft)}
-.mt-nov b{color:#2F6FEB}
-.mt-nov p{margin:12px 0 0;font-size:13px;color:var(--soft)}
-.mt-honest{display:grid;gap:12px}
-.mt-honest>div{background:#fff;border-radius:var(--r-m);padding:18px}
-.mt-honest b{display:block;font-size:17px;color:var(--navy);margin-bottom:6px}
-.mt-honest ul{margin:0;padding-left:18px;font-size:15px;color:var(--soft);display:grid;gap:4px}
-.mt-honest p{margin:8px 0 0;font-size:14px;color:var(--soft)}
-/* v3: 미끼 박스, 장면, 망설임 5가지, 이중 선택, 관리 방식 표 */
-.mt-gift{background:#fff;border:2px dashed #2F6FEB;border-radius:var(--r-m);padding:14px 16px;display:grid;gap:4px}
-.mt-gift>b{font-size:14px;color:#2F6FEB}
-.mt-gift span{font-size:16px;color:var(--navy);line-height:1.5}
-.form-note{margin:8px 0 0;text-align:center;font-size:13px;color:var(--soft)}
-.mt-tight{padding-top:8px}
-.mt-scene{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.mt-scene li{font-size:18px;color:var(--soft);padding-left:14px;border-left:3px solid #DCE6F7}
-.mt-scene b{color:var(--navy)}
-.mt-scene-end{margin:16px 0 0;font-size:19px;font-weight:700;color:#E8456B}
-.mt-care{margin-top:16px;background:#fff;border-radius:var(--r-m);padding:16px}
-.mt-care-t{margin:0 0 10px;font-size:15px;color:var(--navy);font-weight:700}
-.mt-care table{width:100%;border-collapse:collapse;font-size:15px;text-align:center}
-.mt-care th{background:#F1F4F9;color:var(--navy);padding:8px 4px;font-weight:700}
-.mt-care td{border-top:1px solid #E6EBF2;padding:8px 4px;color:var(--soft)}
-.mt-care td:first-child{text-align:left;color:var(--navy)}
-.mt-doubt{display:grid;gap:10px}
-.mt-doubt>div{border:1px solid #DCE6F7;border-radius:var(--r-m);padding:16px}
-.mt-doubt span{display:block;font-size:17px;font-weight:700;color:var(--navy);margin-bottom:6px}
-.mt-doubt p{margin:0;font-size:15px;color:var(--soft);line-height:1.6}
-.mt-doubt p b{color:#2F6FEB}
-.mt-pick{display:grid;gap:10px}
-.mt-pick button{font:inherit;text-align:left;background:#fff;border:2px solid #DCE6F7;border-radius:var(--r-m);padding:16px 18px;cursor:pointer}
-.mt-pick button b{display:block;font-size:18px;color:var(--navy)}
-.mt-pick button span{font-size:15px;color:var(--soft)}
-.mt-pick button[aria-pressed="true"]{border-color:#2F6FEB;background:#F3F7FF}
-.mt-pick-out{margin:14px 0 0;text-align:center;font-size:16px;font-weight:700;color:#2F6FEB;min-height:1.4em}
-.mt-card.hl{outline:3px solid #E8456B;outline-offset:2px}
-.mt-last-sub{margin:-6px 0 14px;font-size:16px;opacity:.9}
+/* 매트리스 메타 랜딩 v4 : 따뜻한 침실 톤, 큰 글씨, 짧은 구성 */
+.mx{--ink:#1F2433;--soft:#6B6F7B;--cream:#F6F1EA;--sand:#EDE4D8;--accent:#E0603F;--accent2:#C9492A;--night:#1E2638;background:#fff;color:var(--ink);font-family:'Noto Sans KR',sans-serif;margin:0}
+.mx *{box-sizing:border-box}
+.mx-in{max-width:560px;margin:0 auto;padding:0 22px}
+.mx h2{font-size:26px;line-height:1.35;font-weight:900;letter-spacing:-.02em;margin:0 0 22px}
+.mx-fine{font-size:12.5px;color:var(--soft);line-height:1.6;margin:16px 0 0}
+
+.mx-top{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:12px 18px;background:rgba(246,241,234,.92);backdrop-filter:blur(8px)}
+.mx-logo{text-decoration:none;color:var(--ink);font-size:14px}
+.mx-logo b{color:#00A0E2;font-size:19px;margin-right:4px}
+.mx-top-cta{font-size:14px;font-weight:700;color:#fff;background:var(--ink);padding:8px 14px;border-radius:999px;text-decoration:none}
+
+.mx-hero{background:var(--cream);padding:34px 0 40px}
+.mx-eyebrow{font-size:13px;font-weight:700;color:var(--accent);margin:0 0 12px}
+.mx-hero h1{font-size:38px;line-height:1.22;font-weight:900;letter-spacing:-.03em;margin:0}
+.mx-hero h1 span{color:var(--accent)}
+.mx-lead{font-size:18px;line-height:1.6;color:var(--ink);margin:16px 0 0}
+.mx-lead b{background:linear-gradient(transparent 60%,#F7C9B5 60%)}
+.mx-hero-img{margin:26px -6px 0;background:#fff;border-radius:24px;aspect-ratio:16/10;display:grid;place-items:center;overflow:hidden;box-shadow:0 18px 40px -22px rgba(60,40,20,.35)}
+.mx-hero-img img{width:92%;height:auto;object-fit:contain}
+.mx-chips{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-wrap:wrap;gap:8px}
+.mx-chips li{font-size:13.5px;font-weight:700;background:#fff;border:1px solid var(--sand);padding:7px 12px;border-radius:999px}
+
+.mx-btn{display:block;width:100%;text-align:center;border:0;cursor:pointer;font:inherit;font-size:18px;font-weight:900;color:#fff;background:var(--accent);padding:18px;border-radius:16px;text-decoration:none;margin-top:22px;box-shadow:0 10px 24px -12px rgba(224,96,63,.8)}
+.mx-btn:active{background:var(--accent2)}
+
+.mx-vs{padding:54px 0}
+.mx-vs-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.mx-vs-card{border-radius:20px;padding:20px 16px;min-height:150px;display:flex;flex-direction:column;gap:6px}
+.mx-vs-card em{font-style:normal;font-size:13px;font-weight:700}
+.mx-vs-card b{font-size:19px;line-height:1.35}
+.mx-vs-card span{font-size:13.5px;margin-top:auto}
+.mx-vs-card.ok{background:#EEF4F1;color:#2F5D4A}
+.mx-vs-card.no{background:var(--night);color:#fff}
+.mx-vs-card.no em{color:#F7A58C}
+.mx-vs-card.no span{color:#C9CEDA}
+.mx-vs-end{text-align:center;font-size:19px;margin:26px 0 0}
+.mx-vs-end b{color:var(--accent)}
+
+.mx-num{background:var(--night);color:#fff;padding:54px 0}
+.mx-num h2{color:#fff}
+.mx-num-grid{display:grid;gap:12px}
+.mx-num-grid>div{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:20px;display:grid;grid-template-columns:96px 1fr;column-gap:14px;align-items:center}
+.mx-num-grid strong{grid-row:span 2;font-size:40px;font-weight:900;color:#F7A58C;line-height:1}
+.mx-num-grid strong small{font-size:16px;margin-left:2px}
+.mx-num-grid b{font-size:18px}
+.mx-num-grid span{font-size:14px;color:#C9CEDA;line-height:1.5;margin-top:4px}
+.mx-num .mx-fine{color:#9AA1B2}
+
+.mx-models{padding:54px 0;background:var(--cream)}
+.mx-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;background:#fff;padding:5px;border-radius:14px;margin-bottom:16px}
+.mx-tabs button{font:inherit;font-size:15px;font-weight:700;border:0;border-radius:10px;padding:12px 4px;background:transparent;color:var(--soft);cursor:pointer}
+.mx-tabs button[aria-selected="true"]{background:var(--ink);color:#fff}
+.mx-cards{display:grid;gap:12px}
+.mx-card{background:#fff;border-radius:20px;overflow:hidden;display:grid;grid-template-columns:120px 1fr;align-items:center}
+.mx-card-img{height:100%;min-height:118px;background:#FBF8F4;display:grid;place-items:center}
+.mx-card-img img{width:100%;height:auto}
+.mx-card-txt{padding:14px 16px}
+.mx-card-txt em{font-style:normal;font-size:12.5px;font-weight:700;color:var(--accent)}
+.mx-card-txt b{display:block;font-size:17px;margin:2px 0 4px}
+.mx-card-txt p{margin:0;font-size:13.5px;color:var(--soft);line-height:1.45}
+.mx-card-txt .pr{margin-top:8px;font-size:14px;color:var(--ink)}
+.mx-card-txt .pr strong{font-size:18px}
+
+.mx-nov{padding:40px 0;background:#fff}
+.mx-nov-tag{display:inline-block;font-size:13px;font-weight:900;color:#fff;background:var(--accent);padding:5px 12px;border-radius:999px;margin:0 0 14px}
+.mx-nov ul{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.mx-nov li{display:flex;justify-content:space-between;gap:10px;font-size:15px;border-bottom:1px dashed var(--sand);padding:10px 0;color:var(--accent2);font-weight:700}
+.mx-nov li b{color:var(--ink)}
+
+.mx-form-sec{background:var(--night);color:#fff;padding:54px 0 64px}
+.mx-form-sec h2{color:#fff}
+.mx-form-lead{font-size:15.5px;color:#C9CEDA;line-height:1.6;margin:-8px 0 20px}
+.mx-form{background:#fff;color:var(--ink);border-radius:22px;padding:22px}
+.mx-form .field{margin-bottom:14px}
+.mx-form select{width:100%;font:inherit;font-size:16px;padding:12px 14px;border:1px solid #D6DCE6;border-radius:12px;background:#fff}
+.mx-form .mx-btn{margin-top:16px}
+.mx-note{text-align:center;font-size:13px;color:var(--soft);margin:10px 0 0}
+
+.mx-faq{padding:48px 0 110px}
+.mx-faq h2{font-size:22px}
+.mx-faq details{border-bottom:1px solid var(--sand);padding:16px 0}
+.mx-faq summary{font-size:16px;font-weight:700;cursor:pointer;list-style:none}
+.mx-faq summary::after{content:"+";float:right;color:var(--accent);font-weight:900}
+.mx-faq details[open] summary::after{content:"−"}
+.mx-faq p{margin:10px 0 0;font-size:15px;color:var(--soft);line-height:1.6}
+
+.mx-done{max-width:560px;margin:0 auto;padding:80px 22px;text-align:center}
+.mx-done h1{font-size:28px}
+
+.mx-sticky{position:fixed;left:14px;right:14px;bottom:14px;z-index:30;text-align:center;font-size:17px;font-weight:900;color:#fff;background:var(--accent);padding:16px;border-radius:16px;text-decoration:none;box-shadow:0 10px 26px -10px rgba(0,0,0,.45);transform:translateY(140%);transition:transform .25s}
+.mx-sticky.show{transform:none}
+@media (min-width:700px){.mx-hero h1{font-size:46px}.mx-sticky{left:50%;right:auto;width:420px;margin-left:-210px}}
