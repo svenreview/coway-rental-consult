@@ -3,6 +3,7 @@
   const { esc } = Site;
   const q = new URLSearchParams(location.search);
   const ad = (q.get('utm_content') || Site.utm().utm_content || '').toLowerCase();
+  const fromRec = q.get('from') === 'recommend';
 
   // 퀸 기본 렌탈료 = 2026년 11월 상담 사이트 data/catalog-prices.json 중 최저 (제휴카드 할인 전)
   const MODELS = {
@@ -71,7 +72,7 @@
         contact: /^[\d\s-]+$/.test(form.contact.value) ? hyphen(form.contact.value) : form.contact.value.trim(),
         kind: '가정',
         products: ['매트리스' + (size ? ` (${size})` : '')],
-        message: `[매트리스 페이지] 견적 요청${size ? ' · 사이즈 ' + size : ''}${pref ? ' · 선호 ' + pref : ''}${ad ? ' · 광고 ' + ad : ''}`,
+        message: `[매트리스 페이지] 견적 요청${size ? ' · 사이즈 ' + size : ''}${pref ? ' · 선호 ' + pref : ''}${fromRec ? ' · 맞춤추천에서 이동' : ''}${ad ? ' · 광고 ' + ad : ''}`,
         consent: form.consent.checked,
         website: form.website.value,
         utm: Site.utm(),
