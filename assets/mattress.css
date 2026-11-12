@@ -224,3 +224,18 @@ h1{text-wrap:wrap}
 .ms-footer-links{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:8px}
 .ms-footer a{color:var(--sub);text-decoration:none}
 .ms-footer a:hover{text-decoration:underline}
+
+/* 사은품 안내 (상담 신청 구역 위, 광고 영상 마지막 장면과 같은 내용) */
+.ms-gift{position:relative;margin:24px 0 8px;padding:28px 20px 24px;border-radius:var(--r);text-align:center;color:#fff;overflow:hidden;background:radial-gradient(120% 90% at 50% 0%,#24476B 0%,var(--navy-2) 60%,#0C1A2B 100%);border:1px solid rgba(255,255,255,.14)}
+.ms-gift::before{content:"";position:absolute;inset:-40%;background:repeating-conic-gradient(from 0deg,rgba(255,255,255,.05) 0 10deg,transparent 10deg 30deg);animation:msGiftSpin 18s linear infinite;pointer-events:none}
+.ms-gift>*{position:relative}
+.ms-gift-badge{display:inline-block;padding:6px 16px;border-radius:999px;background:var(--point);font-weight:800;font-size:15px;letter-spacing:-.02em;box-shadow:0 0 0 3px rgba(255,255,255,.18);animation:msGiftPulse 1.6s ease-in-out infinite}
+.ms-gift-title{margin:16px 0 0;font-size:22px;font-weight:700;letter-spacing:-.03em}
+.ms-gift-main{margin:2px 0 0;font-size:32px;font-weight:800;letter-spacing:-.03em}
+.ms-gift-main b{color:#FFD166;text-shadow:0 0 18px rgba(255,209,102,.6)}
+.ms-gift-tel{display:block;margin:18px auto 0;max-width:340px;padding:12px 16px 14px;border-radius:16px;background:var(--point);border:2px solid rgba(255,255,255,.7);box-shadow:0 0 28px rgba(0,169,193,.55);color:#fff;text-decoration:none;font-size:28px;font-weight:800;letter-spacing:-.01em;line-height:1.2}
+.ms-gift-tel small{display:block;font-size:13px;font-weight:600;opacity:.92;margin-bottom:2px}
+.ms-gift-note{margin:12px 0 0;font-size:12.5px;color:#9FB0C3}
+@keyframes msGiftSpin{to{transform:rotate(360deg)}}
+@keyframes msGiftPulse{50%{transform:scale(1.06)}}
+@media (prefers-reduced-motion:reduce){.ms-gift::before,.ms-gift-badge{animation:none}}
