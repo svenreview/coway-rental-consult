@@ -250,3 +250,9 @@ h1{text-wrap:wrap}
 .ms-flow b{display:block;font-size:16px;color:#fff;line-height:1.4}
 .ms-flow span{display:block;margin-top:2px;font-size:14px;line-height:1.55;color:#B4C0CE}
 .ms-flow-note{margin:16px 0 0;font-size:13px;line-height:1.55;color:#9FB0C3}
+
+/* 중간 약정 기간 안내 */
+.ms-term{margin-top:20px;padding:16px 18px;border-radius:var(--r);background:rgba(0,169,193,.12);border:1px solid rgba(95,201,216,.45)}
+.ms-term-main{margin:0;font-size:16px;line-height:1.55;color:#fff}
+.ms-term-main b{color:#5FC9D8}
+.ms-term-sub{margin:6px 0 0;font-size:13px;line-height:1.55;color:#B4C0CE}
