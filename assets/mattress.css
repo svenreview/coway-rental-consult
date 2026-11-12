@@ -239,3 +239,14 @@ h1{text-wrap:wrap}
 @keyframes msGiftSpin{to{transform:rotate(360deg)}}
 @keyframes msGiftPulse{50%{transform:scale(1.06)}}
 @media (prefers-reduced-motion:reduce){.ms-gift::before,.ms-gift-badge{animation:none}}
+
+/* 신청 후 진행 안내 */
+.ms-flow{margin-top:24px;padding:22px 20px 18px;border-radius:var(--r);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+.ms-flow-t{margin:0 0 14px;font-size:17px;font-weight:700;color:#fff;letter-spacing:-.02em}
+.ms-flow ol{list-style:none;margin:0;padding:0;counter-reset:f;display:grid;gap:14px}
+.ms-flow li{counter-increment:f;position:relative;padding-left:44px}
+.ms-flow li::before{content:counter(f);position:absolute;left:0;top:0;width:30px;height:30px;border-radius:50%;background:var(--point);color:#fff;font-weight:800;font-size:15px;display:grid;place-items:center}
+.ms-flow li:not(:last-child)::after{content:"";position:absolute;left:14px;top:34px;bottom:-12px;width:2px;background:rgba(95,201,216,.35)}
+.ms-flow b{display:block;font-size:16px;color:#fff;line-height:1.4}
+.ms-flow span{display:block;margin-top:2px;font-size:14px;line-height:1.55;color:#B4C0CE}
+.ms-flow-note{margin:16px 0 0;font-size:13px;line-height:1.55;color:#9FB0C3}
