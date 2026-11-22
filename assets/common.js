@@ -192,13 +192,18 @@ const Site = (() => {
   // ── 제품 카드 ──
   function card(p, tag) {
     const low = lowest(p);
+    const cash = document.documentElement.dataset.cashPrices === 'true' ? [...new Set(p.variants.filter(v => v.cashPriceVerified && v.lumpSum != null).map(v => v.lumpSum))] : [];
+    const minCash = cash.length ? Math.min(...cash) : null;
+    const priceLine = low ? `<p class="price num">${low.normal ? `<s>${won(low.normal)}</s>` : ''}월 <b>${won(low.price)}</b>원~</p>` : minCash != null ? `<p class="price num">일시불 <b>${won(minCash)}</b>원</p>` : `<p class="price num">가격 문의</p>`;
+    const cashLine = low && minCash != null ? `<p class="price-extra num">일시불 <b>${won(minCash)}</b>원~</p>` : '';
     return `<article class="card">
       <button type="button" class="card-open" data-open="${esc(p.key)}" aria-label="${esc(p.name)} 금액표 보기">
         ${thumb(p, tag)}
         <span class="model">${esc(modelLabel(p))}</span>
         <h3>${esc(p.name)}</h3>
         ${feats(p)}
-        <p class="price num">${low.normal ? `<s>${won(low.normal)}</s>` : ''}월 <b>${won(low.price)}</b>원~</p>
+        ${priceLine}
+        ${cashLine}
       </button>
       ${addButton(p)}
     </article>`;
@@ -215,21 +220,29 @@ const Site = (() => {
     }
     const years = [...new Set(p.variants.flatMap(v => v.prices.map(x => x.years)))].sort();
     const cell = x => !x ? '—' : x.promo != null ? `<s>${won(x.rental)}</s><b>${won(x.promo)}</b>` : `<b>${won(x.rental)}</b>`;
+    const showCash = document.documentElement.dataset.cashPrices === 'true';
+    const hasPromo = p.variants.some(v => v.prices.some(x => x.promo != null));
+    const rentalNote = showCash && hasPromo ? '월 렌탈료(원), 약정 기간별. 취소선이 있는 금액은 카탈로그 정상가와 프로모션가를 함께 표시해요.' : '월 렌탈료(원), 약정 기간별.';
+    const cashRows = showCash ? [...new Map(p.variants.filter(v => v.cashPriceVerified && v.lumpSum != null).map(v => [`${v.model}|${v.variant.replace(/\s*·\s*신규 월요금 기준\s*$/, '')}|${v.lumpSum}`, v])).values()] : [];
+    const rentalTable = years.length ? `<div class="scroll-x"><table class="ptable num">
+      <thead><tr><th>모델</th><th>관리</th>${years.map(y => `<th>${y}년</th>`).join('')}</tr></thead>
+      <tbody>${p.variants.map(v => `<tr><td>${esc(v.model || '—')}<span class="sub">${esc(v.variant || '')}</span></td><td>${esc([v.care, v.cycle].filter(Boolean).join(' ') || '—')}</td>${years.map(y => `<td>${cell(v.prices.find(x => x.years === y))}</td>`).join('')}</tr>`).join('')}</tbody>
+    </table></div><p class="note" style="margin-top:12px">${rentalNote}</p>` : '';
+    const cashTable = cashRows.length ? `<h3 class="cash-heading">일시불 금액</h3><div class="scroll-x"><table class="ptable num">
+      <thead><tr><th>모델</th><th>색상·구성</th><th>일시불</th></tr></thead>
+      <tbody>${cashRows.map(v => `<tr><td>${esc(v.model || '—')}</td><td>${esc(v.variant || '—')}</td><td><b>${won(v.lumpSum)}</b></td></tr>`).join('')}</tbody>
+    </table></div><p class="note" style="margin-top:12px">카탈로그에 일시불 가격이 표기된 모델만 표시해요.</p>` : '';
     sheet.innerHTML = `<div class="sheet-in">
       <div class="sheet-head"><h2>${esc(p.name)}</h2><button type="button" class="sheet-close" data-close aria-label="닫기">×</button></div>
       ${p.img ? `<div class="sheet-img${p.box ? ' is-shot' : ''}">${picture(p)}</div>` : ''}
       ${p.desc.length ? `<div class="sheet-desc">${descBlock(p)}</div>` : ''}
       ${specBlock(p)}
-      <div class="scroll-x"><table class="ptable num">
-        <thead><tr><th>모델</th><th>관리</th>${years.map(y => `<th>${y}년</th>`).join('')}</tr></thead>
-        <tbody>${p.variants.map(v => `<tr><td>${esc(v.model || '—')}<span class="sub">${esc(v.variant || '')}</span></td><td>${esc([v.care, v.cycle].filter(Boolean).join(' ') || '—')}</td>${years.map(y => `<td>${cell(v.prices.find(x => x.years === y))}</td>`).join('')}</tr>`).join('')}</tbody>
-      </table></div>
-      <p class="note" style="margin-top:12px">월 렌탈료(원), 약정 기간별.</p>
+      ${rentalTable}
+      ${cashTable}
     </div>
     <div class="sheet-foot">${addButton(p, '')}</div>`;
     sheet.showModal();
   }
-
   // 카드가 들어 있는 곳에 한 번 걸어 두면 담기와 금액표 열기가 동작한다
   function wire(products) {
     if (wire.done) return; wire.done = true;
