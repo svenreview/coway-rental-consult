@@ -1,7 +1,7 @@
 // 제품: 제품군 고르기, (매트리스는) 종류 고르기, 이름·모델명으로 찾기, 카드 목록
 (async () => {
   const { CATEGORIES, MATTRESS_TYPES, esc } = Site;
-  const PRODUCT_CATEGORIES = [...CATEGORIES, '가습기', '침대·프레임', '안마·마사지', '의류청정기', '전기레인지', '헬스케어', '벽걸이 에어컨'];
+  const PRODUCT_CATEGORIES = [...CATEGORIES, '침대·프레임', '안마·마사지', '전기레인지', '헬스케어', '벽걸이 에어컨', '의류청정기', '가습기'];
   const chips = document.querySelector('#chips');
   const typeChips = document.querySelector('#type-chips');
   const search = document.querySelector('#search');
