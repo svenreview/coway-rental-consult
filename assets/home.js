@@ -1,6 +1,6 @@
 // 메인: 제품군을 고르면 주력·신제품 카드를 보여 준다
 (async () => {
-  const { FEATURED, CATEGORIES, esc } = Site;
+  const { FEATURED, PRODUCT_CATEGORIES, esc } = Site;
   const chips = document.querySelector('#chips');
   const grid = document.querySelector('#featured');
   const more = document.querySelector('#more');
@@ -10,7 +10,8 @@
     chips.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.cat === cat));
     more.href = 'products.html#' + encodeURIComponent(cat);
     more.textContent = cat + ' 전체 보기';
-    grid.innerHTML = FEATURED[cat].map(([name, tag]) => {
+    const featured = FEATURED[cat] || products.filter(p => p.category === cat).slice(0, 4).map(p => [p.name]);
+    grid.innerHTML = featured.map(([name, tag]) => {
       const p = products.find(x => x.category === cat && x.name === name);
       return p ? Site.card(p, tag) : '';
     }).join('');
@@ -23,9 +24,9 @@
     const hero = products.find(x => x.key === '정수기|아이콘 프로');
     const heroBox = document.querySelector('#hero-product');
     if (hero && hero.img && heroBox) heroBox.insertAdjacentHTML('beforeend', Site.picture(hero));
-    chips.innerHTML = CATEGORIES.map(c => `<button type="button" data-cat="${c}">${c}</button>`).join('');
+    chips.innerHTML = PRODUCT_CATEGORIES.map(c => `<button type="button" data-cat="${c}">${c}<span class="n">${products.filter(p => p.category === c).length}</span></button>`).join('');
     chips.addEventListener('click', e => { const b = e.target.closest('button'); if (b) show(b.dataset.cat); });
-    show(CATEGORIES[0]);
+    show(PRODUCT_CATEGORIES[0]);
   } catch (err) {
     grid.innerHTML = `<p class="empty">${esc(err.message)}. 새로 고침 해 주세요.</p>`;
   }

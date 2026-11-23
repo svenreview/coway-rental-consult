@@ -10,6 +10,7 @@ const Site = (() => {
     '음식물처리기': [['미생물 음식물처리기', '신제품'], ['음식물처리기 2L', '신제품'], ['음식물처리기 3L', '신제품']],
   };
   const CATEGORIES = ['정수기', '공기청정기', '비데', '매트리스', '음식물처리기'];
+  const PRODUCT_CATEGORIES = [...CATEGORIES, '침대·프레임', '안마·마사지', '전기레인지', '헬스케어', '벽걸이 에어컨', '의류청정기', '가습기'];
   // 사진 위 혜택 배지 [문구, 색]. 코웨이 '[26년 11월] 환경가전 제품 판매 활성화 프로모션 안내'(2026-10-29)와 블로그 11월 프로모션 글을 따른다. 혜택이 바뀌면 여기만 고친다.
   // 반값: 아이콘 프로, 데스크탑 얼음정수기(카페 얼음정수기 CHPCI-8400N 제외), 워터 스탠드 플러스·스탠드2.
   // 월 1만원: 아이콘2·3, 청정기 전제품(온풍·제습·가습청정기 포함, 단독 제습기·가습기 제외), 비데 전제품. 단종 제품 재고 소진 시 적용 불가.
@@ -271,5 +272,5 @@ const Site = (() => {
   window.addEventListener('storage', refresh);
   document.addEventListener('DOMContentLoaded', refresh);
 
-  return { FEATURED, CATEGORIES, MATTRESS_TYPES, BADGES, load, descLines, descList, won, esc, lowest, condition, thumb, picture, card, wire, basket, remove, clear, addButton, utm };
+  return { FEATURED, CATEGORIES, PRODUCT_CATEGORIES, MATTRESS_TYPES, BADGES, load, descLines, descList, won, esc, lowest, condition, thumb, picture, card, wire, basket, remove, clear, addButton, utm };
 })();
