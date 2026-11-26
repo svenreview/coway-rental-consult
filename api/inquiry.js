@@ -35,7 +35,7 @@ module.exports = async (req, res) => {
   const r = await fetch(`${SB_URL}/rest/v1/inquiries`, { method: 'POST', headers: { ...sbHeaders(), Prefer: 'return=minimal' }, body: JSON.stringify(row) });
   if (!r.ok) return res.status(500).json({ error: '저장하지 못했어요. 잠시 뒤 다시 시도해 주세요.' });
   // 알림이 실패해도 접수는 된 것으로 본다. 메일·문자·시트 기록을 동시에 시도한다.
-  await Promise.allSettled([notify(row, req.headers.host), textAlerts(row), sheetLog(row)]);
+  await Promise.allSettled([notify(row, req.headers.host), telegramAlert(row), textAlerts(row), sheetLog(row)]);
   return res.status(200).json({ ok: true });
 };
 
@@ -139,6 +139,44 @@ async function textAlerts(row) {
   const isGift = /\[g\d{2,3}\]/.test(row.products || '');
   if (customer && !isGift && env.SOLAPI_TPL_REPLY) jobs.push(sendAlimtalk(customer, env.SOLAPI_TPL_REPLY, { '#{이름}': row.name }));
   await Promise.allSettled(jobs);
+}
+
+// ── 텔레그램 새 상담 알림 ───────────────────────────────────────────
+// 환경변수 TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID 가 있을 때만 담당자 텔레그램으로 알림을 보낸다. (2026-11-26)
+// 고객에게 직접 보내지는 않는다. 알림 아래 첫인사 문구를 붙여 담당자가 복사해서 문자로 보낼 수 있게 한다.
+async function telegramAlert(row) {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chat = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chat) return;
+  const src = row.utm_source ? [row.utm_source, row.utm_medium, row.utm_campaign, row.utm_content].filter(Boolean).join(' / ') : (row.referrer || '직접 방문');
+  const isGift = /\[g\d{2,3}\]/.test(row.products || '');
+  const lines = [
+    isGift ? '🎁 새 사은품 신청' : '🔔 새 상담 신청',
+    '',
+    `이름: ${row.name}`,
+    `연락처: ${row.contact}`,
+    `구분: ${row.kind || '-'}`,
+    '제품:',
+    row.products || '(제품을 정하지 않음)',
+    '',
+    `문의: ${row.message || '(없음)'}`,
+    `유입: ${src}`,
+  ];
+  if (!isGift) lines.push(
+    '',
+    '── 첫인사 문자 (복사해서 보내기) ──',
+    '안녕하세요, 코웨이 렌탈 상담입니다.',
+    `${row.name}님, 상담 신청 잘 받았습니다.`,
+    '확인 후 남겨주신 번호로 연락드리겠습니다.',
+    '통화가 어려우시면 편한 시간을 문자로 남겨주세요.',
+    '코웨이 렌탈·상담 문의 010-3490-8733',
+  );
+  await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: chat, text: lines.join('\n').slice(0, 4000), disable_web_page_preview: true }),
+    signal: AbortSignal.timeout(5000),
+  });
 }
 
 // ── 구글 시트 기록 ─────────────────────────────────────────────────
