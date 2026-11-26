@@ -93,11 +93,13 @@ async function notify(row, host) {
   });
 }
 
-// ── 문자 알림 (솔라피) ─────────────────────────────────────────────
-// 환경변수 SOLAPI_API_KEY, SOLAPI_API_SECRET, SOLAPI_SENDER(솔라피에 등록한 발신번호)가 모두 있을 때만 동작한다.
-// OWNER_ALERT_PHONE 이 있으면 새 상담이 들어올 때 담당자 휴대폰으로 알림 문자를 보낸다.
-// AUTO_REPLY_TEXT 가 있으면 신청한 고객 휴대폰으로 첫인사 문자를 보낸다. 문구 안의 {이름} 은 고객 이름으로 바뀐다.
-// AUTO_REPLY_TEXT 를 비워 두면 고객에게는 아무 문자도 가지 않는다. (대표가 승인한 문구만 넣는다)
+// ── 카카오 알림톡 (솔라피) ─────────────────────────────────────────
+// 문자·RCS 권한은 허용 IP 고정이 필요해 Vercel 에서는 쓸 수 없어 알림톡으로 보낸다. (2026-11-26)
+// 환경변수 SOLAPI_API_KEY, SOLAPI_API_SECRET, SOLAPI_SENDER(등록 발신번호), SOLAPI_PFID(카카오 채널 연동 ID)가 모두 있을 때만 동작한다.
+// SOLAPI_TPL_OWNER + OWNER_ALERT_PHONE 이 있으면 담당자에게 새 상담 알림톡을 보낸다.
+//   템플릿 변수: #{이름} #{연락처} #{구분} #{제품} #{유입}
+// SOLAPI_TPL_REPLY 가 있으면 신청한 고객에게 첫인사 알림톡을 보낸다. 템플릿 변수: #{이름}
+// 템플릿은 카카오 심사를 통과한 것만 넣는다. 템플릿 ID 가 없으면 그 알림톡은 보내지 않는다.
 const mobile = v => { const d = String(v || '').replace(/\D/g, ''); return /^01[016789]\d{7,8}$/.test(d) ? d : null; };
 function solapiAuth() {
   const date = new Date().toISOString();
@@ -105,27 +107,37 @@ function solapiAuth() {
   const signature = crypto.createHmac('sha256', process.env.SOLAPI_API_SECRET).update(date + salt).digest('hex');
   return `HMAC-SHA256 apiKey=${process.env.SOLAPI_API_KEY}, date=${date}, salt=${salt}, signature=${signature}`;
 }
-async function sendSms(to, text) {
+async function sendAlimtalk(to, templateId, variables) {
   const r = await fetch('https://api.solapi.com/messages/v4/send', {
     method: 'POST',
     headers: { Authorization: solapiAuth(), 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: { to, from: String(process.env.SOLAPI_SENDER).replace(/\D/g, ''), text } }),
+    body: JSON.stringify({ message: {
+      to,
+      from: String(process.env.SOLAPI_SENDER).replace(/\D/g, ''),
+      type: 'ATA',
+      kakaoOptions: { pfId: process.env.SOLAPI_PFID, templateId, variables, disableSms: true },
+    } }),
     signal: AbortSignal.timeout(5000),
   });
   if (!r.ok) console.error('solapi', r.status, await r.text().catch(() => ''));
 }
 async function textAlerts(row) {
-  if (!process.env.SOLAPI_API_KEY || !process.env.SOLAPI_API_SECRET || !process.env.SOLAPI_SENDER) return;
+  const env = process.env;
+  if (!env.SOLAPI_API_KEY || !env.SOLAPI_API_SECRET || !env.SOLAPI_SENDER || !env.SOLAPI_PFID) return;
   const jobs = [];
-  const owner = mobile(process.env.OWNER_ALERT_PHONE);
-  if (owner) {
-    const first = String(row.products || '').split('\n')[0] || '제품 미정';
-    const src = row.utm_campaign || row.utm_source || '직접 방문';
-    jobs.push(sendSms(owner, `[새 상담] ${row.name} ${row.contact}\n${row.kind || '-'} / ${first}\n유입: ${src}`));
+  const owner = mobile(env.OWNER_ALERT_PHONE);
+  if (owner && env.SOLAPI_TPL_OWNER) {
+    jobs.push(sendAlimtalk(owner, env.SOLAPI_TPL_OWNER, {
+      '#{이름}': row.name,
+      '#{연락처}': row.contact,
+      '#{구분}': row.kind || '-',
+      '#{제품}': String(row.products || '').split('\n')[0] || '제품 미정',
+      '#{유입}': row.utm_campaign || row.utm_source || '직접 방문',
+    }));
   }
   const customer = mobile(row.contact);
   const isGift = /\[g\d{2,3}\]/.test(row.products || '');
-  if (customer && !isGift && process.env.AUTO_REPLY_TEXT) jobs.push(sendSms(customer, process.env.AUTO_REPLY_TEXT.replace(/\{이름\}/g, row.name)));
+  if (customer && !isGift && env.SOLAPI_TPL_REPLY) jobs.push(sendAlimtalk(customer, env.SOLAPI_TPL_REPLY, { '#{이름}': row.name }));
   await Promise.allSettled(jobs);
 }
 
