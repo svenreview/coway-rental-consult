@@ -143,7 +143,7 @@ async function textAlerts(row) {
 
 // ── 텔레그램 새 상담 알림 ───────────────────────────────────────────
 // 환경변수 TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID 가 있을 때만 담당자 텔레그램으로 알림을 보낸다. (2026-11-26)
-// 고객에게 직접 보내지는 않는다. 알림 아래 첫인사 문구를 붙여 담당자가 복사해서 문자로 보낼 수 있게 한다.
+// 봇: @coway_lead_alert_bot. 고객에게 직접 보내지는 않는다. 알림 아래 첫인사 문구를 붙여 담당자가 복사해서 문자로 보낼 수 있게 한다.
 async function telegramAlert(row) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chat = process.env.TELEGRAM_CHAT_ID;
