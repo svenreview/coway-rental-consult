@@ -274,3 +274,28 @@ const Site = (() => {
 
   return { FEATURED, CATEGORIES, PRODUCT_CATEGORIES, MATTRESS_TYPES, BADGES, load, descLines, descList, won, esc, lowest, condition, thumb, picture, card, wire, basket, remove, clear, addButton, utm };
 })();
+
+// 신청 완료 화면에 카카오톡 1:1 상담 버튼을 붙인다 (제품 랜딩 공통, 2026-11-25).
+// 이미 카카오톡 링크가 있는 화면은 건드리지 않는다.
+(() => {
+  const addKakao = () => {
+    document.querySelectorAll('.ms-done .ms-wrap').forEach(w => {
+      if (w.querySelector('a[href*="_Upxian"]')) return;
+      const note = document.createElement('p');
+      note.className = 'ms-body';
+      note.textContent = '기다리지 않고 바로 상담받으시려면 카카오톡으로 말씀해 주세요.';
+      const kakao = document.createElement('a');
+      kakao.className = 'ms-btn ms-btn-kakao';
+      kakao.href = 'http://pf.kakao.com/_Upxian/chat';
+      kakao.target = '_blank';
+      kakao.rel = 'noopener';
+      kakao.textContent = '카카오톡으로 바로 상담';
+      kakao.style.cssText = 'background:#FEE500;color:#191919;border-color:#FEE500;margin:0 8px 8px 0';
+      kakao.addEventListener('click', () => { if (typeof window.fbq === 'function') window.fbq('track', 'Contact'); });
+      const home = [...w.querySelectorAll('a.ms-btn')].pop();
+      w.insertBefore(note, home || null);
+      w.insertBefore(kakao, home || null);
+    });
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', addKakao); else addKakao();
+})();

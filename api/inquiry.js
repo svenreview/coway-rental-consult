@@ -10,6 +10,8 @@ const sbHeaders = () => ({
   'Content-Type': 'application/json',
 });
 
+const crypto = require('crypto');
+
 module.exports = async (req, res) => {
   if (req.method !== 'POST') return res.status(405).json({ error: 'POST만 가능해요' });
   if (!SB_URL || !SB_KEY) return res.status(500).json({ error: 'Supabase 연결 정보가 없어요. Vercel Storage 연결 후 다시 배포해 주세요.' });
@@ -32,7 +34,8 @@ module.exports = async (req, res) => {
   if (!row.consent) return res.status(400).json({ error: '개인정보 수집·이용에 동의해 주세요' });
   const r = await fetch(`${SB_URL}/rest/v1/inquiries`, { method: 'POST', headers: { ...sbHeaders(), Prefer: 'return=minimal' }, body: JSON.stringify(row) });
   if (!r.ok) return res.status(500).json({ error: '저장하지 못했어요. 잠시 뒤 다시 시도해 주세요.' });
-  await notify(row, req.headers.host).catch(() => {}); // 알림이 실패해도 접수는 된 것으로 본다
+  // 알림이 실패해도 접수는 된 것으로 본다. 메일·문자·시트 기록을 동시에 시도한다.
+  await Promise.allSettled([notify(row, req.headers.host), textAlerts(row), sheetLog(row)]);
   return res.status(200).json({ ok: true });
 };
 
@@ -86,6 +89,56 @@ async function notify(row, host) {
     method: 'POST',
     headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({ from: process.env.NOTIFY_FROM || '코웨이 상담 알림 <onboarding@resend.dev>', to: [to], subject: `${giftLines.length ? '새 사은품 신청' : '새 상담 신청'}: ${row.name}`, text }),
+    signal: AbortSignal.timeout(5000),
+  });
+}
+
+// ── 문자 알림 (솔라피) ─────────────────────────────────────────────
+// 환경변수 SOLAPI_API_KEY, SOLAPI_API_SECRET, SOLAPI_SENDER(솔라피에 등록한 발신번호)가 모두 있을 때만 동작한다.
+// OWNER_ALERT_PHONE 이 있으면 새 상담이 들어올 때 담당자 휴대폰으로 알림 문자를 보낸다.
+// AUTO_REPLY_TEXT 가 있으면 신청한 고객 휴대폰으로 첫인사 문자를 보낸다. 문구 안의 {이름} 은 고객 이름으로 바뀐다.
+// AUTO_REPLY_TEXT 를 비워 두면 고객에게는 아무 문자도 가지 않는다. (대표가 승인한 문구만 넣는다)
+const mobile = v => { const d = String(v || '').replace(/\D/g, ''); return /^01[016789]\d{7,8}$/.test(d) ? d : null; };
+function solapiAuth() {
+  const date = new Date().toISOString();
+  const salt = crypto.randomBytes(16).toString('hex');
+  const signature = crypto.createHmac('sha256', process.env.SOLAPI_API_SECRET).update(date + salt).digest('hex');
+  return `HMAC-SHA256 apiKey=${process.env.SOLAPI_API_KEY}, date=${date}, salt=${salt}, signature=${signature}`;
+}
+async function sendSms(to, text) {
+  const r = await fetch('https://api.solapi.com/messages/v4/send', {
+    method: 'POST',
+    headers: { Authorization: solapiAuth(), 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: { to, from: String(process.env.SOLAPI_SENDER).replace(/\D/g, ''), text } }),
+    signal: AbortSignal.timeout(5000),
+  });
+  if (!r.ok) console.error('solapi', r.status, await r.text().catch(() => ''));
+}
+async function textAlerts(row) {
+  if (!process.env.SOLAPI_API_KEY || !process.env.SOLAPI_API_SECRET || !process.env.SOLAPI_SENDER) return;
+  const jobs = [];
+  const owner = mobile(process.env.OWNER_ALERT_PHONE);
+  if (owner) {
+    const first = String(row.products || '').split('\n')[0] || '제품 미정';
+    const src = row.utm_campaign || row.utm_source || '직접 방문';
+    jobs.push(sendSms(owner, `[새 상담] ${row.name} ${row.contact}\n${row.kind || '-'} / ${first}\n유입: ${src}`));
+  }
+  const customer = mobile(row.contact);
+  const isGift = /\[g\d{2,3}\]/.test(row.products || '');
+  if (customer && !isGift && process.env.AUTO_REPLY_TEXT) jobs.push(sendSms(customer, process.env.AUTO_REPLY_TEXT.replace(/\{이름\}/g, row.name)));
+  await Promise.allSettled(jobs);
+}
+
+// ── 구글 시트 기록 ─────────────────────────────────────────────────
+// 환경변수 SHEET_WEBHOOK_URL(구글 Apps Script 웹앱 주소)이 있을 때만, 새 상담을 시트에 한 줄씩 보낸다.
+async function sheetLog(row) {
+  const url = process.env.SHEET_WEBHOOK_URL;
+  if (!url) return;
+  const at = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
+  await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token: process.env.SHEET_WEBHOOK_TOKEN || '', at, ...row }),
     signal: AbortSignal.timeout(5000),
   });
 }
