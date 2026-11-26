@@ -280,6 +280,9 @@ const Site = (() => {
 (() => {
   const addKakao = () => {
     document.querySelectorAll('.ms-done .ms-wrap').forEach(w => {
+      // 안내 문장은 제품과 상관없이 같은 문장으로 맞춘다 (대표 요청 2026-11-26)
+      const body = w.querySelector('.ms-body');
+      if (body) body.textContent = '확인 후 연락드려 코웨이 제품 렌탈 조건을 안내해 드리겠습니다.';
       if (w.querySelector('a[href*="_Upxian"]')) return;
       const note = document.createElement('p');
       note.className = 'ms-body';
